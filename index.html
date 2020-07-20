@@ -6,6 +6,8 @@
     <script src="js/lib/jquery-3.3.1.min.js"></script>
     <script src="js/lib/template7.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <!-- <script src="js/lib/Winwheel.js"></script>
     <script src="js/lib/TweenMax.min.js"></script>
     <script src="js/wheelOfFortune.js"></script> -->
@@ -76,6 +78,7 @@
 
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css"/> -->
 </head>
+<script>var socket = io();</script>
 
 <body background="images/background.png" class="disable-select" style="font-family: 'Open Sans', Arial, sans-serif;     font-weight: bold;     font-size: 1.65vmax;color:black;">
 
@@ -110,5 +113,27 @@
 
 <img style="display:none" src="images/redbgcommon.png"></img>
 </body>
+<script>
 
+window.onload = function() {
+     let userAgentString =  navigator.userAgent; 
+
+     console.log(userAgentString);
+
+     // Detect Internet Explorer 
+     let IExplorerAgent = (navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true );
+	 
+     // Detect Chrome 
+     let chromeAgent = userAgentString.indexOf("Chrome") > -1; 
+	
+     // Detect Firefox 
+     let firefoxAgent = userAgentString.indexOf("Firefox") > -1; 
+
+     if(IExplorerAgent&&!chromeAgent&&!firefoxAgent){
+     
+     window.location.href("./error.html");
+     } 
+};
+
+</script>
 <html>
