@@ -82,6 +82,16 @@ $('#num_online_players')
 
 ubsApp.updatePlayer = function(studentId) {
 
+    var isDisabled = $("#" + studentId + "Name").prop('disabled');
+    console.log(isDisabled);
+    if(isDisabled){
+        $("#" + studentId + "Name").prop('disabled', false);
+        $("#" + studentId + "Age").prop('disabled', false);
+        $("#" + studentId + "Gender").prop('disabled', false);
+        $("#"+studentId).attr('src','images/update.png');
+    }
+    else{
+
     $("#addPlayerValidationMessage").empty();
         let playerName = $("#" + studentId + "Name").val();
         let playerAge = $("#" + studentId + "Age").val();
@@ -144,6 +154,7 @@ ubsApp.updatePlayer = function(studentId) {
         $('#num_online_players').val(numberOfPlayers)
 
         monopoly.initOnlinePlayers();
+    }
 }
 
 ubsApp.deletePlayer = function(studentId) {
