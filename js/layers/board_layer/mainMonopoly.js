@@ -2,6 +2,7 @@ monopoly.ubsBoardTemplate = undefined;
 monopoly.ubsSideScoreBoardTemplate = undefined;
 monopoly.ubsMonopolyStaticTemplate =undefined;
 monopoly.ubsformTemplate = undefined;
+monopoly.ubswebFormTemplate = undefined;
 monopoly.centerScoreBoardTemplate=undefined;
 monopoly.ubsEndGameTemplate = undefined;
 monopoly.boardConfig={};
@@ -33,6 +34,7 @@ var ubsSideScoreBoardTemplate = monopoly.sideScoreBoardTemplate;
 var ubsEndGameTemplate = monopoly.ubsEndGameTemplate;
 var ubsMonopolyStaticTemplate= monopoly.ubsMonopolyStaticTemplate;
 var ubsformTemplate= monopoly.ubsformTemplate;
+
 // var ubsCenterScoreBoardTemplate=monopoly.centerScoreBoardTemplate;
 var boardConfig = monopoly.boardConfig;
 var salesScenarioArray=monopoly.salesScenarioArray;
@@ -75,6 +77,7 @@ monopoly.intitializeTemplates = function(){
 	rollingDiceTemplate = Template7.compile(monopoly.rollingDiceTemplate);
     ubsMonopolyStaticTemplate = Template7.compile(monopoly.staticTemplate);
     ubsformTemplate = Template7.compile(monopoly.formTemplate);
+    ubswebFormTemplate = Template7.compile(monopoly.webFormTemplate);
     //ubsCenterScoreBoardTemplate=Template7.compile(ubsApp.centerScoreBoardTemplate);
     ubsEndGameTemplate = Template7.compile(monopoly.endGameTemplate);
 }
@@ -462,7 +465,12 @@ monopoly.initPlayers=function(){
                 });
             
             }
-            document.getElementById("take_input").innerHTML+=ubsformTemplate(object);
+            if (ubsApp.isWebEnabled) {
+                document.getElementById("take_input").innerHTML += ubsformTemplate(object);
+            }
+            else {
+                document.getElementById("take_input").innerHTML += ubswebFormTemplate(object);
+            }
       }
       
     }
@@ -503,11 +511,21 @@ monopoly.initOnlinePlayers=function(){
                         });
 
                     }
-                    document.getElementById("take_input").innerHTML+=ubsformTemplate(object);
+                    if (ubsApp.isWebEnabled) {
+                        document.getElementById("take_input").innerHTML += ubswebFormTemplate(object);
+                    }
+                    else {
+                        document.getElementById("take_input").innerHTML += ubsformTemplate(object);
+                    }
                 }
 
                 for(var i=0;i<numplayers;i++) {
-                    $("#name" + i).val(ubsApp.studentArray[i].StudentId + "_" + ubsApp.studentArray[i].StudentName);
+                    if (ubsApp.isWebEnabled) {
+                        $("#name" + i).val(ubsApp.studentArray[i].playerid + "_" + ubsApp.studentArray[i].playername);
+                    }
+                    else {
+                        $("#name" + i).val(ubsApp.studentArray[i].StudentId + "_" + ubsApp.studentArray[i].StudentName);
+                    }
                 }
 
 
@@ -543,7 +561,12 @@ monopoly.initOfflinePlayers=function(){
                 });
 
             }
-            document.getElementById("take_input").innerHTML+=ubsformTemplate(object);
+            if (ubsApp.isWebEnabled) {
+                document.getElementById("take_input").innerHTML += ubswebFormTemplate(object);
+            }
+            else {
+                document.getElementById("take_input").innerHTML += ubsformTemplate(object);
+            }
         }
 
         for(var i=0;i<numplayers;i++) {
@@ -570,7 +593,12 @@ monopoly.initComputerDifficulty=function()
         }
         );
     }
-    document.getElementById("computerDetails").innerHTML+=ubsformTemplate(computerDifficulty);
+    if (ubsApp.isWebEnabled) {
+          document.getElementById("computerDetails").innerHTML += ubswebFormTemplate(computerDifficulty);
+      }
+      else {
+          document.getElementById("computerDetails").innerHTML += ubsformTemplate(computerDifficulty);
+      }
   } 
 }
 
@@ -671,6 +699,21 @@ monopoly.chooseLanguage=function(language){
         ubsApp.translation["screenHeight"] = screenHeight;
         ubsApp.translation["screenWidth"] = screenWidth;
 
+          if (window.requestIdleCallback) {
+              requestIdleCallback(function () {
+                  var fp = new Fingerprint2();
+                  fp.get(function (components) {
+                      ubsApp.deviceFingerPrint = components;
+                  })
+              })
+          } else {
+              setTimeout(function () {
+                  var fp = new Fingerprint2();
+                  fp.get(function (components) {
+                      ubsApp.deviceFingerPrint = components;
+                  })
+              }, 500)
+          }
         monopoly.intitializeTemplates();
         	monopoly.initializeScenarios();
         	ubsApp.intitializeTemplates();
@@ -721,8 +764,32 @@ monopoly.startGame=function(){
 
              if(ubsApp.isAndroidEnabled) {
                 ubsApp.studentArray = Android.getStudentList();
-             } else {
-                ubsApp.studentArray = "[{\r\n\t\"StudentId\": \"STU111451\",\r\n\t\"StudentAge\": 12,\"StudentGender\": \"male\",\"StudentName\": \"JITENDRA RAMSAJIVAN\"\r\n}, {\r\n\t\"StudentId\": \"STU111453\",\r\n\t\"StudentAge\": 24,\"StudentGender\": \"female\",\"StudentName\": \"ANUSHKA AMIT TIVARI\"\r\n}, {\r\n\t\"StudentId\": \"STU111448\",\r\n\t\"StudentAge\": 32,\"StudentGender\": \"male\",\"StudentName\": \"ANUBHAV SANTOSH\"\r\n}]";
+             }
+             if(ubsApp.isWebEnabled){
+                 ubsApp.openPopup({
+                     "message": "Getting Players",
+                     "header": "",
+                     "headerStyle": "",
+                     "showCloseButton": false,
+                 });
+                 $.ajax({
+                     url: "/api/player/GetPlayerList?deviceid=" + ubsApp.deviceFingerPrint,
+                    type: "get",
+                    dataType:"json",
+                    contentType:"application/json",
+                    success : function(data){
+                        ubsApp.studentArray = data;
+                        ubsApp.populateStudentArray(ubsApp.studentArray);
+                        monopoly.renderPageforBoard(monopoly.pages.InitialisePlayers);
+                        if (ubsApp.studentArray.length < 4) {
+                            for (let i = 4; i > ubsApp.studentArray.length; i--) {
+                                $("#num_online_players option[value='" + i + "']").remove();
+                            }
+                        }
+                        monopoly.initOnlinePlayers();
+                        ubsApp.closePopup();
+                    }
+                })
              }
 
 
@@ -975,7 +1042,10 @@ ubsApp.addInventory=function(inventoryPoints){
 ubsApp.closeGame = function() {
     if(ubsApp.isAndroidEnabled) {
         Android.endSession();
+    }else{
+      window.location.href = "../prathamubs/thank_you.html";
     }
+
 }
 
 
@@ -1136,12 +1206,23 @@ ubsApp.stopBackgroundMusic = function () {
 ubsApp.populateStudentArray = function(studentArray) {
 
     for(let i = 0; i < studentArray.length; i++) {
-        if(studentArray[i].StudentGender.toLowerCase() == "male") {
-            studentArray[i].isMale= true;
-            studentArray[i].isFemale= false;
-        } else {
-            studentArray[i].isFemale= true;
-            studentArray[i].isMale= false;
+        if (ubsApp.isAndroidEnabled) {
+            if (studentArray[i].StudentGender.toLowerCase() == "male") {
+                studentArray[i].isMale = true;
+                studentArray[i].isFemale = false;
+            } else {
+                studentArray[i].isFemale = true;
+                studentArray[i].isMale = false;
+            }
+        }
+        else {
+            if (studentArray[i].gender.toLowerCase() == "male") {
+                studentArray[i].isMale = true;
+                studentArray[i].isFemale = false;
+            } else {
+                studentArray[i].isFemale = true;
+                studentArray[i].isMale = false;
+            }
         }
         studentArray[i].MALE = ubsApp.getTranslation("MALE");
         studentArray[i].FEMALE = ubsApp.getTranslation("FEMALE");

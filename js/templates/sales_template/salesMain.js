@@ -26,7 +26,7 @@ ubsApp.getSalesTemplate = function(templateConfig, tempVar){
                         	{
                         		'id':"closePopupButton",
                         		'name' : ubsApp.getTranslation("CLOSE"),
-                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.closePopup();	ubsApp.stopTimer();ubsApp.closeCurrentScenario();"
+                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.closePopup();	ubsApp.stopTimer();ubsApp.closeCurrentScenario();ubsApp.nextMove();"
                         	}
                         ]
                         });

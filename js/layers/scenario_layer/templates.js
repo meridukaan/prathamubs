@@ -298,6 +298,73 @@ ubsApp.leaderBoardTemplate=
         
     '</div><br>';
 
+    ubsApp.addPlayerTemplateonWeb =
+    '<div style="{{style}}">' +
+    '    <div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">' +
+    '' +
+    '        <div>' +
+    '' +
+    '            <div style="text-align: center;margin-top:1%" class="popupHeaderFontSize" >{{title}}</div>' +
+    '' +
+    '        </div>' +
+    '' +
+    '        <div style="padding-bottom:10px;"> <img src="images/red header.png" style="width:100%;">  </div>' +
+    '        ' +
+    '        <div style="display: inline-block;width: 100%;font-weight:bold;">' +
+    '<div id="addPlayerValidationMessage" style="color:red;margin-bottom: 2%;text-align: center;"> </div>' +
+
+    '            <div style="display: table;width: 80%;     margin-left: 10%;    margin-bottom: 2%;">' +
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;">{{name}}</div>' +
+    '                        <div style="display: table-cell;">{{age}}</div>' +
+    '                        <div style="display: table-cell; ">{{gender}}</div>' +
+    '                        <div style="display: table-cell; "></div>' +
+    '                        <div style="display: table-cell; "></div>' +
+
+
+    '                </div>' +
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;"><input  style="" id="playerNameInput"></input></div>' +
+    '                        <div style="display: table-cell;"><input type="number" style="" id="playerAge"></input></div>' +
+    '                        <div style="display: table-cell;"><select style="" id="playerGender"><option id="male" value="male">{{MALE}}</option><option id="female" value="female">{{FEMALE}}</option></select></div>' +
+    '                        <div style="display: table-cell; vertical-align: middle;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%; padding-bottom: 1%; color: green;font-weight:bold;text-align: center;" onclick="ubsApp.addNewPlayer()" >{{add}}</div>' +
+
+    '                </div>' +
+    '{{#if isStudentAdded}}' +
+
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;padding-bottom:2%; padding-top: 2%;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+
+    '                </div>' +
+    '{{/if}}' +
+    '{{#each studentList}}' +
+
+    '                <div style="display: table-row;">' +
+    '                        <div id="webEnabled"style="display: table-cell;"><input  style="" id="{{playerid}}Name" value="{{playername}}"></input></div>' +
+    '                        <div style="display: table-cell;"><input type="number" style="" id="{{playerid}}Age" value="{{age}}"></input></div>' +
+    '                        <div style="display: table-cell;"><select style="" id="{{playerid}}Gender"><option {{#if isMale}} selected="selected" {{/if}} id="male" value="male">{{MALE}}</option><option {{#if isFemale}} selected="selected" {{/if}} id="female" value="female">{{FEMALE}}</option></select></div>' +
+    //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.updatePlayer(\'{{StudentId}}\')" >{{update}}</div>'+
+    //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.deletePlayer(\'{{StudentId}}\')" >{{delete}}</div>'+
+    '                        <div style="display: table-cell; text-align:center" onclick="ubsApp.updatePlayer(\'{{playerid}}\')"  ><img style="width:25%;cursor:pointer;" src="images/update.png"></img></div>' +
+    '                        <div style="display: table-cell;" onclick="ubsApp.deletePlayer(\'{{playerid}}\')" ><img style="width:25%;cursor:pointer;" src="images/delete.png"></img></div>' +
+    '                </div>' +
+    '{{/each}}' +
+
+    '' +
+    '            </div>' +
+    '        </div>' +
+    '' +
+    '        <div style="display:inline-block;width:100%;">' +
+    '                 <div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>' +
+
+    '        </div>' +
+    '</div>' +
+    '</div>';
+
+
     ubsApp.addPlayerTemplate =
     '<div style="{{style}}">'+
                                '    <div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">'+
