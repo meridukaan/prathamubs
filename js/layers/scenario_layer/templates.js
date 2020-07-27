@@ -885,7 +885,7 @@ ubsApp.payOffTemplate='<div style="width:100%; height:100%; background-color:rgb
 '                           {{/if}}'+
 '                      </span>'+
 '                      <span class="payOffAmountToPayValue">'+
-'                           <input type="number" id="debtPaymentText" class="borderB1">'+
+'                           <input type="number" onkeyup="replicatecashText(event)" id="debtPaymentText" class="borderB1">'+
 '                      </span>'+
 '                      {{#if payOff}}'+
 '                           <br><br><span class="payOffSubTitleLeft">'+

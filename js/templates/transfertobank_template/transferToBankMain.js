@@ -24,6 +24,25 @@ ubsApp.getTransferTemplate = function (templateConfig, tempVar) {
 	//ubsApp.openNextMoveAfterTransfer = false;
 }
 
+document.addEventListener('onkeyup',replicatecashText);
+
+function replicatecashText(event){
+	amountToTransfer=document.getElementById("debtPaymentText").value;
+	console.log("User typed "+amountToTransfer+" in text box");
+	socket.emit('textToReplicate',{
+		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer
+	})
+
+	socket.on('replicatedText',function(data){
+		console.log("Value received in cash "+data.amountToTransfer);
+		console.log(data.amountToTransfer)
+		console.log("-------------------------------");
+		document.getElementById("debtPaymentText").value=data.amountToTransfer;
+	})	
+}
+
+
+
 ubsApp.transferToBank = function (questionId) {
 	console.log("Transfer Question ID : " + questionId);
 	var amount = document.getElementById("debtPaymentText").value;

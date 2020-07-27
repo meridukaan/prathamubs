@@ -21,6 +21,12 @@ io.on('connection', function (socket) {
         socket.emit('openTransferToBank', {flag : 1});
     })
 
+    socket.on('textToReplicate', function(data){
+        console.log("Received value entered "+data.cash);
+        socket.broadcast.emit('replicatedText',{
+            description : "Event to send back the text received from the player", amountToTransfer : data.cash
+        })
+    })
 })
 
 
