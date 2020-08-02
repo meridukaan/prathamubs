@@ -32,15 +32,14 @@ function replicatecashText(event){
 	socket.emit('textToReplicate',{
 		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer
 	})
-
-	socket.on('replicatedText',function(data){
-		console.log("Value received in cash "+data.amountToTransfer);
-		console.log(data.amountToTransfer)
-		console.log("-------------------------------");
-		document.getElementById("debtPaymentText").value=data.amountToTransfer;
-	})	
+	
 }
-
+socket.on('replicatedText',function(data){
+	console.log("Value received in cash "+data.amountToTransfer);
+	console.log(data.amountToTransfer)
+	console.log("-------------------------------");
+	document.getElementById("debtPaymentText").value=data.amountToTransfer;
+})
 
 
 ubsApp.transferToBank = function (questionId) {
@@ -103,19 +102,20 @@ ubsApp.transferToBank = function (questionId) {
 }
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
+	console.log("Click happened");
 	socket.emit('transferToBank', { description: "This is transfer to bank method" });
 
-	socket.on('openTransferToBank', function (data) {
-		if(data.flag == 1){
-		ubsApp.startCurrentScenario();
-		ubsApp.openNextMoveAfterTransfer = openNextMove;
-		ubsApp.openedTransferScenario = true;
-		ubsApp.renderPageByName("transferToBank");
-		}else{
-			console.log("not your chance");
-		}
-
-	})
-
-
 }
+
+socket.on('openTransferToBank', function (data) {
+	var openNextMove=data.openNextMove;
+	console.log("Returned from server");
+	if(data.flag == 1){
+	ubsApp.startCurrentScenario();
+	ubsApp.openNextMoveAfterTransfer = openNextMove;
+	ubsApp.openedTransferScenario = true;
+	ubsApp.renderPageByName("transferToBank");
+	}else{
+		console.log("not your chance");
+	}
+})

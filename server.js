@@ -17,8 +17,8 @@ io.on('connection', function (socket) {
 
     socket.on('transferToBank', function(data){
         console.log(data.description);
-        socket.in(1).emit('openTransferToBank', {flag : 1});
-        socket.emit('openTransferToBank', {flag : 1});
+        socket.in(1).emit('openTransferToBank', {flag : 1, openNextMove:false});
+        socket.emit('openTransferToBank', {flag : 1, openNextMove:false});
     })
 
     socket.on('textToReplicate', function(data){
