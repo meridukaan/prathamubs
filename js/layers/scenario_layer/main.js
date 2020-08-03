@@ -415,7 +415,7 @@ ubsApp.updateScoreInDB = function (playerStudentId, scenarioquestionId, scoredma
 	{
 		var scoreObject = {
 			studentId: playerStudentId,
-			questionId: questionID,
+			questionId: scenarioquestionId,
 			scoredMarks:scoredMarks,
 			totalMarks: totalMarks,
 			level: questionLevel,
