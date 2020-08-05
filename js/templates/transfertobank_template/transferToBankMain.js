@@ -43,6 +43,12 @@ socket.on('replicatedText',function(data){
 
 
 ubsApp.transferToBank = function (questionId) {
+	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId});
+	
+}
+
+socket.on('openActualTransferToBank', function(data){
+	var questionId = data.questionId;
 	console.log("Transfer Question ID : " + questionId);
 	var amount = document.getElementById("debtPaymentText").value;
 	var date = new Date();
@@ -99,7 +105,8 @@ ubsApp.transferToBank = function (questionId) {
 	else {
 		document.getElementById("result").innerHTML = ubsApp.translation["validAmount"];
 	}
-}
+
+})
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
 	console.log("Click happened");

@@ -15,6 +15,14 @@ io.on('connection', function (socket) {
     usersList.push(usersList.length);
     console.log(usersList);
 
+    socket.on('actualTransferToBank', function(data){
+        console.log(data.description);
+        console.log(data.qid);
+        socket.emit('openActualTransferToBank', {questionId : data.qid});
+        socket.in(1).emit('openActualTransferToBank', {questionId : data.qid});
+
+    });
+
     socket.on('transferToBank', function(data){
         console.log(data.description);
         socket.in(1).emit('openTransferToBank', {flag : 1, openNextMove:false});
