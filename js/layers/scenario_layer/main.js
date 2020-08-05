@@ -270,7 +270,12 @@ ubsApp.stopTimer = function() {
 }
 
 
-
+ubsApp.socketCloseCurrentScenario=function(){
+	console.log("close scenario - socket mode");
+	socket.emit('closeScenario',{
+		description : "This function goes to server to trigger close scenario in the room"
+	});
+}
 
 ubsApp.closeCurrentScenario=function(){
     $('#resultBackground').hide();
@@ -285,6 +290,11 @@ ubsApp.closeCurrentScenario=function(){
     ubsApp.openNextMoveAfterTransfer = false;
 
 }
+
+socket.on('closingCurrentScenario',function(data){
+	console.log("closing scenrio after receiving from socket");
+	ubsApp.closeCurrentScenario();	
+})
 
 ubsApp.startCurrentScenario=function(){
     $('#resultBackground').show();

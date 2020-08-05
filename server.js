@@ -27,6 +27,16 @@ io.on('connection', function (socket) {
             description : "Event to send back the text received from the player", amountToTransfer : data.cash
         })
     })
+
+    socket.on('closeScenario', function(data){
+        console.log("opened server side of close scenario")
+        socket.emit('closingCurrentScenario',{
+            description : "This function would call the close scenario function on every client"
+        });
+        socket.in(1).emit('closingCurrentScenario',{
+            description : "This function would call the close scenario function on every client"
+        });
+    })
 })
 
 
