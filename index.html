@@ -110,8 +110,18 @@
 </div>
 
 <img style="display:none" src="images/redbgcommon.png"></img>
-</body>
+
 <script>
+
+window.onresize = function (event) {
+  applyOrientation();
+}
+
+function applyOrientation() {
+  if (window.innerHeight > window.innerWidth) {
+    alert("This website is best viewed in landscape mode");
+  } 
+}
 
 window.onload = function() {
      let userAgentString =  navigator.userAgent; 
@@ -120,10 +130,10 @@ window.onload = function() {
 
      // Detect Internet Explorer 
      let IExplorerAgent = (navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true );
-	 
+     
      // Detect Chrome 
      let chromeAgent = userAgentString.indexOf("Chrome") > -1; 
-	
+    
      // Detect Firefox 
      let firefoxAgent = userAgentString.indexOf("Firefox") > -1; 
 
@@ -131,7 +141,12 @@ window.onload = function() {
      
      window.location.href("./error.html");
      } 
+
+     applyOrientation();
 };
 
 </script>
+
+</body>
+
 <html>
