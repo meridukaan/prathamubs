@@ -356,6 +356,16 @@ ubsApp.openPopup = function(config) {
    ubsApp.startHelp("generalPopUp");
 }
 
+ubsApp.callServerClosePopup = function(){
+	console.log("close pop up clicked");
+	socket.emit("serverClosePopup");
+}
+
+socket.on('socketClosePopup', function(data){
+	console.log("server has triggered socket close pop up");
+	ubsApp.closePopup();
+})
+
 ubsApp.closePopup = function(config, doNextMove=true) {
 
    if(ubsApp.isResultPopUpOpen && config) {
