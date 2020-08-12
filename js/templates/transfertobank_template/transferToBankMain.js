@@ -90,7 +90,7 @@ socket.on('openActualTransferToBank', function(data){
 							{
 								'id': "closePopupButton",
 								'name': ubsApp.getTranslation("CLOSE"),
-								'action': "ubsApp.closePopup();"
+								'action': "ubsApp.callServerClosePopup();"
 							}
 						]
 					});

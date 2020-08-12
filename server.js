@@ -45,6 +45,16 @@ io.on('connection', function (socket) {
             description : "This function would call the close scenario function on every client"
         });
     })
+
+    socket.on('serverClosePopup', function(data){
+        console.log("Server side close pop up function");
+        socket.emit('socketClosePopup', {
+            description : "Calling close pop up on current client"
+        });
+        socket.in(1).emit('socketClosePopup', {
+            description : "Calling close popup on all clients in room"
+        });
+    })
 })
 
 
