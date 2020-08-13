@@ -6,7 +6,7 @@ ubsApp.getLuckTemplate=function(templateConfig,tempVar){
 	else{
 		templateConfig.gainTitle=ubsApp.translation["gainTitle"];
 	}
-
+    console.log(templateConfig);
 	templateConfig.hasAdvantageCard = userArray[playerChance].getAdvantageCardNumber() > 0 ? true : false;
 	templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
 	tempVar.html+=ubsLuckTemplate(templateConfig);
@@ -14,6 +14,7 @@ ubsApp.getLuckTemplate=function(templateConfig,tempVar){
 
 ubsApp.luckPaymentQuiz=function(page){
     //luckTakeQuizPopupMessage
+    console.log("Inside luckPaymentQuiz");
     ubsApp.openPopup({
         "message" : ubsApp.translation["luckTakeQuizPopupMessage"],
         "header"  : ubsApp.translation["takeQuizTitle"],
@@ -30,6 +31,7 @@ ubsApp.luckPaymentQuiz=function(page){
 }
 
 ubsApp.renderLuckQuizQuestion = function(page){
+    console.log("Inside renderLuckQuizQuestion");
     ubsApp.emptyQuizQuestions();
     let config = ubsApp.pages[page].templates[0];
     let noOfQuestions = 1;
@@ -49,6 +51,7 @@ ubsApp.renderLuckQuizQuestion = function(page){
 }
 
 ubsApp.findQuizPage = function(category){
+    console.log("Inside findQuizPage");
     var filteredObjs = [];
     var quizConfig = ubsApp.quizConfig;
     var quizCategory = category;
@@ -129,7 +132,7 @@ ubsApp.payFromBank=function(){
 
 
 ubsApp.payOrGain=function(pageName){
-
+    console.log("Inside payOrGain");
     let initialBankBalance = userArray[playerChance].getBankBalance();
     let initialCashBalance = userArray[playerChance].getplayerScore();
     let initialReputationPoints = userArray[playerChance].getReputationPts();
@@ -327,6 +330,7 @@ ubsApp.payOrGain=function(pageName){
 }
 
 ubsApp.useOneAdvantageCard=function(){
+    console.log("Inside useOneAdvantageCard");
     let header = ubsApp.getTranslation("redeemAdvantageCardHeader");
     if(userArray[playerChance].getAdvantageCardNumber() > 0)
     {

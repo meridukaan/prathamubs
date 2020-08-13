@@ -4,7 +4,7 @@ rollingDiceConfig.currentRandomDiceOne=5; //intial value of the dice
 
 function pointRoll() {
   var elDiceOne       = document.getElementById('dice1');
-  var diceValueOne   = Math.floor((Math.random() * 6) + 1);
+  var diceValueOne   = 6;//Math.floor((Math.random() * 6) + 1);
   var audioElement = document.getElementById('rollIt');
   ubsApp.raiseAudioEvent(audioElement, 'rollingDice');
   

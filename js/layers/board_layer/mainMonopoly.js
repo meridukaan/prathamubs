@@ -212,27 +212,41 @@ monopoly.renderPageforBoard = function(page) {
 //   }
 
 
+monopoly.callStartScenario = function(templateName, template, key ){
+  socket.emit('startScenarioToServer',{
+    description : "This calls server side for startScenario", templateName : templateName, template : template, key : key
+  });
+}
+
+socket.on('startScenarioToClient', function(data){
+  console.log("Started scenario on client from Socket");
+  templateName=data.templateName;
+  template=data.template;
+  key=data.key;
+ 
+  console.log("Inside startScenario");
+  $('#monopolyBase').css("z-index",-10);
+  $('#templateBase').css("z-index",10);
+
+  document.getElementById("templateContent").style.opacity="0.95";
+
+  $('#templateContent').css("height",(screenHeight)+'px')
+  $('#templateContent').css("width",(screenWidth)+'px')
+  $('#resultBackground').show();
+  ubsApp.renderPageByName(templateName);
+  template[0].question=key;
+})
+
 monopoly.startScenarios = function(blockNo){
   setTimeout(function(){
       let category = blockCategory[blockNo];
       ubsApp.currentScenarioCategory = category;
       if(category) {
         scenario = userArray[playerChance].getScenario(category,playerChance);   //   blockCategory[blockNo]
-                let currentTemplateName=scenario.getName();
-                let currentTemplate=ubsApp.pages[currentTemplateName].templates;
-                let key=ubsApp.pages[currentTemplateName].templates[0].question;
-
-                $('#monopolyBase').css("z-index",-10);
-                $('#templateBase').css("z-index",10);
-
-                document.getElementById("templateContent").style.opacity="0.95";
-
-                $('#templateContent').css("height",(screenHeight)+'px')
-                $('#templateContent').css("width",(screenWidth)+'px')
-                $('#resultBackground').show();
-
-                ubsApp.renderPageByName(scenario.getName());
-                currentTemplate[0].question=key;
+        let currentTemplateName=scenario.getName();
+        let currentTemplate=ubsApp.pages[currentTemplateName].templates;
+        let key=ubsApp.pages[currentTemplateName].templates[0].question;
+        monopoly.callStartScenario(currentTemplateName, currentTemplate, key);       
       } else {
          ubsApp.currentScenarioCategory = "";
         ubsApp.nextMove();

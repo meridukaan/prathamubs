@@ -98,6 +98,7 @@ ubsApp.renderPage = function(page) {
 	tempVar.scratchCardTemplateConfig = undefined;
 	tempVar.flag=false;
 
+	console.log("Inside renderPage 1");
 
 	for(let i=0; i< page.length; i++) {
 		let templateConfig = $.extend({},page[i]);
@@ -106,6 +107,7 @@ ubsApp.renderPage = function(page) {
 
 	}
 
+	console.log("Inside renderPage 2");
 	if(tempVar.html) {
 		$("#templateContent").empty();
 		$("#templateContent").append(tempVar.html);
@@ -183,6 +185,7 @@ ubsApp.mapTemplatetoFunction = function(){
 
 ubsApp.checkPageorBoard= function(page,amount,hideScenarios){
 	clearInterval(timeVar);
+	console.log("Inside checkPageOrBoard");
 	if(hideScenarios == "true"){
         ubsApp.nextMove();
 	}
@@ -191,11 +194,20 @@ ubsApp.checkPageorBoard= function(page,amount,hideScenarios){
 	}
 }
 
+ubsApp.callsRenderPageByName = function (pageName){
+	socket.emit('renderPageByNameToServer',{
+		description : "This is a socket wrapper for renderPageByName", pageName : pageName
+	});
+}
 
+socket.on('renderPageByNameToClient',function(data){
+	pageName=data.pageName;
+	ubsApp.renderPageByName(pageName);
+})
 
 ubsApp.renderPageByName = function(pageName)/*,amount)*/ {
 	clearInterval(interval);
-
+	console.log("Inside renderPageByName");
 	/*if(amount === undefined || amount === null|| amount.length===0){	
 
 	}
@@ -204,6 +216,7 @@ ubsApp.renderPageByName = function(pageName)/*,amount)*/ {
 	}*/
 	pageName=pageName.trim();
 	this.renderPage(ubsApp.pages[pageName]);
+	
 }
 
 
@@ -240,8 +253,6 @@ ubsApp.intitializeTemplates = function() {
 ubsApp.openCalculator=function(){
 	document.write("Calculator Opened");
 }
-
-
 
 
 ubsApp.startTimer=function(temp){

@@ -31,7 +31,7 @@ io.on('connection', function (socket) {
 
     socket.on('textToReplicate', function(data){
         console.log("Received value entered "+data.cash);
-        socket.broadcast.emit('replicatedText',{
+        socket.in(1).emit('replicatedText',{
             description : "Event to send back the text received from the player", amountToTransfer : data.cash
         })
     })
@@ -44,6 +44,16 @@ io.on('connection', function (socket) {
         socket.in(1).emit('closingCurrentScenario',{
             description : "This function would call the close scenario function on every client"
         });
+    })
+
+    socket.on('startScenarioToServer',function(data){
+        console.log("Opened startScenario on Server");
+        socket.in(1).emit('startScenarioToClient',{
+            description : "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key : data.key
+        })
+        socket.emit('startScenarioToClient',{
+            description : "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key : data.key
+        })
     })
 })
 
