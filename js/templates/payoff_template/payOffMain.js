@@ -16,7 +16,8 @@ ubsApp.getPayOffTemplate=function(templateConfig,tempVar){
 	//ubsApp.openNextMoveAfterPayOff = false;
 }
 
-ubsApp.payDebt=function(){
+ubsApp.payDebt=function(questionId){
+	console.log("Pay Off ID is : " + questionId);
 	document.getElementById("result").innerHTML="";
 	var date = new Date();
 	var startTime=date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
@@ -30,7 +31,7 @@ ubsApp.payDebt=function(){
 						userArray[playerChance].setplayerScore(userArray[playerChance].getplayerScore()-amountEntered);
 						userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+3);
 						userArray[playerChance].setCredit(userArray[playerChance].getCredit()-amountEntered);
-						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),0,amountEntered, 0,0, startTime,"payDebt,Cash");
+						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amountEntered, 0,0, startTime,"payDebt,Cash");
 						ubsApp.currentPlayerContents();
 						ubsApp.closeCurrentScenario();
 						if(userArray[playerChance].getCredit()==0){
@@ -59,7 +60,7 @@ ubsApp.payDebt=function(){
 						userArray[playerChance].setBankBalance(userArray[playerChance].getBankBalance()-amountEntered);
 						userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+3);
 						userArray[playerChance].setCredit(userArray[playerChance].getCredit()-amountEntered);
-						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),0,amountEntered, 0,0, startTime,"payDebt,cheque");
+						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amountEntered, 0,0, startTime,"payDebt,cheque");
 						ubsApp.currentPlayerContents();
 						if(userArray[playerChance].getCredit()==0){
 							userArray[playerChance].setPayOffDeadline(-1);

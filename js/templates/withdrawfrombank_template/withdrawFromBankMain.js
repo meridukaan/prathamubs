@@ -14,11 +14,12 @@ ubsApp.openWithdrawFromBank=function(){
 	ubsApp.renderPageByName("withdrawFromBank");
 }
 
-ubsApp.withdrawFromBank=function(){
+ubsApp.withdrawFromBank=function(questionId){
+    console.log("Withdraw Id is : " + questionId);
     var number =parseInt(document.getElementById("debtPaymentText").value);
     var date = new Date();
     var startTime=date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-    ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),0,number, 0,0, startTime,"withdrawFromBank");
+    ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,number, 0,0, startTime,"withdrawFromBank");
 
     if(number>0)
     {

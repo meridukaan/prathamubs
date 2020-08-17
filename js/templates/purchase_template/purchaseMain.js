@@ -39,7 +39,8 @@ $("#newCostText").text((parseInt(temp.substring(2))-userArray[playerChance].getI
 $("#updatedInventoryValue").text(temp.substring(2));
 }
 
-ubsApp.pay=function(startTime){
+ubsApp.pay=function(startTime,questionId){
+    console.log("Purchase Question ID is:" + questionId);
 var paymentDone=false;
 var resultMessage="";
 var subResultMessage="";
@@ -67,7 +68,7 @@ for(var i=1;i<=numberOfPaymentModes;i++){
         }
     }
 }
-ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),0,totalAmountEntered, 0, 0, startTime,"purchaseInventory");
+ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,totalAmountEntered, 0, 0, startTime,"purchaseInventory");
 if(totalAmountEntered<cost){
     resultMessage = ubsApp.translation["lessMoney"].replace("<CurrentAmount>",totalAmountEntered).replace("<ActualAmount>",cost);
 }

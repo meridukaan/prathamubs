@@ -4,6 +4,7 @@ ubsApp.purchaseConfig={
 		"templates":[
 			{
 				"templateId":8,
+				"questionId": 1,
 				"templateType":"purchase",
 				"purchase":"{{pratham_title_purchase}}",
 				"inventoryTitle":"{{inventoryTitle}}",

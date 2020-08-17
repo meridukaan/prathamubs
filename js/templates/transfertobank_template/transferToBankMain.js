@@ -66,6 +66,22 @@ socket.on('openActualTransferToBank', function(data){
 			cashTransfered = true;
 
 
+ubsApp.transferToBank=function(questionId){
+	console.log("Transfer Question ID : " + questionId);
+	var amount=document.getElementById("debtPaymentText").value;
+	var date = new Date();
+	var startTime=date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+	ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amount, 0,0, startTime,"transferToBank");
+
+	if(amount){
+		if(amount<=userArray[playerChance].getplayerScore()){
+			userArray[playerChance].setplayerScore(userArray[playerChance].getplayerScore()-amount);
+			
+			userArray[playerChance].setBankBalance(parseInt(userArray[playerChance].getBankBalance())+parseInt(amount));
+			if(!cashTransfered&&userArray[playerChance].getTransferReminderOpened()){
+				userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+5);
+			}
+			cashTransfered=true;
 			var temptimer;
 			var temptime = 20;
 			temptimer = setInterval(function () {
@@ -106,7 +122,7 @@ socket.on('openActualTransferToBank', function(data){
 		document.getElementById("result").innerHTML = ubsApp.translation["validAmount"];
 	}
 
-})
+}
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
 	console.log("Click happened");

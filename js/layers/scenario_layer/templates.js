@@ -298,6 +298,73 @@ ubsApp.leaderBoardTemplate=
         
     '</div><br>';
 
+    ubsApp.addPlayerTemplateonWeb =
+    '<div style="{{style}}">' +
+    '    <div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">' +
+    '' +
+    '        <div>' +
+    '' +
+    '            <div style="text-align: center;margin-top:1%" class="popupHeaderFontSize" >{{title}}</div>' +
+    '' +
+    '        </div>' +
+    '' +
+    '        <div style="padding-bottom:10px;"> <img src="images/red header.png" style="width:100%;">  </div>' +
+    '        ' +
+    '        <div style="display: inline-block;width: 100%;font-weight:bold;">' +
+    '<div id="addPlayerValidationMessage" style="color:red;margin-bottom: 2%;text-align: center;"> </div>' +
+
+    '            <div style="display: table;width: 80%;     margin-left: 10%;    margin-bottom: 2%;">' +
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;">{{name}}</div>' +
+    '                        <div style="display: table-cell;">{{age}}</div>' +
+    '                        <div style="display: table-cell; ">{{gender}}</div>' +
+    '                        <div style="display: table-cell; "></div>' +
+    '                        <div style="display: table-cell; "></div>' +
+
+
+    '                </div>' +
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;"><input  style="" id="playerNameInput"></input></div>' +
+    '                        <div style="display: table-cell;"><input type="number" style="" id="playerAge"></input></div>' +
+    '                        <div style="display: table-cell;"><select style="" id="playerGender"><option id="male" value="male">{{MALE}}</option><option id="female" value="female">{{FEMALE}}</option></select></div>' +
+    '                        <div style="display: table-cell; vertical-align: middle;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%; padding-bottom: 1%; color: green;font-weight:bold;text-align: center;" onclick="ubsApp.addNewPlayer()" >{{add}}</div>' +
+
+    '                </div>' +
+    '{{#if isStudentAdded}}' +
+
+    '                <div style="display: table-row;">' +
+    '                        <div style="display: table-cell;padding-bottom:2%; padding-top: 2%;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+    '                        <div style="display: table-cell;"><hr></div>' +
+
+    '                </div>' +
+    '{{/if}}' +
+    '{{#each studentList}}' +
+
+    '                <div style="display: table-row;">' +
+    '                        <div id="webEnabled"style="display: table-cell;"><input  style="" id="{{playerid}}Name" value="{{playername}}"></input></div>' +
+    '                        <div style="display: table-cell;"><input type="number" style="" id="{{playerid}}Age" value="{{age}}"></input></div>' +
+    '                        <div style="display: table-cell;"><select style="" id="{{playerid}}Gender"><option {{#if isMale}} selected="selected" {{/if}} id="male" value="male">{{MALE}}</option><option {{#if isFemale}} selected="selected" {{/if}} id="female" value="female">{{FEMALE}}</option></select></div>' +
+    //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.updatePlayer(\'{{StudentId}}\')" >{{update}}</div>'+
+    //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.deletePlayer(\'{{StudentId}}\')" >{{delete}}</div>'+
+    '                        <div style="display: table-cell; text-align:center" onclick="ubsApp.updatePlayer(\'{{playerid}}\')"  ><img style="width:25%;cursor:pointer;" src="images/update.png"></img></div>' +
+    '                        <div style="display: table-cell;" onclick="ubsApp.deletePlayer(\'{{playerid}}\')" ><img style="width:25%;cursor:pointer;" src="images/delete.png"></img></div>' +
+    '                </div>' +
+    '{{/each}}' +
+
+    '' +
+    '            </div>' +
+    '        </div>' +
+    '' +
+    '        <div style="display:inline-block;width:100%;">' +
+    '                 <div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>' +
+
+    '        </div>' +
+    '</div>' +
+    '</div>';
+
+
     ubsApp.addPlayerTemplate =
     '<div style="{{style}}">'+
                                '    <div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">'+
@@ -343,12 +410,12 @@ ubsApp.leaderBoardTemplate=
                               '{{#each studentList}}' +
 
                                '                <div style="display: table-row;">'+
-                               '                        <div style="display: table-cell;"><input  style="" id="{{StudentId}}Name" value="{{StudentName}}"></input></div>'+
-                               '                        <div style="display: table-cell;"><input type="number" style="" id="{{StudentId}}Age" value="{{StudentAge}}"></input></div>'+
-                               '                        <div style="display: table-cell;"><select style="" id="{{StudentId}}Gender"><option {{#if isMale}} selected="selected" {{/if}} id="male" value="male">{{MALE}}</option><option {{#if isFemale}} selected="selected" {{/if}} id="female" value="female">{{FEMALE}}</option></select></div>'+
+                               '                        <div style="display: table-cell;"><input  style="" id="{{StudentId}}Name" value="{{StudentName}}" disabled></input></div>'+
+                               '                        <div style="display: table-cell;"><input type="number" style="" id="{{StudentId}}Age" value="{{StudentAge}}" disabled></input></div>'+
+                               '                        <div style="display: table-cell;"><select style="" id="{{StudentId}}Gender" disabled><option {{#if isMale}} selected="selected" {{/if}} id="male" value="male">{{MALE}}</option><option {{#if isFemale}} selected="selected" {{/if}} id="female" value="female">{{FEMALE}}</option></select></div>'+
                                //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.updatePlayer(\'{{StudentId}}\')" >{{update}}</div>'+
                                //'                        <div style="display: table-cell;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;padding: 1.5%; color: green;font-weight:bold; text-align: center;" onclick="ubsApp.deletePlayer(\'{{StudentId}}\')" >{{delete}}</div>'+
-                               '                        <div style="display: table-cell; text-align:center" onclick="ubsApp.updatePlayer(\'{{StudentId}}\')"  ><img style="width:25%;cursor:pointer;" src="images/update.png"></img></div>'+
+                               '                        <div style="display: table-cell; text-align:center" onclick="ubsApp.updatePlayer(\'{{StudentId}}\')"  ><img style="width:35%;cursor:pointer;" id="{{StudentId}}" src="images/edit.png"></img></div>'+
                                '                        <div style="display: table-cell;" onclick="ubsApp.deletePlayer(\'{{StudentId}}\')" ><img style="width:25%;cursor:pointer;" src="images/delete.png"></img></div>'+
                               '                </div>'+
                               '{{/each}}' +
@@ -495,7 +562,7 @@ ubsApp.leaderBoardTemplate=
 '           <input id="calcButton" class="button orange" type="button" value="+/-" disabled onclick="addToDisplay(\'\')">'+
 '       </div>'+
 '<div style="display:flex; width:100%; text-align:left;     margin-top: 2%;">'+
-'                  <div id= "salesSubmitButton" class="submitButton" style="cursor:pointer" onclick="if (ubsApp.validateAmount() !== false) { ubsApp.reduceInventory(\' {{onClickPage.nextPage}} \',\'{{amount}}\', \'{{onClickPage.hideScenarios}}\',\'{{tempTotal}}\',\'{{time}}\', \'{{startTime}}\');}">'+
+'                  <div id= "salesSubmitButton" class="submitButton" style="cursor:pointer" onclick="if (ubsApp.validateAmount() !== false) { ubsApp.reduceInventory(\' {{onClickPage.nextPage}} \',\'{{amount}}\', \'{{onClickPage.hideScenarios}}\',\'{{tempTotal}}\',\'{{time}}\', \'{{startTime}}\', \'{{questionId}}\');}">'+
 '           {{SUBMIT}}'+
 ' </div>' +
 '           <div class="helpBtn" style="padding: 6%;" onclick="ubsApp.startHelp(\'{{helpPageName}}\')"></div>'+
@@ -776,7 +843,7 @@ ubsApp.purchaseTemplate = '<div class="container-fluid mainPurchaseDiv">'+
 '                </div>'+
 '            </div></div>'+
 '            <div class="row" style="height:20vmax;">'+
-'                    <div class="confirmButton mainButtons buyMainButtons" onclick="ubsApp.pay(\'{{startTime}}\'); ">{{doneTitle}}</div>'+
+'                    <div class="confirmButton mainButtons buyMainButtons" onclick="ubsApp.pay(\'{{startTime}}\',\'{{questionId}}\'); ">{{doneTitle}}</div>'+
 '                    <div class="confirmButton mainButtons buyMainButtons" id="target_cancel" onclick="ubsApp.closeCurrentScenario(); {{#if openNextMove }} ubsApp.nextMove(); {{/if}}">{{noThanksTitle}}</div>'+
 '                    <div class="helpBtn mainButtons buyMainButtons" onclick="ubsApp.startHelp(\'purchaseHelp\')"></div>'+
 '            </div>'+
@@ -820,11 +887,11 @@ ubsApp.luckyUnluckyTemplate='<div style="width:100%;height:100%;position:relativ
 '                   <div style="width:33.33%; margin:auto; text-align: center;">'+
 '               {{/if}}'+
 '               {{#if isLuckCategory}}'+
-'                  <button class="luckPayButton" onclick="ubsApp.payOrGain(\'{{scenarioName}}\')">'+
+'                  <button class="luckPayButton" onclick="ubsApp.payOrGain(\'{{scenarioName}}\',\'{{questionId}}\')">'+
 '                    {{#if negative}}{{payTitle}}{{else}}{{gainTitle}}{{/if}}'+
 '                  </button>'+
 '                {{else}}'+
-'                  <button class="paymentPayButton" onclick="ubsApp.payFromBank(\'{{scenarioName}}\')">'+
+'                  <button class="paymentPayButton" onclick="ubsApp.payFromBank(\'{{scenarioName}}\',\'{{questionId}}\')">'+
 '                    {{#if negative}}{{payTitle}}{{else}}{{gainTitle}}{{/if}}'+
 '                  </button>'+
 '               {{/if}}'+
@@ -902,7 +969,7 @@ ubsApp.payOffTemplate='<div style="width:100%; height:100%; background-color:rgb
 '                      {{else}}{{/if}}'+
 '                      </div> <div class="payOffButtonContainer">'+
 '                      <div style="width:35%;" >'+
-'                           <button style="color:green;" class="payOffButton" {{#if payOff}}onclick="ubsApp.payDebt()"{{/if}} {{#if transfer}}onclick="ubsApp.transferToBank()"{{/if}} {{#if withdraw}}onclick="ubsApp.withdrawFromBank()"{{/if}}>{{#if payOff}}{{payTitle}}{{/if}} {{#if transfer}}{{transferTitle}}{{/if}} {{#if withdraw}}{{withdrawTitle}}{{/if}}</button>'+
+'                           <button style="color:green;" class="payOffButton" {{#if payOff}}onclick="ubsApp.payDebt(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}} {{#if transfer}}onclick="ubsApp.transferToBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}} {{#if withdraw}}onclick="ubsApp.withdrawFromBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}}>{{#if payOff}}{{payTitle}}{{/if}} {{#if transfer}}{{transferTitle}}{{/if}} {{#if withdraw}}{{withdrawTitle}}{{/if}}</button>'+
 '                      </div>'+
 '                      <div style="width:35%;margin-left: 2%;" >'+
 '                           <button style="color:red;" class="payOffButton"  onclick="ubsApp.socketCloseCurrentScenario(); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}" >{{cancelTitle}}</button>'+

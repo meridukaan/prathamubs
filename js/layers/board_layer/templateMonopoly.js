@@ -258,6 +258,33 @@ monopoly.staticTemplate ='<div class="{{width}}" style="{{style}}"   onclick="mo
 ' </div>'+
 '<div id={{audioId}}></div>';
 
+monopoly.webFormTemplate = '{{#if nameTitle}}<br><div class="title" >{{nameTitle}}:</span> ' +
+    '{{#if isDropdown}}' +
+    '<select id="{{nameId}}" >' +
+    ' {{#each studentArray}}' +
+    '<option value="{{playerid}}_{{playername}}">{{playername}} </option>' +
+    '{{/each}}' +
+    '</select>' +
+    '{{else}}' +
+    '<input type=\"text\" id=\"{{nameId}}\" style=\"margin-left:9px;\"></input>' +
+    '{{/if}}' +
+    '<br><br>' +
+    '{{#if numberOfTokens}}' +
+    '{{#each numberOfTokens}}' +
+    '<input type=\"radio\" style="display:{{display}};padding-left:5em; " name=\"{{radioName}}\" value=\"{{radioValue}}\" id=\"{{radioId}}\"  {{#if checked}}checked{{/if}}><label style="display:{{display}};" for=\"{{radioId}}\"><img src=\"images/{{tokenColor}}.png\" style=\"height:32px;width:32px;\"></label>' +
+    '{{/each}}' +
+    '{{/if}}' +
+    '{{#if difficulty}}' +
+    '{{#each difficulty}}' +
+    '<input type=\"radio\" style\"display:inline;padding-left:5em; \" name=\"{{radioName}}\" value=\"{{radioValue}}\" id=\"{{radioId}}\"><label for=\"{{radioId}}\">{{text}}</label>' +
+    '{{/each}}' +
+    '{{/if}}' +
+    '{{#if language}}' +
+    '{{#each language}}' +
+    '<input type=\"radio\" style\"display:inline;padding-left:5em; \" name=\"{{radioName}}\" value=\"{{radioValue}}\" id=\"{{radioId}}\"><label for=\"{{radioId}}\">{{text}}</label>' +
+    '{{/each}}' +
+    '{{/if}}';
+
 monopoly.formTemplate='{{#if nameTitle}}<br><div class="title" >{{nameTitle}}:</span> '+
 '{{#if isDropdown}}'+
     '<select id="{{nameId}}" >'+
