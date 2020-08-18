@@ -6,6 +6,7 @@ ubsApp.payOffConfig={
 		{
 			"templateId":11,
 			"templateType":"payOff",
+			"questionId":1,
 			"title":"{{payDebtTitle}}",
 			"cashTitle":"{{cashTitle}}",
 			"bankBalanceTitle":"{{bankBalanceTitle}}",

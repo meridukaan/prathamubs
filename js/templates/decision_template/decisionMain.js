@@ -34,6 +34,7 @@ ubsApp.renderDecisonTemplate = function() {
 
 ubsApp.decisionOptions = function(reputationPts, bankBalance, startTime, questionId, insurance=false, page="", pamphlet=false, randomProfit=false){
 
+	console.log("Decision Question Id is : " + questionId);
     reputationPts = parseInt(reputationPts);
 	let initialPlayerRepPoints = userArray[playerChance].getReputationPts();
 	let totalReputationPoints = initialPlayerRepPoints+parseInt(reputationPts);

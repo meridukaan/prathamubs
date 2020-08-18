@@ -4,6 +4,7 @@ ubsApp.weekSummaryConfig = {
                  {
                     "templateId":60,
                     "templateType":"weekSummary",
+                    "questionId": 1,
                     "Credit" : "{{Credit}}",
                     "Cash" : "{{cashChanged}}",
                     "BankBalance" : "{{bankBalanceChanged}}",

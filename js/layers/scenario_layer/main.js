@@ -42,6 +42,8 @@ let templateName = ["static", "decision","purchase","withdrawFromBank","advantag
 let templateMap = {};
 let offlinePurchaseClicked=false;
 ubsApp.isAndroidEnabled=false;
+ubsApp.isWebEnabled = false;
+ubsApp.deviceFingerPrint = "";
 ubsApp.popupConfig = {};
 
 $(document).ready(function(){
@@ -231,6 +233,7 @@ ubsApp.intitializeTemplates = function() {
 	ubsInsuranceTemplate = Template7.compile(ubsApp.insuranceTemplate);
 	ubsPopupTemplate = Template7.compile(ubsApp.popUpTemplate);
 	ubsAddPlayerTemplate = Template7.compile(ubsApp.addPlayerTemplate);
+	ubsAddPlayerTemplateonWeb = Template7.compile(ubsApp.addPlayerTemplateonWeb);
 
 }
 
@@ -279,8 +282,8 @@ ubsApp.socketCloseCurrentScenario=function(){
 
 ubsApp.closeCurrentScenario=function(){
     $('#resultBackground').hide();
-	$('#monopolyBase').css("z-index",0)
-	$('#templateContent').css("z-index",0)
+	// $('#monopolyBase').css("z-index",0)
+	// $('#templateContent').css("z-index",0)
 	$('#templateContent').css("height",0+'px')
 	document.getElementById("templateContent").innerHTML="";
 	document.getElementById("templateContent").style["background-color"] = "rgb(105,105,105)";
@@ -298,8 +301,8 @@ socket.on('closingCurrentScenario',function(data){
 
 ubsApp.startCurrentScenario=function(){
     $('#resultBackground').show();
-	$('#monopolyBase').css("z-index",-10)
-	$('#templateBase').css("z-index",10)
+	 $('#monopolyBase').css("z-index",-10)
+	 $('#templateBase').css("z-index",10)
 	
 	document.getElementById("templateContent").style.opacity="0.95";
 	
@@ -423,9 +426,33 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
    }
 }
 
-ubsApp.updateScoreInDB = function(playerStudentId, questionId, scoredMarks,totalMarks, level, startTime, label){
+ubsApp.updateScoreInDB = function (playerStudentId, scenarioquestionId, scoredmarks, totalmarks, questionlevel, scenarioStartTime, scoreLabel){
 	if(ubsApp.isAndroidEnabled){
 		Android.addScore(playerStudentId,questionId,scoredMarks, totalMarks, level, startTime,label);
+	}
+
+		if(ubsApp.isWebEnabled)
+	{
+		var scoreObject = {
+			studentId: playerStudentId,
+			questionId: scenarioquestionId,
+			scoredMarks:scoredmarks,
+			totalMarks: totalmarks,
+			level: questionLevel,
+			startTime: scenarioStartTime,
+			label: scoreLabel
+
+		} 
+		$.ajax({
+        	url: "/api/ScorePush/ScorePushData",
+  			type: "post",
+  			dataType:"json",
+  			contentType:"application/json",
+  			data: JSON.stringify(scoreObject),
+  			success : function(data){
+    			console.log(data);
+   			}
+  		})
 	}
 	
 }

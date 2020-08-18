@@ -10,8 +10,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 1,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion1}}",
       "questionTime" : 3000,
@@ -72,8 +73,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 2,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion2}}",
       "questionTime" : 3000,
@@ -134,8 +136,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 3,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion3}}",
       "questionTime" : 3000,
@@ -196,8 +199,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 4,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion4}}",
       "questionTime" : 3000,
@@ -258,8 +262,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 5,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion5}}",
       "questionTime" : 3000,
@@ -320,8 +325,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 6,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion6}}",
       "questionTime" : 3000,
@@ -382,8 +388,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 7,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion7}}",
       "questionTime" : 3000,
@@ -444,8 +451,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 8,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion8}}",
       "questionTime" : 3000,
@@ -506,8 +514,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 9,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion9}}",
       "questionTime" : 3000,
@@ -568,8 +577,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 10,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion10}}",
       "questionTime" : 3000,
@@ -630,8 +640,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 11,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion11}}",
       "questionTime" : 3000,
@@ -692,8 +703,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 12,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion12}}",
       "questionTime" : 3000,
@@ -754,8 +766,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 13,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion13}}",
       "questionTime" : 3000,
@@ -816,8 +829,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 14,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion14}}",
       "questionTime" : 3000,
@@ -878,8 +892,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 15,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion15}}",
       "questionTime" : 3000,
@@ -940,8 +955,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 16,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion16}}",
       "questionTime" : 3000,
@@ -1002,8 +1018,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 17,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion17}}",
       "questionTime" : 3000,
@@ -1064,8 +1081,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 18,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion18}}",
       "questionTime" : 3000,
@@ -1126,8 +1144,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 19,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion19}}",
       "questionTime" : 3000,
@@ -1188,8 +1207,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 20,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion20}}",
       "questionTime" : 3000,
@@ -1250,8 +1270,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 21,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion21}}",
       "questionTime" : 3000,
@@ -1312,8 +1333,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 22,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion22}}",
       "questionTime" : 3000,
@@ -1374,8 +1396,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 23,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion23}}",
       "questionTime" : 3000,
@@ -1436,8 +1459,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 24,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion24}}",
       "questionTime" : 3000,
@@ -1498,8 +1522,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 25,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion25}}",
       "questionTime" : 3000,
@@ -1560,8 +1585,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 26,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion26}}",
       "questionTime" : 3000,
@@ -1622,8 +1648,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 27,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion27}}",
       "questionTime" : 3000,
@@ -1684,8 +1711,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 28,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion28}}",
       "questionTime" : 3000,
@@ -1746,8 +1774,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 29,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion29}}",
       "questionTime" : 3000,
@@ -1808,8 +1837,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 30,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion30}}",
       "questionTime" : 3000,
@@ -1870,8 +1900,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 31,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion31}}",
       "questionTime" : 3000,
@@ -1932,8 +1963,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 32,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion32}}",
       "questionTime" : 3000,
@@ -1994,8 +2026,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 33,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion33}}",
       "questionTime" : 3000,
@@ -2056,8 +2089,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 34,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion34}}",
       "questionTime" : 3000,
@@ -2118,8 +2152,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 35,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion35}}",
       "questionTime" : 3000,
@@ -2180,8 +2215,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 36,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion36}}",
       "questionTime" : 3000,
@@ -2242,8 +2278,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 37,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion37}}",
       "questionTime" : 3000,
@@ -2304,8 +2341,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 38,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion38}}",
       "questionTime" : 3000,
@@ -2366,8 +2404,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 39,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion39}}",
       "questionTime" : 3000,
@@ -2428,8 +2467,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 40,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion40}}",
       "questionTime" : 3000,
@@ -2490,8 +2530,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 41,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion41}}",
       "questionTime" : 3000,
@@ -2552,8 +2593,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 42,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion42}}",
       "questionTime" : 3000,
@@ -2614,8 +2656,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 43,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion43}}",
       "questionTime" : 3000,
@@ -2676,8 +2719,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 44,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion44}}",
       "questionTime" : 3000,
@@ -2738,8 +2782,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 45,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion45}}",
       "questionTime" : 3000,
@@ -2800,8 +2845,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 46,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion46}}",
       "questionTime" : 3000,
@@ -2862,8 +2908,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 47,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion47}}",
       "questionTime" : 3000,
@@ -2924,8 +2971,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 48,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion48}}",
       "questionTime" : 3000,
@@ -2986,8 +3034,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 49,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion49}}",
       "questionTime" : 3000,
@@ -3048,8 +3097,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 50,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion50}}",
       "questionTime" : 3000,
@@ -3110,8 +3160,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 51,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion51}}",
       "questionTime" : 3000,
@@ -3172,8 +3223,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 52,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion52}}",
       "questionTime" : 3000,
@@ -3234,8 +3286,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 53,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion53}}",
       "questionTime" : 3000,
@@ -3296,8 +3349,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 54,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion54}}",
       "questionTime" : 3000,
@@ -3358,8 +3412,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 55,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion55}}",
       "questionTime" : 3000,
@@ -3420,8 +3475,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 56,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion56}}",
       "questionTime" : 3000,
@@ -3482,8 +3538,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 57,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion57}}",
       "questionTime" : 3000,
@@ -3544,8 +3601,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 58,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion58}}",
       "questionTime" : 3000,
@@ -3606,8 +3664,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 59,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion59}}",
       "questionTime" : 3000,
@@ -3668,8 +3727,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 60,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion60}}",
       "questionTime" : 3000,
@@ -3730,8 +3790,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 61,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion61}}",
       "questionTime" : 3000,
@@ -3792,8 +3853,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 62,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion62}}",
       "questionTime" : 3000,
@@ -3849,8 +3911,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 63,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion63}}",
       "questionTime" : 3000,
@@ -3911,8 +3974,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 64,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion64}}",
       "questionTime" : 3000,
@@ -3973,8 +4037,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 65,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion65}}",
       "questionTime" : 3000,
@@ -4035,8 +4100,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 66,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion66}}",
       "questionTime" : 3000,
@@ -4097,8 +4163,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 67,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion67}}",
       "questionTime" : 3000,
@@ -4149,8 +4216,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 68,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion68}}",
       "questionTime" : 3000,
@@ -4211,8 +4279,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 69,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion69}}",
       "questionTime" : 3000,
@@ -4273,8 +4342,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 70,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion70}}",
       "questionTime" : 3000,
@@ -4325,8 +4395,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 71,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion71}}",
       "questionTime" : 3000,
@@ -4387,8 +4458,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 72,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion72}}",
       "questionTime" : 3000,
@@ -4449,8 +4521,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 73,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion73}}",
       "questionTime" : 3000,
@@ -4511,8 +4584,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 74,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion74}}",
       "questionTime" : 3000,
@@ -4573,8 +4647,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 75,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion75}}",
       "questionTime" : 3000,
@@ -4635,8 +4710,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 76,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion76}}",
       "questionTime" : 3000,
@@ -4697,8 +4773,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 77,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion77}}",
       "questionTime" : 3000,
@@ -4759,8 +4836,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 78,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion78}}",
       "questionTime" : 3000,
@@ -4811,8 +4889,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 79,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion79}}",
       "questionTime" : 3000,
@@ -4863,8 +4942,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 80,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion80}}",
       "questionTime" : 3000,
@@ -4915,8 +4995,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 81,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion81}}",
       "questionTime" : 3000,
@@ -4967,8 +5048,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 82,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion82}}",
       "questionTime" : 3000,
@@ -5019,8 +5101,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 83,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion83}}",
       "questionTime" : 3000,
@@ -5071,8 +5154,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 84,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion84}}",
       "questionTime" : 3000,
@@ -5123,8 +5207,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 85,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion85}}",
       "questionTime" : 3000,
@@ -5185,8 +5270,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 86,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion86}}",
       "questionTime" : 3000,
@@ -5247,8 +5333,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 87,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion87}}",
       "questionTime" : 3000,
@@ -5309,8 +5396,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 88,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion88}}",
       "questionTime" : 3000,
@@ -5371,8 +5459,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 89,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion89}}",
       "questionTime" : 3000,
@@ -5433,8 +5522,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 90,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion90}}",
       "questionTime" : 3000,
@@ -5495,8 +5585,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 91,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion91}}",
       "questionTime" : 3000,
@@ -5547,8 +5638,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 92,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion92}}",
       "questionTime" : 3000,
@@ -5599,8 +5691,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 93,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion93}}",
       "questionTime" : 3000,
@@ -5651,8 +5744,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 94,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion94}}",
       "questionTime" : 3000,
@@ -5703,8 +5797,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 95,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion95}}",
       "questionTime" : 3000,
@@ -5765,8 +5860,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 96,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion96}}",
       "questionTime" : 3000,
@@ -5817,8 +5913,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 97,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion97}}",
       "questionTime" : 3000,
@@ -5879,8 +5976,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 98,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion98}}",
       "questionTime" : 3000,
@@ -5941,8 +6039,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 99,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion99}}",
       "questionTime" : 3000,
@@ -6003,8 +6102,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 100,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion100}}",
       "questionTime" : 3000,
@@ -6065,8 +6165,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 101,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion101}}",
       "questionTime" : 3000,
@@ -6127,8 +6228,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 102,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion102}}",
       "questionTime" : 3000,
@@ -6189,8 +6291,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 103,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion103}}",
       "questionTime" : 3000,
@@ -6251,8 +6354,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 104,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion104}}",
       "questionTime" : 3000,
@@ -6313,8 +6417,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 105,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion105}}",
       "questionTime" : 3000,
@@ -6375,8 +6480,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 106,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion106}}",
       "questionTime" : 3000,
@@ -6437,8 +6543,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 107,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion107}}",
       "questionTime" : 3000,
@@ -6499,8 +6606,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 108,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion108}}",
       "questionTime" : 3000,
@@ -6561,8 +6669,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 109,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion109}}",
       "questionTime" : 3000,
@@ -6623,8 +6732,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 110,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion110}}",
       "questionTime" : 3000,
@@ -6685,8 +6795,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 111,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion111}}",
       "questionTime" : 3000,
@@ -6747,8 +6858,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 112,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion112}}",
       "questionTime" : 3000,
@@ -6809,8 +6921,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 113,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion113}}",
       "questionTime" : 3000,
@@ -6871,8 +6984,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 114,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion114}}",
       "questionTime" : 3000,
@@ -6933,8 +7047,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 115,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion115}}",
       "questionTime" : 3000,
@@ -6995,8 +7110,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 116,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion116}}",
       "questionTime" : 3000,
@@ -7057,8 +7173,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 117,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion117}}",
       "questionTime" : 3000,
@@ -7119,8 +7236,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 118,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion118}}",
       "questionTime" : 3000,
@@ -7181,8 +7299,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 119,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion119}}",
       "questionTime" : 3000,
@@ -7243,8 +7362,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 120,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion120}}",
       "questionTime" : 3000,
@@ -7305,8 +7425,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 121,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion121}}",
       "questionTime" : 3000,
@@ -7367,8 +7488,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 122,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion122}}",
       "questionTime" : 3000,
@@ -7429,8 +7551,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 123,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion123}}",
       "questionTime" : 3000,
@@ -7491,8 +7614,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 124,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion124}}",
       "questionTime" : 3000,
@@ -7553,8 +7677,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 125,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion125}}",
       "questionTime" : 3000,
@@ -7615,8 +7740,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 126,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion126}}",
       "questionTime" : 3000,
@@ -7677,8 +7803,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 127,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion127}}",
       "questionTime" : 3000,
@@ -7739,8 +7866,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 128,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion128}}",
       "questionTime" : 3000,
@@ -7801,8 +7929,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 129,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion129}}",
       "questionTime" : 3000,
@@ -7863,8 +7992,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 130,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion130}}",
       "questionTime" : 3000,
@@ -7925,8 +8055,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 131,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion131}}",
       "questionTime" : 3000,
@@ -7987,8 +8118,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 132,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion132}}",
       "questionTime" : 3000,
@@ -8049,8 +8181,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 133,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion133}}",
       "questionTime" : 3000,
@@ -8111,8 +8244,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 134,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion134}}",
       "questionTime" : 3000,
@@ -8173,8 +8307,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 135,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion135}}",
       "questionTime" : 3000,
@@ -8235,8 +8370,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 136,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion136}}",
       "questionTime" : 3000,
@@ -8297,8 +8433,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 137,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion137}}",
       "questionTime" : 3000,
@@ -8359,8 +8496,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 138,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion138}}",
       "questionTime" : 3000,
@@ -8421,8 +8559,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 139,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion139}}",
       "questionTime" : 3000,
@@ -8483,8 +8622,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 140,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion140}}",
       "questionTime" : 3000,
@@ -8545,8 +8685,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 141,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion141}}",
       "questionTime" : 3000,
@@ -8607,8 +8748,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 142,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion142}}",
       "questionTime" : 3000,
@@ -8669,8 +8811,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 143,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion143}}",
       "questionTime" : 3000,
@@ -8731,8 +8874,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 144,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion144}}",
       "questionTime" : 3000,
@@ -8793,8 +8937,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 145,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion145}}",
       "questionTime" : 3000,
@@ -8855,8 +9000,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 146,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion146}}",
       "questionTime" : 3000,
@@ -8917,8 +9063,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 147,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion147}}",
       "questionTime" : 3000,
@@ -8979,8 +9126,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 148,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion148}}",
       "questionTime" : 3000,
@@ -9041,8 +9189,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 149,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion149}}",
       "questionTime" : 3000,
@@ -9103,8 +9252,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 150,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion150}}",
       "questionTime" : 3000,
@@ -9165,8 +9315,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 151,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion151}}",
       "questionTime" : 3000,
@@ -9227,8 +9378,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 152,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion152}}",
       "questionTime" : 3000,
@@ -9289,8 +9441,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 153,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion153}}",
       "questionTime" : 3000,
@@ -9351,8 +9504,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 154,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion154}}",
       "questionTime" : 3000,
@@ -9413,8 +9567,9 @@ ubsApp.quizConfig =
     "inventoryScoreToBeChanged" : 0,
     "templates" : [ {
       "templateId" : 0,
-      "questionId" : 0,
+      
       "templateType" : "{{QuizTemplateType}}",
+     "questionId" : 155,
       "noOfQuestions" : "",
       "question" : "{{QuizQuestion155}}",
       "questionTime" : 3000,

@@ -4,6 +4,7 @@ ubsApp.transferToBankConfig={
 		"templates":[
 		{
 			"templateId":11,
+			"questionId": 1,
 			"templateType":"transfer",
 			"title":"{{transferToBankTitle}}",
 			"cashTitle":"{{cashTitle}}",

@@ -39,6 +39,7 @@ ubsApp.displayNextQuizQuestion=function(page, updateCorrectAnswerScore){
 }
 
 ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionId, reputationPoints, startTime, helpPageName, entryPoint, scenarioName){
+  console.log("Quiz Question ID: "+ questionId);
   var totalMarks = 1; // each question carries 1 mark
   var date=new Date();
   var resultConfig={};

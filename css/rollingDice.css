@@ -119,6 +119,8 @@ nav li:hover {
   width: 100%;
   height: 100%;
   cursor:pointer;
+  -webkit-transform: translate3d(0,0,0px);
+  transform: translate3d(0,0,0px);
 }
 
 .dice {

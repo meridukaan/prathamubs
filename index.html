@@ -8,9 +8,7 @@
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>var socket = io();</script>
-    <!-- <script src="js/lib/Winwheel.js"></script>
-    <script src="js/lib/TweenMax.min.js"></script>
-    <script src="js/wheelOfFortune.js"></script> -->
+    <script src="js/lib/fingerprint2.js"></script>
     <script src="js/templates/dice_template/rollingDice.js"></script>
     <script src="js/audioMain.js"></script>
     <script src="js/layers/scenario_layer/main.js"></script>
@@ -91,7 +89,7 @@
 <div id="resultBackground" style="display:none;position:absolute;top:0px;left:0px;z-index: 9;opacity: 0.95;background-color: rgb(105,105,105);;height: 100%;width: 100%;"></div>
 
 <div id="helpBase" class="container-fluid"
-     style="position:relative;z-index:1000;margin:0px; margin-left: 0px; margin-right: 0px; padding: 0px;">
+     style="position:relative;z-index:1000;margin:0px; margin-left: 0px; margin-right: 0px; padding: 0px; -webkit-transform: translate3d(0,0,1000px); transform: translate3d(0,0,1000px);">
     <div id="helpContent"
          style="height:0; transition: height 0.5s;position: absolute;margin:0px;background-color:	rgb(105,105,105); opacity: 0.0;">
 
@@ -99,7 +97,7 @@
 </div>
 
 <div id="templateBase" class="container-fluid"
-     style="position:relative;z-index:0;margin:0px; margin-left: 0px; margin-right: 0px; padding: 0px;  ">
+     style="position:relative;z-index:10;margin:0px; margin-left: 0px; margin-right: 0px; padding: 0px; -webkit-transform: translate3d(0,0,10px); transform: translate3d(0,0,10px); ">
     <div id="templateContent"
          style="height:0; transition: height 0.5s;position: absolute;margin:0px;background-color:	rgb(105,105,105); opacity: 0.0;">
 
@@ -113,6 +111,43 @@
 </div>
 
 <img style="display:none" src="images/redbgcommon.png"></img>
+
+<script>
+
+window.onresize = function (event) {
+  applyOrientation();
+}
+
+function applyOrientation() {
+  if (window.innerHeight > window.innerWidth) {
+    alert("This website is best viewed in landscape mode");
+  } 
+}
+
+window.onload = function() {
+     let userAgentString =  navigator.userAgent; 
+
+     console.log(userAgentString);
+
+     // Detect Internet Explorer 
+     let IExplorerAgent = (navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true );
+     
+     // Detect Chrome 
+     let chromeAgent = userAgentString.indexOf("Chrome") > -1; 
+    
+     // Detect Firefox 
+     let firefoxAgent = userAgentString.indexOf("Firefox") > -1; 
+
+     if(IExplorerAgent&&!chromeAgent&&!firefoxAgent){
+     
+     window.location.href("./error.html");
+     } 
+
+     applyOrientation();
+};
+
+</script>
+
 </body>
 <script>
 
