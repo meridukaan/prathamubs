@@ -3,6 +3,11 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+let rooms = [];
+let userLimitMap = new map();
+let roomUserMap = new map();
+
+
 // const port = 3000;
 // const path = require('path');
 // const fs = require('fs');
@@ -10,49 +15,81 @@ var io = require('socket.io')(http);
 app.use(express.static(__dirname));
 var usersList = [];
 io.on('connection', function (socket) {
-    
+
     socket.join(1);
     usersList.push(usersList.length);
     console.log(usersList);
 
-    socket.on('actualTransferToBank', function(data){
+    socket.on('actualTransferToBank', function (data) {
         console.log(data.description);
         console.log(data.qid);
-        socket.emit('openActualTransferToBank', {questionId : data.qid});
-        socket.in(1).emit('openActualTransferToBank', {questionId : data.qid});
+        socket.emit('openActualTransferToBank', { questionId: data.qid });
+        socket.in(1).emit('openActualTransferToBank', { questionId: data.qid });
 
     });
 
-    socket.on('transferToBank', function(data){
-        console.log(data.description);
-        socket.in(1).emit('openTransferToBank', {flag : 1, openNextMove:false});
-        socket.emit('openTransferToBank', {flag : 1, openNextMove:false});
+    socket.on('serverCreateRoom', function (data) {
+        let users = new Set();
+        roomnum = Math.floor(1000 + Math.random() * 9000); //Generate random
+        // number for room
+        while (rooms.includes(roomnum)) {
+            roomnum = Math.floor(1000 + Math.random() * 9000);
+        }
+        //Should we be creating a simple array for rooms, and a map which will
+        // map all users to particular room? Or is this going to be a DB driven
+        // model?
+        rooms.push(roomnum);
+        userLimit = data.limit;
+        userName = data.userId;
+
+        users.add(userName);
+        userLimitMap.set(roomnum, userLimit);
+        socket.join(roomnum);
+        roomUserMap.set(roomnum, users);
     })
 
-    socket.on('textToReplicate', function(data){
-        console.log("Received value entered "+data.cash);
-        socket.broadcast.emit('replicatedText',{
-            description : "Event to send back the text received from the player", amountToTransfer : data.cash
+    socket.on('serverJoinRoom', function (data) {
+        if (!rooms.includes(Number(data.roomCode))) {
+            console.log("Invalid room code");
+        } else if (roomUserMap.get(roomnum).has(data.userName)) {
+            console.log("Username already exists");
+        } else {
+            socket.join(roomnum);
+            roomUserMap.get(roomCode).add(data.userName);
+            console.log("You have successfully joined room "+ data.roomCode);
+        }
+    })
+
+    socket.on('transferToBank', function (data) {
+        console.log(data.description);
+        socket.in(1).emit('openTransferToBank', { flag: 1, openNextMove: false });
+        socket.emit('openTransferToBank', { flag: 1, openNextMove: false });
+    })
+
+    socket.on('textToReplicate', function (data) {
+        console.log("Received value entered " + data.cash);
+        socket.broadcast.emit('replicatedText', {
+            description: "Event to send back the text received from the player", amountToTransfer: data.cash
         })
     })
 
-    socket.on('closeScenario', function(data){
+    socket.on('closeScenario', function (data) {
         console.log("opened server side of close scenario")
-        socket.emit('closingCurrentScenario',{
-            description : "This function would call the close scenario function on every client"
+        socket.emit('closingCurrentScenario', {
+            description: "This function would call the close scenario function on every client"
         });
-        socket.in(1).emit('closingCurrentScenario',{
-            description : "This function would call the close scenario function on every client"
+        socket.in(1).emit('closingCurrentScenario', {
+            description: "This function would call the close scenario function on every client"
         });
     })
 
-    socket.on('serverClosePopup', function(data){
+    socket.on('serverClosePopup', function (data) {
         console.log("Server side close pop up function");
         socket.emit('socketClosePopup', {
-            description : "Calling close pop up on current client"
+            description: "Calling close pop up on current client"
         });
         socket.in(1).emit('socketClosePopup', {
-            description : "Calling close popup on all clients in room"
+            description: "Calling close popup on all clients in room"
         });
     })
 })
