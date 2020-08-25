@@ -1,19 +1,19 @@
 const { Socket } = require("dgram");
 
-ubsApp.getCreateRoomTemplate = function (templateConfig, tempVar) {
+ubsApp.getCreateRoomLobbyTemplate = function (templateConfig, tempVar) {
     // templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
-    tempVar.html += ubsCreateRoomTemplate(templateConfig);
+    tempVar.html += ubsCreateRoomLobbyTemplate(templateConfig);
 }
 
 
-ubsApp.opencreateRoomTemplate = function () {
+ubsApp.opencreateRoomLobbyTemplate = function () {
     ubsApp.startCurrentScenario();
-    ubsApp.renderPageByName("createRoomPage");
+    ubsApp.renderPageByName("createRoomPageLobby");
 }
 
 //add create room functions below
 
-ubsApp.createRoom = function () {
+ubsApp.createRoomLobby = function () {
     userLimit = document.getElementById("num_online_players").value;
     userName = document.getElementById("playerNameInput").value;
     age = document.getElementById("playerAge").value;
