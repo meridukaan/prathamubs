@@ -463,7 +463,7 @@ ubsApp.leaderBoardTemplate=
     '	'+
     '		</div>'+
     '		<div style="display:inline-block;width:100%;">'+
-    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{joinRoom}}</div>'+
+    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.joinRoom()">{{joinRoom}}</div>'+
     '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>'+
     '		</div>'+
     '	</div>'+
@@ -509,7 +509,7 @@ ubsApp.leaderBoardTemplate=
     '	'+
     '		</div>'+
     '		<div style="display:inline-block;width:100%;">'+
-    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()"  >{{createRoom}}</div>'+
+    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.createRoom()"  >{{createRoom}}</div>'+
     '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>'+
     '		</div>'+
     '	</div>'+
