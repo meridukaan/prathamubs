@@ -644,7 +644,7 @@ monopoly.closeLeaderBoard=function(){
 
 monopoly.createRoom=function(){
     console.log("Creating Room");
-    ubsApp.opencreateRoomTemplate();
+    ubsApp.openCreateRoomTemplate();
 }
 
 monopoly.joinRoom=function(){

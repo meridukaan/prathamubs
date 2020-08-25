@@ -1,13 +1,16 @@
-
 ubsApp.getCreateRoomTemplate = function (templateConfig, tempVar) {
     // templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
     tempVar.html += ubsCreateRoomTemplate(templateConfig);
 }
 
 
-ubsApp.opencreateRoomTemplate = function () {
+ubsApp.openCreateRoomTemplate = function () {
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("createRoomPage");
+}
+
+ubsApp.populateCreateRoomLobbyPage = function(){
+    ubsApp.openCreateRoomLobbyTemplate();
 }
 
 //add create room functions below

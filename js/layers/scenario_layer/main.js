@@ -21,8 +21,9 @@ let ubsAdvantageCardTemplate;
 let ubsQuizTemplate;
 let ubsWeekSummarytemplate;
 let ubsAddPlayerTempate;
-let ubsJoinRoomTemplate;
+let ubsJoinRoomLobbyTemplate;
 let ubsCreateRoomTemplate;
+let ubsCreateRoomLobbyTemplate;
 let choiceSelected={};
 let timeVar;
 var helpScenarioOpen=false;
@@ -40,7 +41,7 @@ var calculatorReq=false;
 let screenHeight = $(window).height();
 let screenWidth = $(window).width();
 
-let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom"];
+let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom", "joinRoomLobby", "createRoomLobby"];
 let templateMap = {};
 let offlinePurchaseClicked=false;
 ubsApp.isAndroidEnabled=false;
@@ -240,6 +241,8 @@ ubsApp.intitializeTemplates = function() {
 	//Multiplayer Tempaltes
 	ubsJoinRoomTemplate= Template7.compile(ubsApp.joinRoomTemplate)
 	ubsCreateRoomTemplate= Template7.compile(ubsApp.createRoomTemplate)
+	ubsJoinRoomLobbyTemplate =Template7.compile(ubsApp.joinRoomLobbyTemplate)
+	ubsCreateRoomLobbyTemplate= Template7.compile(ubsApp.createRoomLobbyTemplate)
 }
 
 
@@ -539,7 +542,9 @@ ubsApp.initializeUbsPages = function() {
 	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.addPlayerConfig);
 	//Multiplayer Changes
 	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.joinRoomConfig);
-	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.craeteRoomConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.joinRoomLobbyConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.createRoomConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.createRoomLobbyConfig);
 }
 
 ubsApp.startRecordingTimer = function(templateConfig){

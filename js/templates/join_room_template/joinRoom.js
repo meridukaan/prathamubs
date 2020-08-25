@@ -10,6 +10,10 @@ ubsApp.openJoinRoomTemplate = function () {
     ubsApp.renderPageByName("joinRoomPage");
 }
 
+ubsApp.populateJoinRoomLobbyPage = function(){
+    ubsApp.openJoinRoomLobbyTemplate();
+}
+
 //add join room functions below
 
 ubsApp.joinRoom = function () {

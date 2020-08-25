@@ -10,35 +10,23 @@
 			<div id="addPlayerValidationMessage" style="color:red;margin-bottom: 2%;text-align: center;"> </div>
 			<div style="display: table;width: 80%;     margin-left: 10%;    margin-bottom: 2%;">
 			<div style="display: table-row;">
-				<div style="display: table-cell;">{{name}}</div>
-				<div style="display: table-cell;">{{age}}</div>
+				<div style="display: table-cell;">{{roomCodeLabel}}</div>
+				<div style="display: table-cell;" id="roomCode"></div>
 			</div>
 			<div style="display: table-row;">
-				<div style="display: table-cell;"><input  style="" id="playerNameInput"></input></div>
-				<div style="display: table-cell;"><input type="number" style="" id="playerAge"></input></div>
+				<div style="display: table-cell;">{{people_message}}</div>
 			</div>
 			<div style="display: table-row;">
-				<div style="display: table-cell; ">{{gender}}</div>
-				<div style="display: table-cell; ">{{languageSelect}}</div>
+				<div style="display: table-cell;" id ="listOfUsers"></div>
 			</div>
-			<div style="display: table-row;">
-				<div style="display: table-cell;"><select style="" id="playerGender"><option id="male" value="male">{{MALE}}</option><option id="female" value="female">{{FEMALE}}</option></select></div>
-				<div style="display: table-cell;"><select style="" id="languageSelect"><option id="english" value="english">{{ENGLISH}}</option><option id="hindi" value="hindi">{{HINDI}}</option><option id="marathi" value="marathi">{{MARATHI}}</option></select></div>
-			</div>
-			<div style="display: table-row;">
-				<div style="display: table-cell; ">{{numberOfWeeks}}</div>
-				<div style="display: table-cell; ">{{numberOfPlayers}}</div>
-			</div>
-			<div style="display: table-row;">
-				<div style="display: table-cell; "><input type="radio" name="noOfWeeks" value="6">6 <input type="radio" name="noOfWeeks" value=12 checked="">12</div>
-				<div style="display: table-cell; "><select style="" id="num_online_players"><option id="one" value="1">1</option><option id="two" value="2">2</option><option id="three" value="3">3</option><option id="four" value="4">4</option></select></div>
-			</div>
+			
+		</div>
+
+		<div style="display:inline-block;width:100%;">
+			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{startGame}}</div>
+			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{shareCode}}</div>
 		</div>
 	
-		</div>
-		<div style="display:inline-block;width:100%;">
-			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{createRoom}}</div>
-			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{cancel}}</div>
 		</div>
 	</div>
 </div>

@@ -1,14 +1,12 @@
-const { Socket } = require("dgram");
-
 ubsApp.getJoinRoomLobbyTemplate = function (templateConfig, tempVar) {
     // templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
-    tempVar.html += ubsJoinRoomTemplate(templateConfig);
+    tempVar.html += ubsJoinRoomLobbyTemplate(templateConfig);
 }
 
 
 ubsApp.openJoinRoomLobbyTemplate = function () {
     ubsApp.startCurrentScenario();
-    ubsApp.renderPageByName("joinRoomPageLobby");
+    ubsApp.renderPageByName("joinRoomLobbyPage");
 }
 
 //add create room functions below
