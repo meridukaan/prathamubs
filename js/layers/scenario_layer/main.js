@@ -21,6 +21,8 @@ let ubsAdvantageCardTemplate;
 let ubsQuizTemplate;
 let ubsWeekSummarytemplate;
 let ubsAddPlayerTempate;
+let ubsJoinRoomTemplate;
+let ubsCreateRoomTemplate;
 let choiceSelected={};
 let timeVar;
 var helpScenarioOpen=false;
@@ -38,7 +40,7 @@ var calculatorReq=false;
 let screenHeight = $(window).height();
 let screenWidth = $(window).width();
 
-let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer"];
+let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom"];
 let templateMap = {};
 let offlinePurchaseClicked=false;
 ubsApp.isAndroidEnabled=false;
@@ -234,7 +236,10 @@ ubsApp.intitializeTemplates = function() {
 	ubsPopupTemplate = Template7.compile(ubsApp.popUpTemplate);
 	ubsAddPlayerTemplate = Template7.compile(ubsApp.addPlayerTemplate);
 	ubsAddPlayerTemplateonWeb = Template7.compile(ubsApp.addPlayerTemplateonWeb);
-
+	
+	//Multiplayer Tempaltes
+	ubsJoinRoomTemplate= Template7.compile(ubsApp.joinRoomTemplate)
+	ubsCreateRoomTemplate= Template7.compile(ubsApp.createRoomTemplate)
 }
 
 
@@ -531,7 +536,10 @@ ubsApp.initializeUbsPages = function() {
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.quizStarterConfig);
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.successErrorConfig);
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.weekSummaryConfig);
-    ubsApp.pages=$.extend(ubsApp.pages,ubsApp.addPlayerConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.addPlayerConfig);
+	//Multiplayer Changes
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.joinRoomConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.craeteRoomConfig);
 }
 
 ubsApp.startRecordingTimer = function(templateConfig){

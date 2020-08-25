@@ -642,6 +642,16 @@ monopoly.closeLeaderBoard=function(){
 
 }
 
+monopoly.createRoom=function(){
+    console.log("Creating Room");
+    ubsApp.opencreateRoomTemplate();
+}
+
+monopoly.joinRoom=function(){
+    console.log("Join Room");
+    ubsApp.openJoinRoomTemplate();
+}
+
 
 monopoly.chooseLanguage=function(language){
 
@@ -1192,7 +1202,7 @@ ubsApp.restartGame = function() {
     var audioElement = document.getElementById('splash');
     ubsApp.raiseAudioEvent(audioElement, 'splashScreenAudio');
     //setTimeout(monopoly.renderPageforBoard, 30, monopoly.pages.Splash);
-    setTimeout(monopoly.renderPageforBoard, renderTimeOutMiliSec, monopoly.pages.EnterLanguagePage);
+    setTimeout(monopoly.renderPageforBoard, renderTimeOutMiliSec, monopoly.pages.CreateOrJoinRoom);
 }
 
 monopoly.initializePages = function() {
