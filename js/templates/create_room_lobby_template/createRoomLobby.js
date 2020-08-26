@@ -8,6 +8,14 @@ ubsApp.openCreateRoomLobbyTemplate = function () {
     ubsApp.renderPageByName("createRoomLobbyPage");
 }
 
+socket.on("populateCreateRoomLobby", function(data){
+    console.log("inside socket populate")
+    console.log("list fo users : "+data.userSet);
+    ubsApp.isCreator = Boolean(data.isCreator);
+    ubsApp.openCreateRoomLobbyTemplate();
+    ubsApp.populateCreateRoomLobbyPage(data.userSet, Number(data.roomCode));
+})
+
 //add create room functions below
 
 // ubsApp.createRoomLobby = function () {

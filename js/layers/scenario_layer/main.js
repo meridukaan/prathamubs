@@ -49,6 +49,8 @@ ubsApp.isWebEnabled = false;
 ubsApp.deviceFingerPrint = "";
 ubsApp.popupConfig = {};
 
+ubsApp.isCreator = false;
+
 $(document).ready(function(){
 	ubsApp.intitializeTemplates();
 	ubsApp.mapTemplatetoFunction();

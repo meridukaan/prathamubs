@@ -28,3 +28,13 @@ ubsApp.joinRoomLobby = function () {
         });
     }
 }
+
+socket.on("populateJoinRoom", function(data){
+    userList = data.userList;
+    roomCode = data.roomCode;
+    console.log("ubsApp flag : " + ubsApp.isCreator + "socket flag : "+ data.isCreator);
+    if(!ubsApp.isCreator){
+    ubsApp.openJoinRoomLobbyTemplate();
+    ubsApp.populateJoinRoomLobbyPage(userList, roomCode);
+    }
+})
