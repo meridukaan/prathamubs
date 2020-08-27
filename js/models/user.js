@@ -5,6 +5,14 @@ class User{
 
     }*/
 
+    setRoomCode(roomCode){
+        this.roomCode = roomCode;
+    }
+
+    getRoomCode(){
+        return this.roomCode;
+    }
+
     canUserTakeQuiz() {
      if(this.quizTakenInCurrentWeek < 2) {
         return true;

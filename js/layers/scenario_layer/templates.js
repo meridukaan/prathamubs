@@ -463,12 +463,40 @@ ubsApp.leaderBoardTemplate=
     '	'+
     '		</div>'+
     '		<div style="display:inline-block;width:100%;">'+
-    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{joinRoom}}</div>'+
+    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.joinRoom()">{{joinRoom}}</div>'+
     '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>'+
     '		</div>'+
     '	</div>'+
     '</div>';
 
+    ubsApp.joinRoomLobbyTemplate = '<div style="{{style}}">'+
+    '	<div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">	'+
+    '		<div>'+
+    '			<div style="text-align: center;margin-top:1%" class="popupHeaderFontSize" >{{title}}</div>'+
+    '		</div>'+
+    '		'+
+    '		<div style="padding-bottom:10px;"> <img src="images/red header.png" style="width:100%;"></div>'+
+    '		'+
+    '		<div style="display: inline-block;width: 100%;font-weight:bold;">'+
+    '			<div id="addPlayerValidationMessage" style="color:red;margin-bottom: 2%;text-align: center;"> </div>'+
+    '			<div style="display: table;width: 80%;     margin-left: 10%;    margin-bottom: 2%;">'+
+    '			<div style="display: table-row;">'+
+    '				<div style="display: table-cell;">{{joined_room_message}}</div>'+
+    '			</div>'+
+    '			<div style="display: table-row;">'+
+    '				<div style="display: table-cell;">{{people_message}}</div>'+
+    '			</div>'+
+    '			<div style="display: table-row;">'+
+    '				<div style="display: table-cell; " id ="listOfUsers"></div>'+
+    '			</div>'+
+    '			<div style="display: table-row;">'+
+    '				<div style="display: table-cell; ">{{waitingMessage}}</div>'+
+    '			</div>'+
+    '			'+
+    '		</div>'+
+    '		</div>'+
+    '	</div>'+
+    '</div>';
 
     ubsApp.createRoomTemplate = '<div style="{{style}}">'+
     '	<div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">	'+
@@ -509,13 +537,45 @@ ubsApp.leaderBoardTemplate=
     '	'+
     '		</div>'+
     '		<div style="display:inline-block;width:100%;">'+
-    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()"  >{{createRoom}}</div>'+
+    '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.createRoom()"  >{{createRoom}}</div>'+
     '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()" >{{cancel}}</div>'+
     '		</div>'+
     '	</div>'+
     '</div>';
         
-    
+    ubsApp.createRoomLobbyTemplate = '<div style="{{style}}">'+
+'	<div style="background-color: white;margin-left:1%;margin-right:1%;position: relative; overflow: auto; max-height: 80vh; ">	'+
+'		<div>'+
+'			<div style="text-align: center;margin-top:1%" class="popupHeaderFontSize" >{{title}}</div>'+
+'		</div>'+
+'		'+
+'		<div style="padding-bottom:10px;"> <img src="images/red header.png" style="width:100%;"></div>'+
+'		'+
+'		<div style="display: inline-block;width: 100%;font-weight:bold;">'+
+'			<div id="addPlayerValidationMessage" style="color:red;margin-bottom: 2%;text-align: center;"> </div>'+
+'			<div style="display: table;width: 80%;     margin-left: 10%;    margin-bottom: 2%;">'+
+'			<div style="display: table-row;">'+
+'				<div style="display: table-cell;">{{roomCodeLabel}}</div>'+
+'				<div style="display: table-cell;" id="roomCode"></div>'+
+'			</div>'+
+'			<div style="display: table-row;">'+
+'				<div style="display: table-cell;">{{people_message}}</div>'+
+'			</div>'+
+'			<div style="display: table-row;">'+
+'				<div style="display: table-cell; " id ="listOfUsers"></div>'+
+'			</div>'+
+'			'+
+'		</div>'+
+''+
+'		<div style="display:inline-block;width:100%;">'+
+'			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{startGame}}</div>'+
+'			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{shareCode}}</div>'+
+'		</div>'+
+'	'+
+'		</div>'+
+'	</div>'+
+'</div>';
+
 
     ubsApp.salesTemplate=
     '<div class="mainDiv row" style="height:100%;width:100%">'+

@@ -1,5 +1,3 @@
-const { Socket } = require("dgram");
-
 ubsApp.getCreateRoomTemplate = function (templateConfig, tempVar) {
     // templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
     tempVar.html += ubsCreateRoomTemplate(templateConfig);
@@ -19,9 +17,16 @@ ubsApp.createRoom=function(){
     roomUserMap.set(roomnum, userName);
 }
 
-ubsApp.opencreateRoomTemplate = function () {
+ubsApp.openCreateRoomTemplate = function () {
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("createRoomPage");
+}
+
+ubsApp.populateCreateRoomLobbyPage = function(users, roomCode){
+    console.log("populate method in create room js called with room code "+roomCode +"and users : "+users);
+    document.getElementById("roomCode").innerHTML = roomCode;
+    document.getElementById("listOfUsers").innerHTML = users;
+    // ubsApp.openCreateRoomLobbyTemplate();
 }
 
 //add create room functions below
@@ -32,8 +37,46 @@ ubsApp.createRoom = function () {
     age = document.getElementById("playerAge").value;
     if (!userName) {
         console.log("Invalid username");
-    } else if (age < 0 || !age) {
+        ubsApp.openResultPopup({
+            "message": "Please enter valid username",
+            "header": "Invalid Username",
+            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
+            "buttons": [
+                {
+                    'id': "closePopupButton",
+                    'name': "CLOSE",
+                    'action': "ubsApp.closePopup();"
+                }
+            ]
+        });
+    } else if (age <= 0 || !age) {
         console.log("Invalid age");
+        ubsApp.openResultPopup({
+            "message": "Please enter valid age",
+            "header": "Invalid age",
+            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
+            "buttons": [
+                {
+                    'id': "closePopupButton",
+                    'name': "CLOSE",
+                    'action': "ubsApp.closePopup();"
+                }
+            ]
+        });
+    } else if(userLimit == 1){
+        console.log("Please visit pratham web URL");
+        ubsApp.openResultPopup({
+            "message": "Please play on http://meridukan.prathamopenschool.org/",
+            "header": "Single player",
+            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
+            "buttons": [
+                {
+                    'id': "closePopupButton",
+                    'name': "CLOSE",
+                    'action': "ubsApp.closePopup();"
+                }
+            ]
+        });
     }
     else {
         socket.emit("serverCreateRoom", {
