@@ -3,11 +3,11 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var map = require('hashmap');
-
 let rooms = [];
 let userLimitMap = new map();
 let roomUserMap = new map();
 let creatorMap = new map();
+let studentArrayMap = new map();
 
 
 // const port = 3000;
@@ -24,26 +24,37 @@ io.on('connection', function (socket) {
 
     socket.on('serverCreateRoom', function (data) {
         let users = new Set();
+        let players = [];
+        let player = {};
+        userLimit = Number(data.limit);
+        userName = data.userId;
         roomnum = Math.floor(1000 + Math.random() * 9000); //Generate random num for room code
         while (rooms.includes(roomnum)) {
             roomnum = Math.floor(1000 + Math.random() * 9000);
         }
         rooms.push(roomnum);
         creatorMap.set(roomnum, socket.id);
-        userLimit = Number(data.limit);
-        userName = data.userId;
         users.add(userName);
         userList = Array.from(users);
         userLimitMap.set(roomnum, userLimit);
         socket.join(roomnum);
         roomUserMap.set(roomnum, users);
+        playerChance=0;//Initialize creator to be first player
+        player.name=userName;
+        player.age=Number(data.userAge);
+        player.gender = data.userGender;
+        player.room = roomnum;
+        players.push(player);
+        studentArrayMap.set(roomnum, players);
+        console.log(studentArrayMap.get(roomnum));
         console.log("Room successfully created with room code : " + roomnum + "with users" + userList);
-        socket.emit("populateCreateRoomLobby", {userSet : userList, roomCode : roomnum, isCreator : true});
+        socket.emit("populateCreateRoomLobby", {userSet : userList, studentArray : studentArrayMap.get(roomnum), roomCode : roomnum, isCreator : true, playerAge : data.userAge, playerGender : data.userGender});
         
     })
 
     socket.on('serverJoinRoom', function (data) {
         users = [];
+        let player = {};
         roomCode = Number(data.roomCode);
         //For both failing conditions below, we should have popup which will show error, and upon close will return to join room.
         if (!rooms.includes(roomCode)) {
@@ -56,16 +67,23 @@ io.on('connection', function (socket) {
             socket.join(roomCode);
             roomUserMap.get(roomCode).add(data.userName);
             users = Array.from(roomUserMap.get(roomCode));
-            console.log("room size is " + roomUserMap.get(roomCode).size);
-            console.log("user limit is " + (userLimitMap.get(roomCode)));
-            console.log("You have successfully joined room " + roomCode);
-            // socket.emit("joinRoomPopup", {description : "You have successfully joined room", header : "Success!"});
+            // console.log("room size is " + roomUserMap.get(roomCode).size);
+            // console.log("user limit is " + (userLimitMap.get(roomCode)));
+            // console.log("You have successfully joined room " + roomCode);
+            playerChance = roomUserMap.get(roomCode).size - 1;
+            console.log("Chance of player is " + playerChance);
             console.log(roomUserMap.get(roomCode).size + " players in room " + roomCode + " : " + users);
-            socket.emit("populateJoinRoom", {userList : users, roomCode : roomCode, isCreator : false});
-            socket.in(roomCode).emit("populateJoinRoom", {userList : users, roomCode : roomCode, isCreator : false});
-            socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", {userSet : users, isCreator : true, roomCode : roomCode});
+            player.name=data.userName;
+            player.age=Number(data.userAge);
+            player.gender=data.userGender;
+            player.room = roomCode;
+            studentArrayMap.get(roomCode).push(player);
+            console.log(studentArrayMap.get(roomCode));
+            socket.emit("populateJoinRoom", {userList : users, studentArray : studentArrayMap.get(roomCode), roomCode : roomCode, isCreator : false});
+            socket.in(roomCode).emit("populateJoinRoom", {userList : users, studentArray : studentArrayMap.get(roomCode), roomCode : roomCode, isCreator : false});
+            socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", {userSet : users, isCreator : true, roomCode : roomCode, studentArray : studentArrayMap.get(roomCode)});
 
-            // socket.emit("populateCreateRoomLobby", {userSet : users, roomCode : roomnum});
+            
             if(roomUserMap.get(roomCode).size == userLimitMap.get(roomCode)){
                 console.log("start game");
             }

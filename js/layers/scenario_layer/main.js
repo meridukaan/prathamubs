@@ -40,9 +40,7 @@ var languageSelected="hindi";
 var calculatorReq=false;
 let screenHeight = $(window).height();
 let screenWidth = $(window).width();
-let rooms = [];
-let userLimitMap = new map();
-let roomUserMap = new map();
+
 
 let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom", "joinRoomLobby", "createRoomLobby"];
 let templateMap = {};

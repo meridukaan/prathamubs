@@ -31,10 +31,13 @@ ubsApp.joinRoomLobby = function () {
 
 socket.on("populateJoinRoom", function(data){
     userList = data.userList;
-    roomCode = data.roomCode;
-    console.log("ubsApp flag : " + ubsApp.isCreator + "socket flag : "+ data.isCreator);
+    roomCode = Number(data.roomCode);
+    console.log("inside populate join room");
+    console.log("ubsApp flag : " + ubsApp.isCreator + " socket flag : "+ data.isCreator);
+    console.log(data.studentArray);
+    ubsApp.studentArray=data.studentArray;
     if(!ubsApp.isCreator){
-    ubsApp.openJoinRoomLobbyTemplate();
-    ubsApp.populateJoinRoomLobbyPage(userList, roomCode);
+        ubsApp.openJoinRoomLobbyTemplate();
+        ubsApp.populateJoinRoomLobbyPage(userList, roomCode);
     }
 })
