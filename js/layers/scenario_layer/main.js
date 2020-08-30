@@ -372,7 +372,9 @@ ubsApp.openPopup = function(config) {
 
 ubsApp.callServerClosePopup = function(){
 	console.log("close pop up clicked");
-	socket.emit("serverClosePopup");
+	socket.emit("serverClosePopup",{
+		roomCode : ubsApp.studentArray[0].room
+	});
 }
 
 socket.on('socketClosePopup', function(data){

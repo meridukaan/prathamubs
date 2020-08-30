@@ -74,8 +74,8 @@ io.on('connection', function (socket) {
             console.log("Chance of player is " + playerChance);
             console.log(roomUserMap.get(roomCode).size + " players in room " + roomCode + " : " + users);
             player.name=data.userName;
-            player.age=Number(data.userAge);
-            player.gender=data.userGender;
+            player.age=Number(data.age);
+            player.gender=data.gender;
             player.room = roomCode;
             studentArrayMap.get(roomCode).push(player);
             console.log(studentArrayMap.get(roomCode));
@@ -91,17 +91,27 @@ io.on('connection', function (socket) {
         
     })
 
+    socket.on('storePlayerDetailsToServer',function(data){
+        console.log(data.description);
+        socket.emit('storePlayerDetailsToClient',{
+            description : "Calls store player details on all clients"
+        })
+        socket.to(Number(data.roomCode)).emit('storePlayerDetailsToClient',{
+            description : "Calls store player details on all clients"
+        })
+    })
+
     socket.on('actualTransferToBank', function (data) {
         console.log(data.description);
         console.log(data.qid);
         socket.emit('openActualTransferToBank', { questionId: data.qid });
-        socket.in(1).emit('openActualTransferToBank', { questionId: data.qid });
+        socket.in(Number(data.roomCode)).emit('openActualTransferToBank', { questionId: data.qid });
 
     });
 
     socket.on('transferToBank', function (data) {
         console.log(data.description);
-        socket.in(1).emit('openTransferToBank', { flag: 1, openNextMove: false });
+        socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: false });
         socket.emit('openTransferToBank', { flag: 1, openNextMove: false });
     })
 
@@ -117,7 +127,7 @@ io.on('connection', function (socket) {
         socket.emit('closingCurrentScenario', {
             description: "This function would call the close scenario function on every client"
         });
-        socket.in(1).emit('closingCurrentScenario', {
+        socket.in(Number(data.roomCode)).emit('closingCurrentScenario', {
             description: "This function would call the close scenario function on every client"
         });
     })
@@ -127,7 +137,7 @@ io.on('connection', function (socket) {
         socket.emit('socketClosePopup', {
             description: "Calling close pop up on current client"
         });
-        socket.in(1).emit('socketClosePopup', {
+        socket.in(Number(data.roomCode)).emit('socketClosePopup', {
             description: "Calling close popup on all clients in room"
         });
     })

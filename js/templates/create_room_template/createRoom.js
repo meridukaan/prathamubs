@@ -9,13 +9,6 @@ ubsApp.openCreateRoomTemplate = function () {
     ubsApp.renderPageByName("createRoomPage");
 }
 
-ubsApp.populateCreateRoomLobbyPage = function(users, roomCode){
-    console.log("populate method in create room js called with room code "+roomCode +"and users : "+users);
-    document.getElementById("roomCode").innerHTML = roomCode;
-    document.getElementById("listOfUsers").innerHTML = users;
-    // ubsApp.openCreateRoomLobbyTemplate();
-}
-
 //add create room functions below
 
 ubsApp.createRoom = function () {

@@ -30,7 +30,7 @@ function replicatecashText(event){
 	amountToTransfer=document.getElementById("debtPaymentText").value;
 	console.log("User typed "+amountToTransfer+" in text box");
 	socket.emit('textToReplicate',{
-		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer
+		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer, roomCode : ubsApp.studentArray[0].room
 	})
 	
 }
@@ -43,7 +43,7 @@ socket.on('replicatedText',function(data){
 
 
 ubsApp.transferToBank = function (questionId) {
-	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId});
+	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId, roomCode : ubsApp.studentArray[0].room});
 	
 }
 
@@ -109,7 +109,7 @@ socket.on('openActualTransferToBank', function(data){
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
 	console.log("Click happened");
-	socket.emit('transferToBank', { description: "This is transfer to bank method" });
+	socket.emit('transferToBank', { description: "This is transfer to bank method", roomCode : ubsApp.studentArray[0].room });
 
 }
 
