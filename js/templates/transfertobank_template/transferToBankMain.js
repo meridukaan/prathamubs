@@ -108,7 +108,6 @@ socket.on('openActualTransferToBank', function(data){
 
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
-	console.log("Click happened");
 	socket.emit('transferToBank', { description: "This is transfer to bank method", roomCode : ubsApp.studentArray[0].room });
 
 }

@@ -370,16 +370,20 @@ ubsApp.openPopup = function(config) {
    ubsApp.startHelp("generalPopUp");
 }
 
-ubsApp.callServerClosePopup = function(){
+ubsApp.callServerClosePopup = function(config, doNextMoveFlag){
 	console.log("close pop up clicked");
 	socket.emit("serverClosePopup",{
-		roomCode : ubsApp.studentArray[0].room
+		roomCode : ubsApp.studentArray[0].room,
+		config : config,
+		doNextMove : doNextMoveFlag
 	});
 }
 
 socket.on('socketClosePopup', function(data){
 	console.log("server has triggered socket close pop up");
-	ubsApp.closePopup();
+	popUpConfig = data.config;
+	doNextMoveFlag = data.doNextMove;
+	ubsApp.closePopup(popUpConfig, doNextMoveFlag);
 })
 
 ubsApp.closePopup = function(config, doNextMove=true) {
