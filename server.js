@@ -145,8 +145,7 @@ io.on('connection', function (socket) {
     })
 
     socket.on('callNextMove', function(data){
-        console.log("Calling Next move in the client");
-        console.log(data.roomCode);
+        
         socket.emit('nextMove', {
             description: "Calling Next Move in all Cleints in my room"
         });
