@@ -32,24 +32,23 @@ io.on('connection', function (socket) {
         userList = Array.from(users);
         userLimitMap.set(roomnum, userLimit); //remove
         socket.join(roomnum);
-        
+
         roomUserMap.set(roomnum, users);
         roomPropertiesList.push([socket.id, userLimit, language, weeks]);
         roomPropertiesMap.set(roomnum, roomPropertiesList);
-        console.log(roomPropertiesMap.get(roomnum));    
+        console.log(roomPropertiesMap.get(roomnum));
 
-        playerChance=0;//Initialize creator to be first player
-        player.name=userName;
-        player.age=Number(data.userAge);
+        playerChance = 0;//Initialize creator to be first player
+        player.name = userName;
+        player.age = Number(data.userAge);
         player.gender = data.userGender;
         player.room = roomnum;
         players.push(player);
         studentArrayMap.set(roomnum, players);
-        
+
         console.log(studentArrayMap.get(roomnum));
-        console.log("Room successfully created with room code : " + roomnum + "with users" + userList);
-        socket.emit("populateCreateRoomLobby", {userSet : userList, studentArray : studentArrayMap.get(roomnum), roomCode : roomnum, isCreator : true, playerAge : data.userAge, playerGender : data.userGender});
-        
+        socket.emit("populateCreateRoomLobby", { userSet: userList, studentArray: studentArrayMap.get(roomnum), roomCode: roomnum, isCreator: true, playerAge: data.userAge, playerGender: data.userGender });
+
     })
 
     socket.on('serverJoinRoom', function (data) {
@@ -59,44 +58,44 @@ io.on('connection', function (socket) {
 
         if (!rooms.includes(roomCode)) {
             console.log("Invalid room code");
-            socket.emit("joinRoomPopup", {description : "Room code does not exist!", header : "Invalid room code"});
-        
+            socket.emit("joinRoomPopup", { description: "Room code does not exist!", header: "Invalid room code" });
+
         } else if (roomUserMap.get(roomCode).has(data.userName)) {
             console.log("Username already exists");
-            socket.emit("joinRoomPopup", {description : "Sorry, this username is already taken", header : "Username already exists"});
-        
-        } else if(roomUserMap.get(roomCode).size < userLimitMap.get(roomCode)){            
+            socket.emit("joinRoomPopup", { description: "Sorry, this username is already taken", header: "Username already exists" });
+
+        } else if (roomUserMap.get(roomCode).size < userLimitMap.get(roomCode)) {
             socket.join(roomCode);
             roomUserMap.get(roomCode).add(data.userName);
             users = Array.from(roomUserMap.get(roomCode));
             playerChance = roomUserMap.get(roomCode).size - 1;
             console.log("Chance of player is " + playerChance);
             console.log(roomUserMap.get(roomCode).size + " players in room " + roomCode + " : " + users);
-            
-            player.name=data.userName;
-            player.age=Number(data.age);
-            player.gender=data.gender;
+
+            player.name = data.userName;
+            player.age = Number(data.age);
+            player.gender = data.gender;
             player.room = roomCode;
             player.chance = playerChance;
             studentArrayMap.get(roomCode).push(player);
-            
+
             console.log(studentArrayMap.get(roomCode));
-            socket.emit("populateJoinRoomLobby", {userList : users, studentArray : studentArrayMap.get(roomCode), roomCode : roomCode, isCreator : false});
-            socket.in(roomCode).emit("populateJoinRoomLobby", {userList : users, studentArray : studentArrayMap.get(roomCode), roomCode : roomCode, isCreator : false});
-            socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", {userSet : users, isCreator : true, roomCode : roomCode, studentArray : studentArrayMap.get(roomCode)});
-            
+            socket.emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
+            socket.in(roomCode).emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
+            socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", { userSet: users, isCreator: true, roomCode: roomCode, studentArray: studentArrayMap.get(roomCode) });
+
         }//TODO : room full popup
-        
+
     })
 
-    socket.on('storePlayerDetailsToServer',function(data){
-        socket.emit('storePlayerDetailsToClient',{
-            description : "Calls store player details on all clients",
-            roomLanguage : data.roomLanguage
+    socket.on('storePlayerDetailsToServer', function (data) {
+        socket.emit('storePlayerDetailsToClient', {
+            description: "Calls store player details on all clients",
+            roomLanguage: data.roomLanguage
         })
-        socket.to(Number(data.roomCode)).emit('storePlayerDetailsToClient',{
-            description : "Calls store player details on all clients",
-            roomLanguage : data.roomLanguage
+        socket.to(Number(data.roomCode)).emit('storePlayerDetailsToClient', {
+            description: "Calls store player details on all clients",
+            roomLanguage: data.roomLanguage
         })
     })
 
@@ -134,13 +133,29 @@ io.on('connection', function (socket) {
         console.log("Server side close pop up function");
         socket.emit('socketClosePopup', {
             description: "Calling close pop up on current client",
-            config : data.config,
-            doNextMove : data.doNextMove
+            config: data.config,
+            doNextMove: data.doNextMove
         });
         socket.in(Number(data.roomCode)).emit('socketClosePopup', {
             description: "Calling close popup on all clients in room",
-            config : data.config,
-            doNextMove : data.doNextMove
+            config: data.config,
+            doNextMove: data.doNextMove
+        });
+    })
+
+    socket.on('serverMyMove', function (data) {
+        console.log("inside server's myMove socket");
+        socket.emit('clientMyMove', {
+            userDiceValue: data.userDiceValue,
+            userChance: data.userChance,
+            userPosition: data.userPosition,
+            userRoom: data.userRoom
+        });
+        socket.in(Number(data.userRoom)).emit('clientMyMove', {
+            userDiceValue: data.userDiceValue,
+            userChance: data.userChance,
+            userPosition: data.userPosition,
+            userRoom: data.userRoom
         });
     })
 })

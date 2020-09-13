@@ -249,11 +249,15 @@ monopoly.startScenarios = function(blockNo){
 
 }
 
+socket.on('clientMyMove', function(data){
+    console.log("dice value is : "+data.userDiceValue);
+    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition);
+})
 monopoly.myMove = function(count, pId, currentPos) {
   var temp="#p"+pId;
   var playerToken = $(temp);
   var blockNo = currentPos;   
-
+  console.log("Current Pos : "+ currentPos + "of player : " + userArray[pId].getplayerName());
    var movePlayer = setInterval(frame, 500);
   if(currentPos+count >= boardConfig.blocks){
     let x = userArray[pId].getWeeks();
@@ -342,8 +346,14 @@ monopoly.rollDice  = function(){
 		playerChance=0;
 	}
 	$("#player").html(userArray[playerChance].getplayerName());
-	$("#diceval").html(diceVal);	
-      monopoly.myMove(diceVal, playerChance, userArray[playerChance].getplayerCurrentPos());   //update Real time dice Value
+    $("#diceval").html(diceVal);
+    socket.emit("serverMyMove", {
+        userDiceValue : diceVal,
+        userChance : playerChance,
+        userPosition : userArray[playerChance].getplayerCurrentPos(),
+        userRoom : userArray[playerChance].getRoomCode()
+    });	
+    //   monopoly.myMove(diceVal, playerChance, userArray[playerChance].getplayerCurrentPos());   //update Real time dice Value
     },1000);
 }
 
@@ -396,14 +406,14 @@ monopoly.storePlayerDetails=function(){
 
     for( i=0;i<numplayers;i++)
     {
+        console.log("Num of players : "+numplayers);
         let user=new User();
         // let res = document.getElementById("name"+i).value.split("_");
         // user.setplayerName(res[1]);
         // user.setplayerStudentId(res[0]);
 
         user.setplayerName(ubsApp.studentArray[i].name);
-
-
+        user.setRoomCode(ubsApp.studentArray[i].room);
         user.setplayerScore(initialPlayerCash);
         user.setLastWeekSummary(initialPlayerCash, initialPlayerBankBalance, initialReputation, 0, 0, 60.00);
         user.setInventoryScore(60.00);
