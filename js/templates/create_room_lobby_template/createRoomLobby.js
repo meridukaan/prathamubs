@@ -10,14 +10,12 @@ ubsApp.openCreateRoomLobbyTemplate = function () {
 
 
 ubsApp.populateCreateRoomLobbyPage = function(users, roomCode){
-    console.log("populate method in create room js called with room code "+roomCode +"and users : "+users);
     document.getElementById("roomCode").innerHTML = roomCode;
     document.getElementById("listOfUsers").innerHTML = users;
     // ubsApp.openCreateRoomLobbyTemplate();
 }
 
 socket.on("populateCreateRoomLobby", function(data){
-    console.log("inside socket populate")
     console.log("list of users : "+data.userSet);
     ubsApp.isCreator = Boolean(data.isCreator);
     console.log(data.studentArray);

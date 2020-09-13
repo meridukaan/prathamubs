@@ -32,7 +32,6 @@ ubsApp.joinRoomLobby = function () {
 socket.on("populateJoinRoomLobby", function(data){
     userList = data.userList;
     roomCode = Number(data.roomCode);
-    console.log("inside populate join room");
     console.log("ubsApp flag : " + ubsApp.isCreator + " socket flag : "+ data.isCreator);
     console.log(data.studentArray);
     ubsApp.studentArray=data.studentArray;
