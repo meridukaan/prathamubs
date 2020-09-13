@@ -29,7 +29,7 @@ ubsApp.joinRoomLobby = function () {
     }
 }
 
-socket.on("populateJoinRoom", function(data){
+socket.on("populateJoinRoomLobby", function(data){
     userList = data.userList;
     roomCode = Number(data.roomCode);
     console.log("inside populate join room");
