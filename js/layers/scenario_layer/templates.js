@@ -991,7 +991,7 @@ ubsApp.purchaseTemplate = '<div class="container-fluid mainPurchaseDiv">'+
 '            </div></div>'+
 '            <div class="row" style="height:20vmax;">'+
 '                    <div class="confirmButton mainButtons buyMainButtons" onclick="ubsApp.pay(\'{{startTime}}\',\'{{questionId}}\'); ">{{doneTitle}}</div>'+
-'                    <div class="confirmButton mainButtons buyMainButtons" id="target_cancel" onclick="ubsApp.closeCurrentScenario(); {{#if openNextMove }} ubsApp.nextMove(); {{/if}}">{{noThanksTitle}}</div>'+
+'                    <div class="confirmButton mainButtons buyMainButtons" id="target_cancel" onclick="ubsApp.closeCurrentScenario(); {{#if openNextMove }} ubsApp.callServerNextMove(); {{/if}}">{{noThanksTitle}}</div>'+
 '                    <div class="helpBtn mainButtons buyMainButtons" onclick="ubsApp.startHelp(\'purchaseHelp\')"></div>'+
 '            </div>'+
 '        </div>'+
@@ -1116,10 +1116,10 @@ ubsApp.payOffTemplate='<div style="width:100%; height:100%; background-color:rgb
 '                      {{else}}{{/if}}'+
 '                      </div> <div class="payOffButtonContainer">'+
 '                      <div style="width:35%;" >'+
-'                           <button style="color:green;" class="payOffButton" {{#if payOff}}onclick="ubsApp.payDebt(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}} {{#if transfer}}onclick="ubsApp.transferToBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}} {{#if withdraw}}onclick="ubsApp.withdrawFromBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}"{{/if}}>{{#if payOff}}{{payTitle}}{{/if}} {{#if transfer}}{{transferTitle}}{{/if}} {{#if withdraw}}{{withdrawTitle}}{{/if}}</button>'+
+'                           <button style="color:green;" class="payOffButton" {{#if payOff}}onclick="ubsApp.payDebt(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.callServerNextMove(); {{/if}}"{{/if}} {{#if transfer}}onclick="ubsApp.transferToBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.callServerNextMove(); {{/if}}"{{/if}} {{#if withdraw}}onclick="ubsApp.withdrawFromBank(\'{{questionId}}\'); {{#if openNextMove}} ubsApp.callServerNextMove(); {{/if}}"{{/if}}>{{#if payOff}}{{payTitle}}{{/if}} {{#if transfer}}{{transferTitle}}{{/if}} {{#if withdraw}}{{withdrawTitle}}{{/if}}</button>'+
 '                      </div>'+
 '                      <div style="width:35%;margin-left: 2%;" >'+
-'                           <button style="color:red;" class="payOffButton"  onclick="ubsApp.socketCloseCurrentScenario(); {{#if openNextMove}} ubsApp.nextMove(); {{/if}}" >{{cancelTitle}}</button>'+
+'                           <button style="color:red;" class="payOffButton"  onclick="ubsApp.socketCloseCurrentScenario(); {{#if openNextMove}} ubsApp.callServerNextMove(); {{/if}}" >{{cancelTitle}}</button>'+
 '                      </div>' +
 '</div>'+
 '       <div id="result"></div>'+
@@ -1355,7 +1355,7 @@ ubsApp.insuranceTemplate = '<div id="decisonMaking">'+
 '            <br>'+
 '            <div id="buy_cancel" style="align:center;">'+
 '                <span id="decisionBuy" class="insuranceButtons" style="color:green; margin-right: 2%;" onclick="ubsApp.buyInsurance(\'{{page}}\')">{{buy}}</span>'+
-'                <span id="decisionCancel" class="insuranceButtons" style="color:red;" onclick="ubsApp.nextMove()">{{cancel}}</span>'+
+'                <span id="decisionCancel" class="insuranceButtons" style="color:red;" onclick="ubsApp.callServerNextMove()">{{cancel}}</span>'+
 '            </div>'+
 '        </div>'+
 '</div>'+
@@ -1553,7 +1553,7 @@ ubsApp.weekSummaryTemplate =  '<div style="{{style}}">'+
                               '        <div style="display:inline-block;margin-top: 10px;width:58%;">'+
                               '            <div style="float:left;margin-left: 2%;background-color: #a6a6e4;padding: 3px;font-weight: bold;max-width: 70%;width:fit-content">{{playerNameTitle}}: {{userName}}</div>'+
                               '            <div style="float:right;"> '+
-                              '                 <div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;    padding: 7px; color: red;font-weight: bold;" onclick="ubsApp.closeCurrentScenario(); ubsApp.nextMove();" >{{Close}}</div>'+
+                              '                 <div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;    padding: 7px; color: red;font-weight: bold;" onclick="ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();" >{{Close}}</div>'+
                               '            </div>'+
                               '        </div>'+
                               '</div>'+

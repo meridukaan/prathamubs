@@ -63,6 +63,6 @@ ubsApp.buyInsurance = function(page){
 		ubsApp.pages[page].repeatforuser = false;
 
         //code for premium payment or set insurance to false
-		ubsApp.nextMove();
+		ubsApp.callServerNextMove();
 	}
 }

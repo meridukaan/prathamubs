@@ -37,7 +37,7 @@ ubsApp.cancelQuiz=function(scenarioName){
 	ubsApp.closeCurrentScenario();
 	if(ubsApp.nextPlayerOnQuizClose) {
 	    ubsApp.nextPlayerOnQuizClose = false;
-	    ubsApp.nextMove();
+	    ubsApp.callServerNextMove();
 	}
 
 }

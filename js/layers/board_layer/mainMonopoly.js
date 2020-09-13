@@ -219,6 +219,7 @@ monopoly.renderPageforBoard = function(page) {
 
 
 monopoly.startScenarios = function(blockNo){
+    console.log("Inside Start Scenario");
   setTimeout(function(){
       let category = blockCategory[blockNo];
       ubsApp.currentScenarioCategory = category;
@@ -241,7 +242,7 @@ monopoly.startScenarios = function(blockNo){
                 currentTemplate[0].question=key;
       } else {
          ubsApp.currentScenarioCategory = "";
-        ubsApp.nextMove();
+         ubsApp.callServerNextMove();
       }
 
        
@@ -282,7 +283,8 @@ monopoly.myMove = function(count, pId, currentPos) {
                     			"header" : ubsApp.getTranslation("EndGameSummary"),
                     			"isWeekSummary" : true,
                     			});
-            setTimeout(function() { ubsApp.nextMove();}, 5000);
+            // setTimeout(function() { ubsApp.nextMove();}, 5000); //Call to server
+            setTimeout(function(){ubsApp.callServerNextMove();}, 5000);
         }
 
 
@@ -295,7 +297,7 @@ monopoly.myMove = function(count, pId, currentPos) {
     if (blockNo == (currentPos+count)%boardConfig.blocks){
       userArray[pId].setplayerCurrentPos((currentPos+count)%boardConfig.blocks);
       clearInterval(movePlayer);
-      if(userArray[pId].getWeeks() <= ubsApp.maxNumOfWeeks) {
+      if(userArray[pId].getWeeks() <= 12) {
         monopoly.startScenarios(blockNo);
       }
     } 
@@ -979,7 +981,7 @@ ubsApp.confirmEndGame=function(){
 
 ubsApp.nextMove = function(){
 
-
+    console.log("Calling next move");
     ubsApp.closeCurrentScenario();
     if(!userArray[playerChance]) {
         return;
@@ -1259,3 +1261,8 @@ ubsApp.populateStudentArray = function(studentArray) {
         studentArray[i]["delete"] = ubsApp.getTranslation("DELETE");
     }
 }
+
+socket.on('nextMove', function (data) {
+    console.log("Toggling player chance");
+    ubsApp.nextMove();
+})

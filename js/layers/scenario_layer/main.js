@@ -192,7 +192,7 @@ ubsApp.mapTemplatetoFunction = function(){
 ubsApp.checkPageorBoard= function(page,amount,hideScenarios){
 	clearInterval(timeVar);
 	if(hideScenarios == "true"){
-        ubsApp.nextMove();
+        ubsApp.callServerNextMove();
 	}
 	else {
 		ubsApp.renderPageByName(page);/*,amount);*/
@@ -377,6 +377,11 @@ ubsApp.callServerClosePopup = function(){
 	});
 }
 
+ubsApp.callServerNextMove = function(){
+	console.log("Next Move clicked");
+	socket.emit("callNextMove",{ description: "Call Next Move", roomCode : ubsApp.studentArray[0].room });
+}
+
 socket.on('socketClosePopup', function(data){
 	console.log("server has triggered socket close pop up");
 	ubsApp.closePopup();
@@ -424,10 +429,10 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
    $('#resultBackground').hide();
 
    if(ubsApp.openedTransferScenario && (ubsApp.openNextMoveAfterTransfer || ubsApp.openNextMoveAfterPayOff)) {
-       ubsApp.nextMove();
+	ubsApp.callServerNextMove();
        }
     else if (!ubsApp.openedTransferScenario ) {
-        ubsApp.nextMove();
+        ubsApp.callServerNextMove();
    }
    else {
     ubsApp.closeCurrentScenario();

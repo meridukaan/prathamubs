@@ -141,6 +141,17 @@ io.on('connection', function (socket) {
             description: "Calling close popup on all clients in room"
         });
     })
+
+    socket.on('callNextMove', function(data){
+        console.log("Calling Next move in the client");
+        console.log(data.roomCode);
+        socket.emit('nextMove', {
+            description: "Calling Next Move in all Cleints in my room"
+        });
+        socket.in(Number(data.roomCode)).emit('nextMove', {
+            description: "Calling Next Move in all Cleints in my room"
+        });
+    })
 })
 
 http.listen(3000, function () {
