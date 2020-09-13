@@ -30,7 +30,7 @@ ubsApp.createRoom = function () {
                 {
                     'id': "closePopupButton",
                     'name': "CLOSE",
-                    'action': "ubsApp.closePopup();"
+                    'action': "ubsApp.callServerClosePopup();"
                 }
             ]
         });
@@ -44,7 +44,7 @@ ubsApp.createRoom = function () {
                 {
                     'id': "closePopupButton",
                     'name': "CLOSE",
-                    'action': "ubsApp.closePopup();"
+                    'action': "ubsApp.callServerClosePopup();"
                 }
             ]
         });
@@ -58,7 +58,7 @@ ubsApp.createRoom = function () {
                 {
                     'id': "closePopupButton",
                     'name': "CLOSE",
-                    'action': "ubsApp.closePopup();"
+                    'action': "ubsApp.callServerClosePopup();"
                 }
             ]
         });

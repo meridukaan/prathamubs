@@ -61,11 +61,11 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 		  	if(entryPoint == "unluckyScenario"){
 		  		let currentPlayerRepPoints = userArray[playerChance].getReputationPts();
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizWrongResultFromLuckyScenario'], [reputationPoints]));
-		  		nextAction = "ubsApp.closePopup(); ubsApp.closeCurrentScenario();ubsApp.callServerNextMove();"
+		  		nextAction = "ubsApp.callServerClosePopup(); ubsApp.closeCurrentScenario();ubsApp.callServerNextMove();"
 		  	}
 		  	else{
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizCorrectAnswerMessage'], [reputationPoints]));
-		  		nextAction = "ubsApp.closePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
+		  		nextAction = "ubsApp.callServerClosePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
 		  	}
 		    ubsApp.openPopup({
         		"message" : quizResultMessage,
@@ -100,7 +100,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 	                		{
 	                			'id':"unluckyScenarioOkButton",
 	                            'name' : ubsApp.getTranslation("OK"),
-	                            'action': "ubsApp.closePopup(); ubsApp.payOrGain(\'"+ scenarioName +"\');ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
+	                            'action': "ubsApp.callServerClosePopup(); ubsApp.payOrGain(\'"+ scenarioName +"\');ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
 	                        }
 	                 ]
 
@@ -121,7 +121,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 	                        {
 	                			'id':"quizWrongAnswer",
 	                            'name' : ubsApp.getTranslation("no"),
-	                            'action': "ubsApp.closePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
+	                            'action': "ubsApp.callServerClosePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
 	                        }
 	                 ]
 

@@ -22,7 +22,7 @@ ubsApp.luckPaymentQuiz=function(page){
                 {
                     'id':"luckTakeQuizPopup",
                     'name' : ubsApp.getTranslation("OK"),
-                    'action': "ubsApp.closePopup();ubsApp.renderLuckQuizQuestion(\'"+ page +"\')"
+                    'action': "ubsApp.callServerClosePopup();ubsApp.renderLuckQuizQuestion(\'"+ page +"\')"
                 }
         ]
 

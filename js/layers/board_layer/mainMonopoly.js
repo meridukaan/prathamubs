@@ -458,7 +458,7 @@ monopoly.storePlayerDetails=function(){
                       "showBorder" : false,
                       "backgroundColor" :"white",
                    });
-    setTimeout(function(){ubsApp.closePopup();}, 2000);
+    setTimeout(function(){ubsApp.callServerClosePopup();}, 2000);
 }
 
 monopoly.initPlayers=function(){
@@ -749,7 +749,7 @@ monopoly.chooseLanguage=function(language){
             ubsApp.initializeUbsPages();
             monopoly.initializePages();
     	 ubsApp.translateScenarios();
-    	 ubsApp.closePopup();
+    	 ubsApp.callServerClosePopup();
     	 ubsApp.startHelp("introHelp");
     	//  monopoly.pages.WelcomePage[1].src="<img src=\"images/" + languageSelected +"/logo.png\" style=\"height: 39vh;top:40%;margin: 6%;margin-left: 30%;\"> </img>";
           monopoly.storePlayerDetails();
@@ -815,7 +815,7 @@ monopoly.startGame=function(){
                             }
                         }
                         monopoly.initOnlinePlayers();
-                        ubsApp.closePopup();
+                        ubsApp.callServerClosePopup();
                     }
                 })
              }
@@ -873,12 +873,12 @@ ubsApp.confirmEndGame=function(){
       'buttons' : [
           {
               'name' : ubsApp.getTranslation("yes"),
-              'action': "ubsApp.closePopup();ubsApp.endGame();"
+              'action': "ubsApp.callServerClosePopup();ubsApp.endGame();"
           },
 
           {
                       'name' : ubsApp.getTranslation("no"),
-                      'action': "ubsApp.closePopup();"
+                      'action': "ubsApp.callServerClosePopup();"
           }
       ]
   });
@@ -1015,7 +1015,7 @@ ubsApp.nextMove = function(){
                                           "showBorder" : false,
                                           "backgroundColor" :"transparent",
                                        });
-                       setTimeout(function(){ubsApp.closePopup(true);}, 2000);
+                       setTimeout(function(){ubsApp.callServerClosePopup(true);}, 2000);
          }
 
 			playerChance+=1;
@@ -1187,7 +1187,7 @@ ubsApp.openQuizIfValid = function() {
                     {
                             'id':"quizStart",
                             'name' : ubsApp.getTranslation("startQuiz"),
-                            'action': "ubsApp.closePopup();ubsApp.renderPageByName('generalQuizStarter');"
+                            'action': "ubsApp.callServerClosePopup();ubsApp.renderPageByName('generalQuizStarter');"
                     }
                  ]
 

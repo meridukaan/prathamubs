@@ -32,7 +32,7 @@ ubsApp.joinRoom = function () {
                 {
                     'id': "closePopupButton",
                     'name': "CLOSE",
-                    'action': "ubsApp.closePopup();"
+                    'action': "ubsApp.callServerClosePopup();"
                 }
             ]
         });
@@ -46,7 +46,7 @@ ubsApp.joinRoom = function () {
                 {
                     'id': "closePopupButton",
                     'name': "CLOSE",
-                    'action': "ubsApp.closePopup();"
+                    'action': "ubsApp.callServerClosePopup();"
                 }
             ]
         });
@@ -77,7 +77,7 @@ socket.on("joinRoomPopup", function (data) {
             {
                 'id': "closePopupButton",
                 'name': "CLOSE",
-                'action': "ubsApp.closePopup();"
+                'action': "ubsApp.callServerClosePopup();"
             }
         ]
     });
