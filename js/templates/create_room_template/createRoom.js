@@ -12,10 +12,14 @@ ubsApp.openCreateRoomTemplate = function () {
 //add create room functions below
 
 ubsApp.createRoom = function () {
+    // ubsApp.maxNumOfWeeks = document.getElementById("");
+    numOfWeeks = ubsApp.maxNumOfWeeks = $("input[name='noOfWeeks']:checked"). val();
     userLimit = document.getElementById("num_online_players").value;
     userName = document.getElementById("playerNameInput").value;
     userAge = document.getElementById("playerAge").value;
     userGender = document.getElementById("playerGender").value;
+    languageSelected = document.getElementById("languageSelect").value;
+    console.log("language :" + languageSelected)
     if (!userName) {
         console.log("Invalid username");
         ubsApp.openResultPopup({
@@ -62,10 +66,12 @@ ubsApp.createRoom = function () {
     else {
         socket.emit("serverCreateRoom", {
             description: "create room button clicked",
-            limit: userLimit,
-            userId: userName,
+            roomLimit: userLimit,
+            userName: userName,
             userAge : userAge,
-            userGender : userGender
+            userGender : userGender,
+            roomWeeks : numOfWeeks,
+            roomLanguage : languageSelected
         });
     }
 }

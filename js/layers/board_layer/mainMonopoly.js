@@ -351,13 +351,15 @@ monopoly.rollDice  = function(){
 
 monopoly.socketStorePlayerDetails=function(){
     socket.emit('storePlayerDetailsToServer',{
-        description : "Calls server for storing details of player", roomCode : ubsApp.studentArray[0].room
+        description : "Calls server for storing details of player", 
+        roomCode : ubsApp.studentArray[0].room,
+        roomLanguage : languageSelected
     })
 }
 
 socket.on('storePlayerDetailsToClient',function(data){
    ubsApp.closeCurrentScenario();
-    monopoly.chooseLanguage('english');
+    monopoly.chooseLanguage(data.roomLanguage);
     // monopoly.storePlayerDetails();
 })
 
@@ -366,7 +368,6 @@ monopoly.storePlayerDetails=function(){
     let computerRequired=false;  //document.getElementById("computer").checked;
     let isOffline = ubsApp.isOfflineMode;
     let playerMap = {};
-    ubsApp.maxNumOfWeeks = $("input[name='noOfWeeks']:checked"). val();
 
     numplayers=ubsApp.studentArray.length;
 
