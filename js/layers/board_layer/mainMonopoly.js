@@ -218,36 +218,47 @@ monopoly.renderPageforBoard = function(page) {
 //   }
 
 
-monopoly.startScenarios = function(blockNo){
-    console.log("Inside Start Scenario");
-  setTimeout(function(){
-      let category = blockCategory[blockNo];
-      ubsApp.currentScenarioCategory = category;
-      if(category) {
-        scenario = userArray[playerChance].getScenario(category,playerChance);   //   blockCategory[blockNo]
-                let currentTemplateName=scenario.getName();
-                let currentTemplate=ubsApp.pages[currentTemplateName].templates;
-                let key=ubsApp.pages[currentTemplateName].templates[0].question;
+monopoly.callStartScenario = function (templateName, template, key) {
+    socket.emit('startScenarioToServer', {
+        description: "This calls server side for startScenario", templateName
+            : templateName, template: template, key: key, roomCode:
+            ubsApp.studentArray[0].room
+    });
+}
 
-                $('#monopolyBase').css("z-index",-10);
-                $('#templateBase').css("z-index",10);
+socket.on('startScenarioToClient', function (data) {
+    console.log("Started scenario on client from Socket");
+    templateName = data.templateName;
+    template = data.template;
+    key = data.key;
+    $('#monopolyBase').css("z-index", -10);
+    $('#templateBase').css("z-index", 10);
+    document.getElementById("templateContent").style.opacity = "0.95";
+    $('#templateContent').css("height", (screenHeight) + 'px')
+    $('#templateContent').css("width", (screenWidth) + 'px')
+    $('#resultBackground').show();
+    ubsApp.renderPageByName(templateName);
+    template[0].question = key;
+})
 
-                document.getElementById("templateContent").style.opacity="0.95";
-
-                $('#templateContent').css("height",(screenHeight)+'px')
-                $('#templateContent').css("width",(screenWidth)+'px')
-                $('#resultBackground').show();
-
-                ubsApp.renderPageByName(scenario.getName());
-                currentTemplate[0].question=key;
-      } else {
-         ubsApp.currentScenarioCategory = "";
-         ubsApp.callServerNextMove();
-      }
-
-       
-  },1000);
-
+monopoly.startScenarios = function (blockNo) {
+    console.log("beginning startScenario");
+    setTimeout(function () {
+        let category = blockCategory[blockNo];
+        ubsApp.currentScenarioCategory = category;
+        if (category) {
+            console.log("Inside startScenario If")
+            scenario = userArray[playerChance].getScenario(category, playerChance);
+            // blockCategory[blockNo]
+            let currentTemplateName = scenario.getName();
+            let currentTemplate = ubsApp.pages[currentTemplateName].templates;
+            let key = ubsApp.pages[currentTemplateName].templates[0].question;
+            monopoly.callStartScenario(currentTemplateName, currentTemplate, key);
+        } else {
+            ubsApp.currentScenarioCategory = "";
+            ubsApp.nextMove()
+        }
+    }, 1000);
 }
 
 socket.on('clientMyMove', function(data){

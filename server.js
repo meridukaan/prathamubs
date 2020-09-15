@@ -168,6 +168,16 @@ io.on('connection', function (socket) {
             description: "Calling Next Move in all Cleints in my room"
         });
     })
+
+    socket.on('startScenarioToServer', function (data) {
+        console.log("Opened startScenario on Server");
+        socket.in(Number(data.roomCode)).emit('startScenarioToClient', {
+            description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
+        })
+        socket.emit('startScenarioToClient', {
+            description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
+        })
+    })
 })
 
 http.listen(3000, function () {
