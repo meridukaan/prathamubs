@@ -1038,7 +1038,7 @@ ubsApp.luckyUnluckyTemplate='<div style="width:100%;height:100%;position:relativ
 '                    {{#if negative}}{{payTitle}}{{else}}{{gainTitle}}{{/if}}'+
 '                  </button>'+
 '                {{else}}'+
-'                  <button class="paymentPayButton" onclick="ubsApp.payFromBank(\'{{scenarioName}}\',\'{{questionId}}\')">'+
+'                  <button class="paymentPayButton" onclick="ubsApp.socketPayFromBank(\'{{scenarioName}}\',\'{{questionId}}\')">'+
 '                    {{#if negative}}{{payTitle}}{{else}}{{gainTitle}}{{/if}}'+
 '                  </button>'+
 '               {{/if}}'+

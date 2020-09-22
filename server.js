@@ -178,6 +178,18 @@ io.on('connection', function (socket) {
             description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
         })
     })
+
+    socket.on('serverPayFromBank', function(data){
+        console.log(data.description);
+        socket.in(Number(data.roomCode)).emit('clientPayFromBank', {
+            pageName : data.pageName,
+            questionId : data.questionId
+        })
+        socket.emit('clientPayFromBank', {
+            pageName : data.pageName,
+            questionId : data.questionId
+        })
+    })
 })
 
 http.listen(3000, function () {

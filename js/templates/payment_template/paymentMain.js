@@ -3,6 +3,20 @@ ubsApp.getPayTemplate=function(templateConfig,tempVar){
 	tempVar.html+=ubsLuckTemplate(templateConfig);
 }
 
+ubsApp.socketPayFromBank = function(pageName, questionId){
+    socket.emit('serverPayFromBank', {
+        description : "Emitting to serverPayFromBank",
+        pageName : pageName,
+        questionId : questionId,
+        roomCode : userArray[playerChance].getRoomCode()
+    });
+}
+
+socket.on('clientPayFromBank', function(data){
+    console.log("inside clientPayFromBank");
+    ubsApp.payFromBank(data.pageName, data.questionId);
+})
+
 ubsApp.payFromBank=function(pageName,questionId){
     console.log("Payment Question ID is: " + questionId)
     let initialBankBalance = userArray[playerChance].getBankBalance();
