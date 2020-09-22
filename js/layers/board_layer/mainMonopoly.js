@@ -29,6 +29,7 @@ var initialPlayerBankBalance=100000;
 var initialInventoryScore=60;
 var initialReputation=10;
 var harnamSinghProfit=8000;
+// let playerColors =[Red, Green, Blue, Purple];
 var ubsBoardTemplate = monopoly.ubsBoardTemplate;
 var ubsSideScoreBoardTemplate = monopoly.sideScoreBoardTemplate;
 var ubsEndGameTemplate = monopoly.ubsEndGameTemplate;
@@ -122,6 +123,8 @@ monopoly.renderPageforBoard = function(page) {
              }
               for(var j=0;j<templateConfig.bottom_row.length;j++){
                 let key=templateConfig.bottom_row[j].title;
+                console.log(templateConfig.bottom_row);
+                console.log(key);
                 let translatedString=ubsApp.translation[key];
                 templateConfig.bottom_row[j].title=translatedString;
               }
@@ -215,42 +218,58 @@ monopoly.renderPageforBoard = function(page) {
 //   }
 
 
-monopoly.startScenarios = function(blockNo){
-  setTimeout(function(){
-      let category = blockCategory[blockNo];
-      ubsApp.currentScenarioCategory = category;
-      if(category) {
-        scenario = userArray[playerChance].getScenario(category,playerChance);   //   blockCategory[blockNo]
-                let currentTemplateName=scenario.getName();
-                let currentTemplate=ubsApp.pages[currentTemplateName].templates;
-                let key=ubsApp.pages[currentTemplateName].templates[0].question;
-
-                $('#monopolyBase').css("z-index",-10);
-                $('#templateBase').css("z-index",10);
-
-                document.getElementById("templateContent").style.opacity="0.95";
-
-                $('#templateContent').css("height",(screenHeight)+'px')
-                $('#templateContent').css("width",(screenWidth)+'px')
-                $('#resultBackground').show();
-
-                ubsApp.renderPageByName(scenario.getName());
-                currentTemplate[0].question=key;
-      } else {
-         ubsApp.currentScenarioCategory = "";
-        ubsApp.nextMove();
-      }
-
-       
-  },1000);
-
+monopoly.callStartScenario = function (templateName, template, key) {
+    socket.emit('startScenarioToServer', {
+        description: "This calls server side for startScenario", templateName
+            : templateName, template: template, key: key, roomCode:
+            ubsApp.studentArray[0].room
+    });
 }
 
+socket.on('startScenarioToClient', function (data) {
+    console.log("Started scenario on client from Socket");
+    templateName = data.templateName;
+    template = data.template;
+    key = data.key;
+    $('#monopolyBase').css("z-index", -10);
+    $('#templateBase').css("z-index", 10);
+    document.getElementById("templateContent").style.opacity = "0.95";
+    $('#templateContent').css("height", (screenHeight) + 'px')
+    $('#templateContent').css("width", (screenWidth) + 'px')
+    $('#resultBackground').show();
+    ubsApp.renderPageByName(templateName);
+    template[0].question = key;
+})
+
+monopoly.startScenarios = function (blockNo) {
+    console.log("beginning startScenario");
+    setTimeout(function () {
+        let category = blockCategory[blockNo];
+        ubsApp.currentScenarioCategory = category;
+        if (category) {
+            console.log("Inside startScenario If")
+            scenario = userArray[playerChance].getScenario(category, playerChance);
+            // blockCategory[blockNo]
+            let currentTemplateName = scenario.getName();
+            let currentTemplate = ubsApp.pages[currentTemplateName].templates;
+            let key = ubsApp.pages[currentTemplateName].templates[0].question;
+            monopoly.callStartScenario(currentTemplateName, currentTemplate, key);
+        } else {
+            ubsApp.currentScenarioCategory = "";
+            ubsApp.nextMove()
+        }
+    }, 1000);
+}
+
+socket.on('clientMyMove', function(data){
+    console.log("dice value is : "+data.userDiceValue);
+    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition);
+})
 monopoly.myMove = function(count, pId, currentPos) {
   var temp="#p"+pId;
   var playerToken = $(temp);
   var blockNo = currentPos;   
-
+  console.log("Current Pos : "+ currentPos + "of player : " + userArray[pId].getplayerName());
    var movePlayer = setInterval(frame, 500);
   if(currentPos+count >= boardConfig.blocks){
     let x = userArray[pId].getWeeks();
@@ -279,7 +298,8 @@ monopoly.myMove = function(count, pId, currentPos) {
                     			"header" : ubsApp.getTranslation("EndGameSummary"),
                     			"isWeekSummary" : true,
                     			});
-            setTimeout(function() { ubsApp.nextMove();}, 5000);
+            // setTimeout(function() { ubsApp.nextMove();}, 5000); //Call to server
+            setTimeout(function(){ubsApp.callServerNextMove();}, 5000);
         }
 
 
@@ -292,7 +312,7 @@ monopoly.myMove = function(count, pId, currentPos) {
     if (blockNo == (currentPos+count)%boardConfig.blocks){
       userArray[pId].setplayerCurrentPos((currentPos+count)%boardConfig.blocks);
       clearInterval(movePlayer);
-      if(userArray[pId].getWeeks() <= ubsApp.maxNumOfWeeks) {
+      if(userArray[pId].getWeeks() <= 12) {
         monopoly.startScenarios(blockNo);
       }
     } 
@@ -339,18 +359,38 @@ monopoly.rollDice  = function(){
 		playerChance=0;
 	}
 	$("#player").html(userArray[playerChance].getplayerName());
-	$("#diceval").html(diceVal);	
-      monopoly.myMove(diceVal, playerChance, userArray[playerChance].getplayerCurrentPos());   //update Real time dice Value
+    $("#diceval").html(diceVal);
+    socket.emit("serverMyMove", {
+        userDiceValue : diceVal,
+        userChance : playerChance,
+        userPosition : userArray[playerChance].getplayerCurrentPos(),
+        userRoom : userArray[playerChance].getRoomCode()
+    });	
+    //   monopoly.myMove(diceVal, playerChance, userArray[playerChance].getplayerCurrentPos());   //update Real time dice Value
     },1000);
 }
 
+monopoly.socketStorePlayerDetails=function(){
+    socket.emit('storePlayerDetailsToServer',{
+        description : "Calls server for storing details of player", 
+        roomCode : ubsApp.studentArray[0].room,
+        roomLanguage : languageSelected
+    })
+}
+
+socket.on('storePlayerDetailsToClient',function(data){
+   ubsApp.closeCurrentScenario();
+    monopoly.chooseLanguage(data.roomLanguage);
+    // monopoly.storePlayerDetails();
+})
 
 monopoly.storePlayerDetails=function(){
     var i=0;
     let computerRequired=false;  //document.getElementById("computer").checked;
     let isOffline = ubsApp.isOfflineMode;
     let playerMap = {};
-    ubsApp.maxNumOfWeeks = $("input[name='noOfWeeks']:checked"). val();
+
+    numplayers=ubsApp.studentArray.length;
 
     if (numplayers <= 0) {
       ubsApp.openPopup({
@@ -364,36 +404,34 @@ monopoly.storePlayerDetails=function(){
      return;
     }
 
-    for( i=0;i<numplayers;i++) {
+    // for( i=0;i<numplayers;i++) {
 
-        if(playerMap[document.getElementById("name"+i).value]) {
-             ubsApp.openPopup({
-                    "message" : ubsApp.getTranslation("eachPlayerNameUniqueMessage"),
-                    "header" : ubsApp.getTranslation("ERROR"),
-                    "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
-                    });
-             return;
-        }
-        playerMap[document.getElementById("name"+i).value] = true;
-     }
-
-
-
-
+    //     if(playerMap[document.getElementById("name"+i).value]) {
+    //          ubsApp.openPopup({
+    //                 "message" : ubsApp.getTranslation("eachPlayerNameUniqueMessage"),
+    //                 "header" : ubsApp.getTranslation("ERROR"),
+    //                 "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
+    //                 });
+    //          return;
+    //     }
+    //     playerMap[document.getElementById("name"+i).value] = true;
+    //  }
 
     for( i=0;i<numplayers;i++)
     {
+        console.log("Num of players : "+numplayers);
         let user=new User();
-        let res = document.getElementById("name"+i).value.split("_");
-        user.setplayerName(res[1]);
-        user.setplayerStudentId(res[0]);
+        // let res = document.getElementById("name"+i).value.split("_");
+        // user.setplayerName(res[1]);
+        // user.setplayerStudentId(res[0]);
 
-
-
+        user.setplayerName(ubsApp.studentArray[i].name);
+        user.setRoomCode(ubsApp.studentArray[i].room);
         user.setplayerScore(initialPlayerCash);
         user.setLastWeekSummary(initialPlayerCash, initialPlayerBankBalance, initialReputation, 0, 0, 60.00);
         user.setInventoryScore(60.00);
-        var color=$('input[name=Radio'+i+']:checked').val();
+        // var color=$('input[name=Radio'+i+']:checked').val();
+        var color = monopoly.tokens[i];
         user.setplayerColor(color.toLowerCase());
         user.setplayerId("p"+i);
         user.setplayerCurrentPos(0);
@@ -430,6 +468,7 @@ monopoly.storePlayerDetails=function(){
     }
     monopoly.noPlayersPlaying = numplayers;
     done_initialising=true;
+    console.log("StoreInitPlayers, before render");
     monopoly.renderPageforBoard(monopoly.pages["monopoly"]);
     ubsApp.openPopup({
                       "header" : "",
@@ -440,7 +479,7 @@ monopoly.storePlayerDetails=function(){
                       "showBorder" : false,
                       "backgroundColor" :"white",
                    });
-    setTimeout(function(){ubsApp.closePopup();}, 2000);
+    setTimeout(function(){ubsApp.callServerClosePopup();}, 2000);
 }
 
 monopoly.initPlayers=function(){
@@ -642,6 +681,16 @@ monopoly.closeLeaderBoard=function(){
 
 }
 
+monopoly.createRoom=function(){
+    console.log("Creating Room");
+    ubsApp.openCreateRoomTemplate();
+}
+
+monopoly.joinRoom=function(){
+    console.log("Join Room");
+    ubsApp.openJoinRoomTemplate();
+}
+
 
 monopoly.chooseLanguage=function(language){
 
@@ -721,10 +770,10 @@ monopoly.chooseLanguage=function(language){
             ubsApp.initializeUbsPages();
             monopoly.initializePages();
     	 ubsApp.translateScenarios();
-    	 ubsApp.closePopup();
+    	 ubsApp.callServerClosePopup();
     	 ubsApp.startHelp("introHelp");
-    	 monopoly.pages.WelcomePage[1].src="<img src=\"images/" + languageSelected +"/logo.png\" style=\"height: 39vh;top:40%;margin: 6%;margin-left: 30%;\"> </img>";
-
+    	//  monopoly.pages.WelcomePage[1].src="<img src=\"images/" + languageSelected +"/logo.png\" style=\"height: 39vh;top:40%;margin: 6%;margin-left: 30%;\"> </img>";
+          monopoly.storePlayerDetails();
 
       }
     }
@@ -787,7 +836,7 @@ monopoly.startGame=function(){
                             }
                         }
                         monopoly.initOnlinePlayers();
-                        ubsApp.closePopup();
+                        ubsApp.callServerClosePopup();
                     }
                 })
              }
@@ -818,7 +867,7 @@ monopoly.startGame=function(){
                ubsApp.studentArray = JSON.parse(ubsApp.studentArray);
 
               } catch(err) {
-                                      console.log("Error parsing student array from andriod");
+                console.log("Error parsing student array from andriod");
 
                 ubsApp.studentArray=[];
               }
@@ -845,12 +894,12 @@ ubsApp.confirmEndGame=function(){
       'buttons' : [
           {
               'name' : ubsApp.getTranslation("yes"),
-              'action': "ubsApp.closePopup();ubsApp.endGame();"
+              'action': "ubsApp.callServerClosePopup();ubsApp.endGame();"
           },
 
           {
                       'name' : ubsApp.getTranslation("no"),
-                      'action': "ubsApp.closePopup();"
+                      'action': "ubsApp.callServerClosePopup();"
           }
       ]
   });
@@ -954,7 +1003,7 @@ ubsApp.confirmEndGame=function(){
 
 ubsApp.nextMove = function(){
 
-
+    console.log("Calling next move");
     ubsApp.closeCurrentScenario();
     if(!userArray[playerChance]) {
         return;
@@ -987,7 +1036,7 @@ ubsApp.nextMove = function(){
                                           "showBorder" : false,
                                           "backgroundColor" :"transparent",
                                        });
-                       setTimeout(function(){ubsApp.closePopup(true);}, 2000);
+                       setTimeout(function(){ubsApp.callServerClosePopup(true);}, 2000);
          }
 
 			playerChance+=1;
@@ -1159,7 +1208,7 @@ ubsApp.openQuizIfValid = function() {
                     {
                             'id':"quizStart",
                             'name' : ubsApp.getTranslation("startQuiz"),
-                            'action': "ubsApp.closePopup();ubsApp.renderPageByName('generalQuizStarter');"
+                            'action': "ubsApp.callServerClosePopup();ubsApp.renderPageByName('generalQuizStarter');"
                     }
                  ]
 
@@ -1192,7 +1241,7 @@ ubsApp.restartGame = function() {
     var audioElement = document.getElementById('splash');
     ubsApp.raiseAudioEvent(audioElement, 'splashScreenAudio');
     //setTimeout(monopoly.renderPageforBoard, 30, monopoly.pages.Splash);
-    setTimeout(monopoly.renderPageforBoard, renderTimeOutMiliSec, monopoly.pages.EnterLanguagePage);
+    setTimeout(monopoly.renderPageforBoard, renderTimeOutMiliSec, monopoly.pages.CreateOrJoinRoom);
 }
 
 monopoly.initializePages = function() {
@@ -1234,3 +1283,8 @@ ubsApp.populateStudentArray = function(studentArray) {
         studentArray[i]["delete"] = ubsApp.getTranslation("DELETE");
     }
 }
+
+socket.on('nextMove', function (data) {
+    console.log("Toggling player chance");
+    ubsApp.nextMove();
+})

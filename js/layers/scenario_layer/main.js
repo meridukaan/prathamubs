@@ -21,6 +21,9 @@ let ubsAdvantageCardTemplate;
 let ubsQuizTemplate;
 let ubsWeekSummarytemplate;
 let ubsAddPlayerTempate;
+let ubsJoinRoomLobbyTemplate;
+let ubsCreateRoomTemplate;
+let ubsCreateRoomLobbyTemplate;
 let choiceSelected={};
 let timeVar;
 var helpScenarioOpen=false;
@@ -38,13 +41,16 @@ var calculatorReq=false;
 let screenHeight = $(window).height();
 let screenWidth = $(window).width();
 
-let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer"];
+
+let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom", "joinRoomLobby", "createRoomLobby"];
 let templateMap = {};
 let offlinePurchaseClicked=false;
 ubsApp.isAndroidEnabled=false;
 ubsApp.isWebEnabled = false;
 ubsApp.deviceFingerPrint = "";
 ubsApp.popupConfig = {};
+
+ubsApp.isCreator = false;
 
 $(document).ready(function(){
 	ubsApp.intitializeTemplates();
@@ -186,7 +192,7 @@ ubsApp.mapTemplatetoFunction = function(){
 ubsApp.checkPageorBoard= function(page,amount,hideScenarios){
 	clearInterval(timeVar);
 	if(hideScenarios == "true"){
-        ubsApp.nextMove();
+        ubsApp.callServerNextMove();
 	}
 	else {
 		ubsApp.renderPageByName(page);/*,amount);*/
@@ -234,7 +240,12 @@ ubsApp.intitializeTemplates = function() {
 	ubsPopupTemplate = Template7.compile(ubsApp.popUpTemplate);
 	ubsAddPlayerTemplate = Template7.compile(ubsApp.addPlayerTemplate);
 	ubsAddPlayerTemplateonWeb = Template7.compile(ubsApp.addPlayerTemplateonWeb);
-
+	
+	//Multiplayer Tempaltes
+	ubsJoinRoomTemplate= Template7.compile(ubsApp.joinRoomTemplate)
+	ubsCreateRoomTemplate= Template7.compile(ubsApp.createRoomTemplate)
+	ubsJoinRoomLobbyTemplate =Template7.compile(ubsApp.joinRoomLobbyTemplate)
+	ubsCreateRoomLobbyTemplate= Template7.compile(ubsApp.createRoomLobbyTemplate)
 }
 
 
@@ -359,14 +370,25 @@ ubsApp.openPopup = function(config) {
    ubsApp.startHelp("generalPopUp");
 }
 
-ubsApp.callServerClosePopup = function(){
+ubsApp.callServerClosePopup = function(config, doNextMoveFlag){
 	console.log("close pop up clicked");
-	socket.emit("serverClosePopup");
+	socket.emit("serverClosePopup",{
+		roomCode : ubsApp.studentArray[0].room,
+		config : config,
+		doNextMove : doNextMoveFlag
+	});
+}
+
+ubsApp.callServerNextMove = function(){
+	console.log("Next Move clicked");
+	socket.emit("callNextMove",{ description: "Call Next Move", roomCode : ubsApp.studentArray[0].room });
 }
 
 socket.on('socketClosePopup', function(data){
 	console.log("server has triggered socket close pop up");
-	ubsApp.closePopup();
+	popUpConfig = data.config;
+	doNextMoveFlag = data.doNextMove;
+	ubsApp.closePopup(popUpConfig, doNextMoveFlag);
 })
 
 ubsApp.closePopup = function(config, doNextMove=true) {
@@ -411,10 +433,10 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
    $('#resultBackground').hide();
 
    if(ubsApp.openedTransferScenario && (ubsApp.openNextMoveAfterTransfer || ubsApp.openNextMoveAfterPayOff)) {
-       ubsApp.nextMove();
+	ubsApp.callServerNextMove();
        }
     else if (!ubsApp.openedTransferScenario ) {
-        ubsApp.nextMove();
+        ubsApp.callServerNextMove();
    }
    else {
     ubsApp.closeCurrentScenario();
@@ -531,7 +553,12 @@ ubsApp.initializeUbsPages = function() {
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.quizStarterConfig);
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.successErrorConfig);
     ubsApp.pages=$.extend(ubsApp.pages,ubsApp.weekSummaryConfig);
-    ubsApp.pages=$.extend(ubsApp.pages,ubsApp.addPlayerConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.addPlayerConfig);
+	//Multiplayer Changes
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.joinRoomConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.joinRoomLobbyConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.createRoomConfig);
+	ubsApp.pages=$.extend(ubsApp.pages,ubsApp.createRoomLobbyConfig);
 }
 
 ubsApp.startRecordingTimer = function(templateConfig){

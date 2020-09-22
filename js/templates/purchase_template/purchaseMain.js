@@ -157,7 +157,7 @@ else{
         document.getElementById("creditLimitValue").innerHTML="₹ "+userArray[playerChance].getCreditLimit();
 
         if(!offlinePurchaseClicked)
-            ubsApp.nextMove();
+        ubsApp.callServerNextMove();
         else{
             ubsApp.closeCurrentScenario();
             ubsApp.currentPlayerContents();

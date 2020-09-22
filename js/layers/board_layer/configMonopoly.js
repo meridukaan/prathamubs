@@ -33,6 +33,31 @@ monopoly.origpages = {
         }
 
     ],
+
+    "CreateOrJoinRoom":[
+    
+        {
+            "templateId":1,
+            "templateType":"static",
+            "src":"<div id=\"languageDetails\" style=\"cursor:pointer\" onclick=\"monopoly.createRoom()\"><label style=\"color:white; cursor:pointer\" for\"english\">Create Room || कक्ष बनाओ || खोली बनवा</label></div>",
+            "style": "position:absolute;margin-left:15%;padding:10px;border-radius:5px; background-color:black; width:70%;top:30%;"
+        },
+        {
+            "templateId":1,
+            "templateType":"static",
+            "src":"<div id=\"languageDetails\" style=\"cursor:pointer\" onclick=\"monopoly.joinRoom()\"><label style=\"color:white;cursor:pointer\" for\"hindi\">Join Room || कक्ष में शामिल हो || खोलीत सामील व्हा</label></div>",    
+            "style": "position:absolute; width:70%;padding:10px;border-radius:5px;top:45%;margin-left:15%; background-color:black;"
+        },
+        
+        {
+            "templateId":2,
+            "templateType":"static",
+            "src":"<img src=\"images/guptaji/guptaji_front.png\" style=\"position:absolute; top:20%; width: 12%; height: 40%;\"></img>",
+           /* "style": "position: absolute;padding:10px;border-radius:5px;top:20%; " */
+        }
+
+    ], 
+
  
     "Splash":[
         {

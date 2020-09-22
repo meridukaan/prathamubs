@@ -15,6 +15,31 @@ ubsApp.openAddPlayerTemplate = function(){
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("addPlayerPage");
 }
+ubsApp.studentArray = [];
+ubsApp.addOnlinePlayer = function(playerName, playerRoom, playerAge, playerGender) { 
+    let player={}
+    
+    player.name=playerName;
+    player.age=playerAge;
+    player.gender=playerGender;
+    player.roomCode=playerRoom;
+    // playerData = JSON.stringify(player);
+    // console.log(playerData);
+    ubsApp.studentArray.push(player);
+    console.log(ubsApp.studentArray);
+
+    // $.ajax({
+    //     url: "/api/player/AddPlayer",
+    //     type: "post",
+    //     dataType:"json",
+    //     contentType:"application/json",
+    //     data: JSON.stringify(player),
+    //     success : function(data){
+    //         console.log("Player Added successfully" + data);
+    //         ubsApp.studentArray.add(data);
+    //     }
+    // });
+}
 
 ubsApp.addNewPlayer = function () {
     $("#addPlayerValidationMessage").empty();

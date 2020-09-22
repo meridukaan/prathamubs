@@ -26,7 +26,7 @@ ubsApp.getSalesTemplate = function(templateConfig, tempVar){
                         	{
                         		'id':"closePopupButton",
                         		'name' : ubsApp.getTranslation("CLOSE"),
-                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.closePopup();	ubsApp.stopTimer();ubsApp.closeCurrentScenario();ubsApp.nextMove();"
+                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.callServerClosePopup();	ubsApp.stopTimer();ubsApp.closeCurrentScenario();ubsApp.callServerNextMove();"
                         	}
                         ]
                         });
@@ -110,12 +110,12 @@ ubsApp.validateAmount = function(showPopup = true) {
                            'buttons' : [
                                {
                                    'name' : ubsApp.getTranslation("yes"),
-                                   'action': "ubsApp.closePopup();ubsApp.startHelp(\'salesHelp\');",
+                                   'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
                                },
 
                                {
                                            'name' : ubsApp.getTranslation("no"),
-                                           'action': "ubsApp.closePopup();"
+                                           'action': "ubsApp.callServerClosePopup();"
                                }
                            ]
                        });
@@ -143,12 +143,12 @@ ubsApp.validateAmount = function(showPopup = true) {
                                    'buttons' : [
                                        {
                                            'name' : ubsApp.getTranslation("yes"),
-                                           'action': "ubsApp.closePopup();ubsApp.startHelp(\'salesHelp\');",
+                                           'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
                                        },
 
                                        {
                                                    'name' : ubsApp.getTranslation("no"),
-                                                   'action': "ubsApp.closePopup();"
+                                                   'action': "ubsApp.callServerClosePopup();"
                                        }
                                    ]
                                });
@@ -196,7 +196,7 @@ ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, star
                 	{
                 		'id':"closePopupButton",
                 		'name' : ubsApp.getTranslation("CLOSE"),
-              			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');setTimeout(function(){ubsApp.closePopup();}, 2000);"
+              			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');setTimeout(function(){ubsApp.callServerClosePopup();}, 2000);"
                 	}
                 ]
                 });
@@ -232,13 +232,13 @@ ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, star
                "buttons":[
                       {
                            'name' : ubsApp.getTranslation("yes"),
-                           'action': "ubsApp.closePopup(true);ubsApp.startHelp(\'salesAnswerHelp\');",
+                           'action': "ubsApp.callServerClosePopup(true);ubsApp.startHelp(\'salesAnswerHelp\');",
                      },
 
                 	{
                 		'id':"closePopupButton",
                 		'name' : ubsApp.getTranslation("no"),
-              			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.closePopup()"
+              			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.callServerClosePopup()"
                 	}
                 ]
                });

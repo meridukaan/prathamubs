@@ -30,7 +30,7 @@ function replicatecashText(event){
 	amountToTransfer=document.getElementById("debtPaymentText").value;
 	console.log("User typed "+amountToTransfer+" in text box");
 	socket.emit('textToReplicate',{
-		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer
+		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer, roomCode : ubsApp.studentArray[0].room
 	})
 	
 }
@@ -43,7 +43,7 @@ socket.on('replicatedText',function(data){
 
 
 ubsApp.transferToBank = function (questionId) {
-	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId});
+	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId, roomCode : ubsApp.studentArray[0].room});
 	
 }
 
@@ -64,24 +64,6 @@ socket.on('openActualTransferToBank', function(data){
 				userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts() + 5);
 			}
 			cashTransfered = true;
-
-
-ubsApp.transferToBank=function(questionId){
-	console.log("Transfer Question ID : " + questionId);
-	var amount=document.getElementById("debtPaymentText").value;
-	var date = new Date();
-	var startTime=date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-	ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amount, 0,0, startTime,"transferToBank");
-
-	if(amount){
-		if(amount<=userArray[playerChance].getplayerScore()){
-			userArray[playerChance].setplayerScore(userArray[playerChance].getplayerScore()-amount);
-			
-			userArray[playerChance].setBankBalance(parseInt(userArray[playerChance].getBankBalance())+parseInt(amount));
-			if(!cashTransfered&&userArray[playerChance].getTransferReminderOpened()){
-				userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+5);
-			}
-			cashTransfered=true;
 			var temptimer;
 			var temptime = 20;
 			temptimer = setInterval(function () {
@@ -122,11 +104,11 @@ ubsApp.transferToBank=function(questionId){
 		document.getElementById("result").innerHTML = ubsApp.translation["validAmount"];
 	}
 
-}
+})
+
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
-	console.log("Click happened");
-	socket.emit('transferToBank', { description: "This is transfer to bank method" });
+	socket.emit('transferToBank', { description: "This is transfer to bank method", roomCode : ubsApp.studentArray[0].room });
 
 }
 
