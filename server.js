@@ -178,6 +178,41 @@ io.on('connection', function (socket) {
             description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
         })
     })
+
+    socket.on('serverAddToDisplay', function (data) {
+        console.log("Opened AddToDisplay (Calculator) on Server");
+        console.log("RoomCode ="+Number(data.roomCode));
+        console.log("Button clicked " +data.clickedButtonVal);
+        socket.in(Number(data.roomCode)).emit('clientAddToDisplay', {
+            description: "This event calls the AddToDisplay (Calculator) on all clients in room", 
+                            clickedButtonVal:data.clickedButtonVal
+        })
+        // socket.emit('clientAddToDisplay', {
+        //     description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
+        // })
+    })
+
+    socket.on('serverSelectAvailableItem', function (data) {
+        console.log("Opened selectAvailableItem  on Server");
+        console.log("RoomCode ="+Number(data.roomCode));
+        console.log("Socket Id ="+ socket.id);
+        socket.in(Number(data.roomCode)).emit('clientSelectAvailableItem', {
+            description: "This event calls the selectAvailableItem on all clients in room",
+            config:data.config,
+            arr:data.arr,
+            noOfItems: data.noOfItems,
+            val:data.val
+        })
+        socket.emit('clientSelectAvailableItem', {
+            description: "This event calls the selectAvailableItem on all clients in room",
+            config:data.config,
+            arr:data.arr,
+            noOfItems: data.noOfItems,
+            val:data.val
+        })
+    })
+
+
 })
 
 http.listen(3000, function () {

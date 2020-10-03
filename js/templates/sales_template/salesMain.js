@@ -299,40 +299,98 @@ ubsApp.selectAvailableItems = function(config){
 	    arr[arr.length] = randomNumber;
 	}
 
-	for(let i = 0; i<arr.length;i++){
-		config.order[arr[i]].exclude = true;
-	}
+  socket.emit("serverSelectAvailableItem",{
+    config:config,
+    arr:arr,
+    noOfItems: noOfItems,
+    val:val,
+    roomCode: ubsApp.studentArray[playerChance].room
+
+  });
+
+}
+
+socket.on("clientSelectAvailableItem",function(data){
+
+    config=data.config;
+    arr=data.arr;
+    noOfItems= data.noOfItems;
+    val=data.val;
+
+    console.log("config"+ config.order);
+    console.log("Array"+ arr);
+    for(let i = 0; i<arr.length;i++){
+    config.order[arr[i]].exclude = true;
+  }
+      console.log("config"+ config.order);
+    console.log("Array"+ arr);
 
     let orderNo=1;
-	for(var i=0;i<noOfItems;i++){
-		var x = config.order[i].itemId;
-		config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
+  for(var i=0;i<noOfItems;i++){
+    var x = config.order[i].itemId;
+    config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
 
     config.order[i].item = ubsApp.translation.itemTable[x];
 
-		if(config.order[i].exclude==false){
-		    config.order[i].no = orderNo;
+    if(config.order[i].exclude==false){
+        config.order[i].no = orderNo;
              orderNo++;
-			val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
-			if(config.order[i].discountOnItem) {
-            	    if(config.order[i].discountOnItem.type == 1) {
-            	        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
-            	    } else {
-            	        val-=config.order[i].discountOnItem.value;
-            	    }
+      val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
+      if(config.order[i].discountOnItem) {
+                  if(config.order[i].discountOnItem.type == 1) {
+                      val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
+                  } else {
+                      val-=config.order[i].discountOnItem.value;
+                  }
             }
-		}
-	}
+    }
+  }
 
-	if(config.discountOnTotal) {
-	    if(config.discountOnTotal.type == 1) {
-	        val-=config.discountOnTotal.value * val / 100;
-	    } else {
-	        val-=config.discountOnTotal.value;
-	    }
-	}
-	config["tempTotal"] = Math.round(val * 100) / 100;
-}
+  if(config.discountOnTotal) {
+      if(config.discountOnTotal.type == 1) {
+          val-=config.discountOnTotal.value * val / 100;
+      } else {
+          val-=config.discountOnTotal.value;
+      }
+  }
+  config["tempTotal"] = Math.round(val * 100) / 100;
+
+})
+
+	// for(let i = 0; i<arr.length;i++){
+	// 	config.order[arr[i]].exclude = true;
+	// }
+
+ //    let orderNo=1;
+	// for(var i=0;i<noOfItems;i++){
+	// 	var x = config.order[i].itemId;
+	// 	config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
+
+ //    config.order[i].item = ubsApp.translation.itemTable[x];
+
+	// 	if(config.order[i].exclude==false){
+	// 	    config.order[i].no = orderNo;
+ //             orderNo++;
+	// 		val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
+	// 		if(config.order[i].discountOnItem) {
+ //            	    if(config.order[i].discountOnItem.type == 1) {
+ //            	        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
+ //            	    } else {
+ //            	        val-=config.order[i].discountOnItem.value;
+ //            	    }
+ //            }
+	// 	}
+	// }
+
+	// if(config.discountOnTotal) {
+	//     if(config.discountOnTotal.type == 1) {
+	//         val-=config.discountOnTotal.value * val / 100;
+	//     } else {
+	//         val-=config.discountOnTotal.value;
+	//     }
+	// }
+	// config["tempTotal"] = Math.round(val * 100) / 100;
+
 
 
 ubsApp.checkInventory=function(){
