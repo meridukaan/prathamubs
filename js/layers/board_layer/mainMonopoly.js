@@ -19,6 +19,7 @@ monopoly.flag2= false;
 monopoly.computerDifficulty={};
 monopoly.scenario ={};
 monopoly.numplayers=0;
+monopoly.isCaller = false;
 let numplayers = monopoly.numplayers;
 monopoly.playerChance = 0;
 let playerChance = monopoly.playerChance;
@@ -123,8 +124,6 @@ monopoly.renderPageforBoard = function(page) {
              }
               for(var j=0;j<templateConfig.bottom_row.length;j++){
                 let key=templateConfig.bottom_row[j].title;
-                console.log(templateConfig.bottom_row);
-                console.log(key);
                 let translatedString=ubsApp.translation[key];
                 templateConfig.bottom_row[j].title=translatedString;
               }
@@ -227,7 +226,7 @@ monopoly.callStartScenario = function (templateName, template, key) {
 }
 
 socket.on('startScenarioToClient', function (data) {
-    console.log("Started scenario on client from Socket");
+    console.log(data.description);
     templateName = data.templateName;
     template = data.template;
     key = data.key;
@@ -263,14 +262,15 @@ monopoly.startScenarios = function (blockNo) {
 
 socket.on('clientMyMove', function(data){
     console.log("dice value is : "+data.userDiceValue);
-    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition);
+    monopoly.isCaller = data.isCaller;
+    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller);
 })
-monopoly.myMove = function(count, pId, currentPos) {
+monopoly.myMove = function(count, pId, currentPos, isCaller) {
   var temp="#p"+pId;
   var playerToken = $(temp);
   var blockNo = currentPos;   
-  console.log("Current Pos : "+ currentPos + "of player : " + userArray[pId].getplayerName());
-   var movePlayer = setInterval(frame, 500);
+  console.log("Current Pos : "+ currentPos + " of player : " + userArray[pId].getplayerName());
+  var movePlayer = setInterval(function(){frame(isCaller);}, 500);
   if(currentPos+count >= boardConfig.blocks){
     let x = userArray[pId].getWeeks();
     if(x < ubsApp.maxNumOfWeeks) {
@@ -308,17 +308,20 @@ monopoly.myMove = function(count, pId, currentPos) {
 
 
   }
-  function frame(){
+  function frame(isCaller){
+    console.log("Inside frame, isCaller : " + isCaller);
+    console.log("BlockNo : " + blockNo + ", count : " + count + ", BoardConfig.blocks : " + boardConfig.blocks);
     if (blockNo == (currentPos+count)%boardConfig.blocks){
       userArray[pId].setplayerCurrentPos((currentPos+count)%boardConfig.blocks);
       clearInterval(movePlayer);
-      if(userArray[pId].getWeeks() <= 12) {
+      console.log("inside If")
+      if(userArray[pId].getWeeks() <= 12 && isCaller == true) {
         monopoly.startScenarios(blockNo);
       }
     } 
     else{
       blockNo++;
-      
+      console.log("inside else, blockNo : " + blockNo)
       blockNo %= boardConfig.blocks;
       if(blockNo==0){
           if(document.getElementById("weekContent")!=null){

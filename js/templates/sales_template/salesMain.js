@@ -1,6 +1,8 @@
 ubsApp.getSalesTemplate = function(templateConfig, tempVar){
-	tempVar.salesConfig = templateConfig;
-	ubsApp.selectAvailableItems(templateConfig);
+    tempVar.salesConfig = templateConfig;
+    if(monopoly.isCaller == true){
+        ubsApp.selectAvailableItems(templateConfig);
+    }
     templateConfig.SUBMIT = ubsApp.getTranslation("SUBMIT");
     templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
     templateConfig.Customer = ubsApp.getTranslation("Customer");
@@ -158,8 +160,34 @@ ubsApp.validateAmount = function(showPopup = true) {
         }
     return true;
 }
+
+ubsApp.callsReduceInventory = function(page,amount,hideScenarios,total,totalTime, startTime, questionId){
+    socket.emit('serverReduceInventory',{
+        page : page,
+        amount : amount,
+        hideScenarios : hideScenarios,
+        total : total,
+        totalTime : totalTime,
+        startTime : startTime,
+        questionId : questionId,
+        roomCode: ubsApp.studentArray[playerChance].room
+    })
+}
+
+socket.on('clientReduceInventory', function(data){
+    page = data.page;
+    amount = data.amount;
+    hideScenarios = data.hideScenarios;
+    total = data.total;
+    totalTime = data.totalTime;
+    startTime = data.startTime;
+    questionId = data.questionId;
+
+    ubsApp.reduceInventory(page,amount,hideScenarios,total,totalTime, startTime, questionId);    
+})
+
 ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, startTime, questionId){
-  console.log("Sales Question ID: " + questionId);
+    console.log("Sales Question ID: " + questionId);
     total = parseFloat(total);
 	let time = totalTime - $("#seconds").html();
 	ubsApp.stopTimer();
@@ -180,8 +208,8 @@ ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, star
 
 		userArray[playerChance].setReputationPts(r + reputationPointIncrease);
 		ubsApp.raiseAudioEvent(document.getElementById('salesSubmitButton'), 'rightAnswer');
-      ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,reputationPointIncrease, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesReputationPointIncrease");
-		  ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,cashIncreased, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesCashIncrease");
+        ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,reputationPointIncrease, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesReputationPointIncrease");
+		ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,cashIncreased, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesCashIncrease");
         let message = ubsApp.getTranslation("salesCorrectAnswer");
 		if(reputationPointIncrease > 0) {
 		    message += "<br>" + ubsApp.getTranslation("salesCorrectRptpt1").replace("{{reputationPoints}}",reputationPointIncrease).replace("{{time}}",time);
@@ -290,23 +318,25 @@ ubsApp.selectAvailableItems = function(config){
 	let notAvailable = Math.round(percent*noOfItems);
 	let arr = [];
 
-   if(notAvailable == noOfItems) {
+    if(notAvailable == noOfItems) {
         ubsApp.noItemsForSale = true;
-   }
+    }
 	while(arr.length < notAvailable){
 	    var randomNumber = Math.floor(Math.random()*noOfItems);
 	    if(arr.indexOf(randomNumber) > -1) continue;
 	    arr[arr.length] = randomNumber;
 	}
+    for(let i = 0; i<arr.length;i++){
+        config.order[arr[i]].exclude = true;
+    }
+    socket.emit("serverSelectAvailableItem",{
+        config:config,
+        arr:arr,
+        noOfItems: noOfItems,
+        val:val,
+        roomCode: ubsApp.studentArray[playerChance].room
 
-  socket.emit("serverSelectAvailableItem",{
-    config:config,
-    arr:arr,
-    noOfItems: noOfItems,
-    val:val,
-    roomCode: ubsApp.studentArray[playerChance].room
-
-  });
+    });
 
 }
 
@@ -317,43 +347,37 @@ socket.on("clientSelectAvailableItem",function(data){
     noOfItems= data.noOfItems;
     val=data.val;
 
-    console.log("config"+ config.order);
-    console.log("Array"+ arr);
-    for(let i = 0; i<arr.length;i++){
-    config.order[arr[i]].exclude = true;
-  }
-      console.log("config"+ config.order);
-    console.log("Array"+ arr);
-
+    console.log(data.description);
     let orderNo=1;
-  for(var i=0;i<noOfItems;i++){
-    var x = config.order[i].itemId;
-    config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
+    for(var i=0;i<noOfItems;i++){
+        var x = config.order[i].itemId;
+        console.log(config.order);
+        config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
 
-    config.order[i].item = ubsApp.translation.itemTable[x];
+        config.order[i].item = ubsApp.translation.itemTable[x];
 
-    if(config.order[i].exclude==false){
-        config.order[i].no = orderNo;
-             orderNo++;
-      val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
-      if(config.order[i].discountOnItem) {
-                  if(config.order[i].discountOnItem.type == 1) {
-                      val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
-                  } else {
-                      val-=config.order[i].discountOnItem.value;
-                  }
+        if(config.order[i].exclude==false){
+            config.order[i].no = orderNo;
+            orderNo++;
+            val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
+            if(config.order[i].discountOnItem) {
+                if(config.order[i].discountOnItem.type == 1) {
+                    val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
+                } else {
+                    val-=config.order[i].discountOnItem.value;
+                }
             }
+        }
     }
-  }
 
-  if(config.discountOnTotal) {
-      if(config.discountOnTotal.type == 1) {
-          val-=config.discountOnTotal.value * val / 100;
-      } else {
-          val-=config.discountOnTotal.value;
-      }
-  }
-  config["tempTotal"] = Math.round(val * 100) / 100;
+    if(config.discountOnTotal) {
+        if(config.discountOnTotal.type == 1) {
+            val-=config.discountOnTotal.value * val / 100;
+        } else {
+            val-=config.discountOnTotal.value;
+        }
+    }
+    config["tempTotal"] = Math.round(val * 100) / 100;
 
 })
 

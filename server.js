@@ -149,13 +149,15 @@ io.on('connection', function (socket) {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
             userPosition: data.userPosition,
-            userRoom: data.userRoom
+            userRoom: data.userRoom,
+            isCaller : true
         });
         socket.in(Number(data.userRoom)).emit('clientMyMove', {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
             userPosition: data.userPosition,
-            userRoom: data.userRoom
+            userRoom: data.userRoom,
+            isCaller : false
         });
     })
 
@@ -175,7 +177,7 @@ io.on('connection', function (socket) {
             description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
         })
         socket.emit('startScenarioToClient', {
-            description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
+            description: "This event calls the startScenario on calling client in room", templateName : data.templateName, template : data.template, key: data.key
         })
     })
 
@@ -193,25 +195,51 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverSelectAvailableItem', function (data) {
-        console.log("Opened selectAvailableItem  on Server");
-        console.log("RoomCode ="+Number(data.roomCode));
-        console.log("Socket Id ="+ socket.id);
+        console.log("Opened selectAvailableItem on Server");
+        console.log("RoomCode = "+Number(data.roomCode));
+        console.log("Socket Id = "+ socket.id);
+        console.log(data.config.order);
+        console.log(data.arr);
         socket.in(Number(data.roomCode)).emit('clientSelectAvailableItem', {
             description: "This event calls the selectAvailableItem on all clients in room",
             config:data.config,
             arr:data.arr,
             noOfItems: data.noOfItems,
-            val:data.val
+            val:data.val,
+            isCaller : false
         })
         socket.emit('clientSelectAvailableItem', {
-            description: "This event calls the selectAvailableItem on all clients in room",
+            description: "This event calls the selectAvailableItem on calling client in room",
             config:data.config,
             arr:data.arr,
             noOfItems: data.noOfItems,
-            val:data.val
+            val:data.val,
+            isCaller : true
         })
     })
 
+    socket.on('serverReduceInventory', function(data){
+        socket.in(Number(data.roomCode)).emit('clientReduceInventory',{
+            description : "This event calls Reduce Inventory function on all clients in room",
+            page : data.page,
+            amount : data.amount,
+            hideScenarios : data.hideScenarios,
+            total : data.total,
+            totalTime : data.totalTime,
+            startTime : data.startTime,
+            questionId : data.questionId,
+        })
+        socket.emit('clientReduceInventory',{
+            description : "This event calls Reduce Inventory function on calling client in room",
+            page : data.page,
+            amount : data.amount,
+            hideScenarios : data.hideScenarios,
+            total : data.total,
+            totalTime : data.totalTime,
+            startTime : data.startTime,
+            questionId : data.questionId,
+        })
+    })
 
 })
 
