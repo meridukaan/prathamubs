@@ -180,6 +180,19 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('decisionOptionClicked', function (data) {
+        console.log(data.questionId);
+        socket.emit('decisionOptionsResult', { reputationPts : data.reputationPts, bankBalance: data.bankBalance,
+        startTime: data.startTime, questionId: data.questionId,
+        insurance: data.insurance, page: data.page,
+        pamphlet: data.pamphlet, randomProfit: data.randomProfit });
+        socket.in(Number(data.roomCode)).emit('decisionOptionsResult', { reputationPts : data.reputationPts, bankBalance: data.bankBalance,
+        startTime: data.startTime, questionId: data.questionId,
+        insurance: data.insurance, page: data.page,
+        pamphlet: data.pamphlet, randomProfit: data.randomProfit });
+
+    }); 
+
     socket.on('rollDiceEvent', function (data) {
         console.log(data.description);
         console.log(data.diceValue);
