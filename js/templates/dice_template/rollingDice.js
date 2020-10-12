@@ -15,7 +15,7 @@ function pointRoll(diceValue)
     }
     
     socket.emit('rollDiceEvent', {description: "RollDiceEvent", diceValue : rollingDiceValue, roomCode : ubsApp.studentArray[0].room});
-      return 4;
+      return rollingDiceValue;
 }
   
 socket.on('replicateRollDice', function(data)
