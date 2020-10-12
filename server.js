@@ -178,6 +178,42 @@ io.on('connection', function (socket) {
             description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
         })
     })
+
+    socket.on('serverLuckPaymentQuiz', function(data) {
+        socket.in(Number(data.roomCode)).emit('clientLuckPaymentQuiz', {
+            page : data.page,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientLuckPaymentQuiz', {
+            page : data.page,
+            roomCode : data.roomCode
+        })
+    })
+
+    socket.on('serverPayOrGain', function(data){
+        socket.in(Number(data.roomCode)).emit('clientPayOrGain', {
+            pageName : data.pageName,
+            questionId : data.questionId,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientPayOrGain', {
+            pageName : data.pageName,
+            questionId : data.questionId,
+            roomCode : data.roomCode
+        })
+    })
+
+    socket.on('serverQuizPage', function(data){
+        console.log(data.description);
+        socket.in(Number(data.roomCode)).emit('clientQuizPage', {
+            quizPage : data.quizPage,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientQuizPage', {
+            quizPage : data.quizPage,
+            roomCode : data.roomCode
+        })
+    })
 })
 
 http.listen(3000, function () {
