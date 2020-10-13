@@ -162,22 +162,30 @@ io.on('connection', function (socket) {
     })
 
     socket.on('callNextMove', function(data){
-        
+        console.log("Next move on server")
         socket.emit('nextMove', {
-            description: "Calling Next Move in all Cleints in my room"
+            description: "Calling Next Move in calling client in room", 
+            isCaller : true
         });
         socket.in(Number(data.roomCode)).emit('nextMove', {
-            description: "Calling Next Move in all Cleints in my room"
+            description: "Calling Next Move in all clients in my room",
+            isCaller : false
         });
     })
 
     socket.on('startScenarioToServer', function (data) {
         console.log("Opened startScenario on Server");
         socket.in(Number(data.roomCode)).emit('startScenarioToClient', {
-            description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
+            description : "This event calls the startScenario on all clients in room", 
+            templateName : data.templateName, 
+            template : data.template, 
+            key : data.key
         })
         socket.emit('startScenarioToClient', {
-            description: "This event calls the startScenario on calling client in room", templateName : data.templateName, template : data.template, key: data.key
+            description: "This event calls the startScenario on calling client in room", 
+            templateName : data.templateName, 
+            template : data.template, 
+            key : data.key
         })
     })
 
@@ -187,7 +195,7 @@ io.on('connection', function (socket) {
         console.log("Button clicked " +data.clickedButtonVal);
         socket.in(Number(data.roomCode)).emit('clientAddToDisplay', {
             description: "This event calls the AddToDisplay (Calculator) on all clients in room", 
-                            clickedButtonVal:data.clickedButtonVal
+            clickedButtonVal:data.clickedButtonVal
         })
         // socket.emit('clientAddToDisplay', {
         //     description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key

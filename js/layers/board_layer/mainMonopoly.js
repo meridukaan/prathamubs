@@ -219,9 +219,11 @@ monopoly.renderPageforBoard = function(page) {
 
 monopoly.callStartScenario = function (templateName, template, key) {
     socket.emit('startScenarioToServer', {
-        description: "This calls server side for startScenario", templateName
-            : templateName, template: template, key: key, roomCode:
-            ubsApp.studentArray[0].room
+        description : "This calls server side for startScenario", 
+        templateName : templateName, 
+        template : template, 
+        key : key, 
+        roomCode : ubsApp.studentArray[0].room
     });
 }
 
@@ -1288,6 +1290,9 @@ ubsApp.populateStudentArray = function(studentArray) {
 }
 
 socket.on('nextMove', function (data) {
-    console.log("Toggling player chance");
-    ubsApp.nextMove();
+    console.log(data.description);
+    if (data.isCaller == true) {
+        ubsApp.nextMove();
+    }
+    
 })
