@@ -213,6 +213,13 @@ io.on('connection', function (socket) {
     })
 
 
+    socket.on('textToReplicateSale', function (data) {
+        socket.broadcast.emit('replicatedTextTotal', {
+            description: "Event to send back the text received from the player", amountToTransfer: data.calculatedTotal
+        })
+    })
+
+
 })
 
 http.listen(3000, function () {

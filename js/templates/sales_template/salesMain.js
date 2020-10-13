@@ -462,3 +462,20 @@ ubsApp.getCategoryToPostScore = function(category){
 
   return numericCategory;
 }
+
+document.addEventListener('onkeyup',calculatorTotal);
+
+function calculatorTotal(event){
+  calculatedTotal=document.getElementById("receiptTotal").value;
+  console.log("User typed "+calculatedTotal+" in text box");
+  socket.emit('textToReplicateSale',{
+    description : "Event sends keypress events in textbox for total amount sale", total:calculatedTotal, roomCode : ubsApp.studentArray[0].room
+  })
+  
+}
+socket.on('replicatedTextTotal',function(data){
+  console.log("Value received in total "+data.calculatedTotal);
+  console.log(data.calculatedTotal)
+  console.log("-------------------------------");
+  document.getElementById("receiptTotal").value=data.calculatedTotal;
+})
