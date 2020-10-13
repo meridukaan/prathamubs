@@ -498,8 +498,25 @@ function calculatorTotal(event){
   
 }
 socket.on('replicatedTextTotal',function(data){
-  console.log("Value received in total "+data.calculatedTotal);
+  console.log("Value received in total "+Number(data.calculatedTotal));
   console.log(data.calculatedTotal)
   console.log("-------------------------------");
-  document.getElementById("receiptTotal").value=data.calculatedTotal;
+  document.getElementById("receiptTotal").value=Number(data.calculatedTotal);
+})
+
+document.addEventListener('onkeyup',eachOrderPrice);
+
+function eachOrderPrice(event,id){
+  orderPrice=document.getElementById(id).value;
+  console.log("User typed "+orderPrice+" in text box");
+  socket.emit('textToReplicateSaleOrder',{
+    description : "Event sends keypress events in textbox for total amount sale", orderPrice:orderPrice, roomCode : ubsApp.studentArray[0].room,elementId : id
+  })
+  
+}
+socket.on('replicatedTextSaleOrder',function(data){
+  console.log("Value received in order "+Number(data.orderPrice));
+  console.log(data.orderPrice)
+  console.log("-------------------------------");
+  document.getElementById(data.elementId).value=Number(data.orderPrice);
 })

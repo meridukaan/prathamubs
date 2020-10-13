@@ -250,8 +250,17 @@ io.on('connection', function (socket) {
     })
 
     socket.on('textToReplicateSale', function (data) {
-        socket.broadcast.emit('replicatedTextTotal', {
-            description: "Event to send back the text received from the player", amountToTransfer: data.calculatedTotal
+        console.log("calling from server");
+        socket.in(Number(data.roomCode)).emit('replicatedTextTotal', {
+            description: "Event to send back the text received from the player", calculatedTotal: data.total
+        })
+    })
+
+    socket.on('textToReplicateSaleOrder', function (data) {
+        console.log("calling from server");
+        console.log("calling from server"+ data.elementId);
+        socket.in(Number(data.roomCode)).emit('replicatedTextSaleOrder', {
+            description: "Event to send back the text received from the player", orderPrice: data.orderPrice, elementId:data.elementId
         })
     })
 
