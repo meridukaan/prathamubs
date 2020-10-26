@@ -645,7 +645,7 @@ ubsApp.leaderBoardTemplate=
 '                       <td  class="items">{{item}}</td>'+
 '                       <td  class="items" id="itemPrice{{no}}">{{amount}}</td>'+
 '                       <td  class="items">{{rate}}</td>'+
-'                       <td ><input id = "input{{no}}{{#if exclude}}-1{{/if}}" onkeyup="eachOrderPrice(event,input{{no}}{{#if exclude}}-1{{/if}})" type="number" name="amt" class="amount saleInputButtons" oninput="ubsApp.calculateBill()" {{#if exclude}}disabled{{/if}} {{#if exclude}}value="0"{{/if}}></td>  '+
+'                       <td ><input id = "input{{no}}{{#if exclude}}-1{{/if}}" onkeyup="eachOrderPrice(event,input{{no}})" type="number" name="amt" class="amount saleInputButtons" oninput="ubsApp.calculateBill()" {{#if exclude}}disabled{{/if}} {{#if exclude}}value="0"{{/if}}></td>  '+
 '                     </tr>'+
 '                       {{/each}}'+
 '                     {{#if discount}}'+

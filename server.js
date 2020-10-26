@@ -258,9 +258,9 @@ io.on('connection', function (socket) {
 
     socket.on('textToReplicateSaleOrder', function (data) {
         console.log("calling from server");
-        console.log("calling from server"+ data.elementId);
+        console.log("calling from server"+ data.id);
         socket.in(Number(data.roomCode)).emit('replicatedTextSaleOrder', {
-            description: "Event to send back the text received from the player", orderPrice: data.orderPrice, elementId:data.elementId
+            description: "Event to send back the text received from the player", orderPrice: data.orderPrice, id : data.id
         })
     })
 

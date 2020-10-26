@@ -506,11 +506,15 @@ socket.on('replicatedTextTotal',function(data){
 
 document.addEventListener('onkeyup',eachOrderPrice);
 
-function eachOrderPrice(event,id){
-  orderPrice=document.getElementById(id).value;
+function eachOrderPrice(event,imp){
+  console.log("imp= "+imp.id)
+  console.log("id aya he" + imp.value);
+  // orderPrice=document.getElementById("input1").value;
+    orderPrice=imp.value;
+    id=imp.id;
   console.log("User typed "+orderPrice+" in text box");
   socket.emit('textToReplicateSaleOrder',{
-    description : "Event sends keypress events in textbox for total amount sale", orderPrice:orderPrice, roomCode : ubsApp.studentArray[0].room,elementId : id
+    description : "Event sends keypress events in textbox for total amount sale", orderPrice:orderPrice, roomCode : ubsApp.studentArray[0].room,id : id
   })
   
 }
@@ -518,5 +522,7 @@ socket.on('replicatedTextSaleOrder',function(data){
   console.log("Value received in order "+Number(data.orderPrice));
   console.log(data.orderPrice)
   console.log("-------------------------------");
-  document.getElementById(data.elementId).value=Number(data.orderPrice);
+  // document.getElementById("input1").value=Number(data.orderPrice);
+  console.log("Id ala ahe " +data.id )
+  document.getElementById(data.id).value=Number(data.orderPrice);
 })
