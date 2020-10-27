@@ -249,6 +249,29 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('serverPayOffScenario', function(data){
+        socket.in(Number(data.roomCode)).emit('clientPayOffScenario', { 
+            openNextMove: data.openNextMove
+        });
+        socket.emit('clientPayOffScenario', { 
+            openNextMove: data.openNextMove 
+        });
+    })
+
+    socket.on('serverPayDebt',function(data){
+        socket.in(Number(data.roomCode)).emit('clientPayDebt', { 
+            questionId: data.questionId
+        });
+        socket.emit('clientPayDebt', { 
+            questionId: data.questionId 
+        });
+    })
+
+    socket.on('serverPayOffDropDown', function(data){
+        socket.in(Number(data.roomCode)).emit('clientPayOffDropDown',{
+            dropDownValue : data.dropDownValue
+        })
+    })
 })
 
 http.listen(3000, function () {

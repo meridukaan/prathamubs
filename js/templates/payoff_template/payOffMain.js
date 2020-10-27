@@ -16,7 +16,8 @@ ubsApp.getPayOffTemplate=function(templateConfig,tempVar){
 	//ubsApp.openNextMoveAfterPayOff = false;
 }
 
-ubsApp.payDebt=function(questionId){
+socket.on('clientPayDebt',function(data){
+	var questionId=data.questionId;
 	console.log("Pay Off ID is : " + questionId);
 	document.getElementById("result").innerHTML="";
 	var date = new Date();
@@ -94,11 +95,41 @@ ubsApp.payDebt=function(questionId){
 	else{
 			document.getElementById("result").innerHTML=ubsApp.translation["noDebt"]; //break;
 	}
+})
+
+ubsApp.payDebt=function(questionId){
+	socket.emit('serverPayDebt',{
+		description : "This is the Pay Debt Method",
+		roomCode : ubsApp.studentArray[playerChance].room,
+		questionId : questionId
+	})
 }
 
+ubsApp.modeOfPayment = function(){
+	var dropDownValue = document.getElementById("payOffDropDown").value
+	socket.emit('serverPayOffDropDown',{
+		dropDownValue : dropDownValue,
+		roomCode : ubsApp.studentArray[0].room
+	})
+}
+
+socket.on('clientPayOffDropDown',function(data){
+	var selectedValue = document.getElementById("payOffDropDown");
+	selectedValue.textContent = data.dropDownValue;
+})
+
 ubsApp.openPayOffScenario=function(openNextMove = false){
+	socket.emit('serverPayOffScenario',{
+		description: "This is payOff Scenario method", 
+		roomCode : ubsApp.studentArray[0].room,
+		openNextMove : openNextMove
+	})
+}
+
+socket.on('clientPayOffScenario',function(data){
+	var openNextMove = data.openNextMove;
 	ubsApp.startCurrentScenario();
 	ubsApp.openNextMoveAfterPayOff = openNextMove;
 	ubsApp.openedTransferScenario = true;
 	ubsApp.renderPageByName("PayOffScenario");
-}
+})
