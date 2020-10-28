@@ -249,6 +249,7 @@ io.on('connection', function (socket) {
         })
     })
 
+<<<<<<< HEAD
     socket.on('serverPayOffScenario', function(data){
         socket.in(Number(data.roomCode)).emit('clientPayOffScenario', { 
             openNextMove: data.openNextMove
@@ -272,6 +273,24 @@ io.on('connection', function (socket) {
             dropDownValue : data.dropDownValue
         })
     })
+=======
+    socket.on('textToReplicateSale', function (data) {
+        console.log("calling from server");
+        socket.in(Number(data.roomCode)).emit('replicatedTextTotal', {
+            description: "Event to send back the text received from the player", calculatedTotal: data.total
+        })
+    })
+
+    socket.on('textToReplicateSaleOrder', function (data) {
+        console.log("calling from server");
+        console.log("calling from server"+ data.id);
+        socket.in(Number(data.roomCode)).emit('replicatedTextSaleOrder', {
+            description: "Event to send back the text received from the player", orderPrice: data.orderPrice, id : data.id
+        })
+    })
+
+
+>>>>>>> 1a53ef9ae364933ff36387cb6d3de7c47701b1ae
 })
 
 http.listen(3000, function () {

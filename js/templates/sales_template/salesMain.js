@@ -486,3 +486,43 @@ ubsApp.getCategoryToPostScore = function(category){
 
   return numericCategory;
 }
+
+document.addEventListener('onkeyup',calculatorTotal);
+
+function calculatorTotal(event){
+  calculatedTotal=document.getElementById("receiptTotal").value;
+  console.log("User typed "+calculatedTotal+" in text box");
+  socket.emit('textToReplicateSale',{
+    description : "Event sends keypress events in textbox for total amount sale", total:calculatedTotal, roomCode : ubsApp.studentArray[0].room
+  })
+  
+}
+socket.on('replicatedTextTotal',function(data){
+  console.log("Value received in total "+Number(data.calculatedTotal));
+  console.log(data.calculatedTotal)
+  console.log("-------------------------------");
+  document.getElementById("receiptTotal").value=Number(data.calculatedTotal);
+})
+
+document.addEventListener('onkeyup',eachOrderPrice);
+
+function eachOrderPrice(event,imp){
+  console.log("imp= "+imp.id)
+  console.log("id aya he" + imp.value);
+  // orderPrice=document.getElementById("input1").value;
+    orderPrice=imp.value;
+    id=imp.id;
+  console.log("User typed "+orderPrice+" in text box");
+  socket.emit('textToReplicateSaleOrder',{
+    description : "Event sends keypress events in textbox for total amount sale", orderPrice:orderPrice, roomCode : ubsApp.studentArray[0].room,id : id
+  })
+  
+}
+socket.on('replicatedTextSaleOrder',function(data){
+  console.log("Value received in order "+Number(data.orderPrice));
+  console.log(data.orderPrice)
+  console.log("-------------------------------");
+  // document.getElementById("input1").value=Number(data.orderPrice);
+  console.log("Id ala ahe " +data.id )
+  document.getElementById(data.id).value=Number(data.orderPrice);
+})
