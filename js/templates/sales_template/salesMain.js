@@ -1,40 +1,123 @@
+function resolveAfter2Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 300);
+    });
+  }
+
+var globalTempVar;
+var globalTempConfig;
+var socketComplete =false;
 ubsApp.getSalesTemplate = function(templateConfig, tempVar){
     tempVar.salesConfig = templateConfig;
     if(monopoly.isCaller == true){
-        ubsApp.selectAvailableItems(templateConfig);
+        ubsApp.selectAvailableItems(templateConfig, tempVar);
     }
-    templateConfig.SUBMIT = ubsApp.getTranslation("SUBMIT");
-    templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
-    templateConfig.Customer = ubsApp.getTranslation("Customer");
-    templateConfig.gameLogo = ubsApp.getTranslation("gameLogo");
+    console.log("Awaiting at " + Date.now())
+    // while(!socketComplete){
 
-    templateConfig.salesConfig = ubsApp.getTranslation("sale");
-    templateConfig.sale = ubsApp.getTranslation("sale");
-    templateConfig.Discount = ubsApp.getTranslation("Discount");
-    templateConfig.PLAYER = ubsApp.getTranslation("PLAYER");
-    templateConfig.Total = ubsApp.getTranslation("Total");
+    //     if(socketComplete){
+    //         break
+    //     }
+    //     else{
+    //         continue
+    //     }
+    // }
+    tempVar = globalTempVar;
+    templateConfig = globalTempConfig;
+    console.log("Finished waiting at " + Date.now())
+}
 
+socket.on("clientSelectAvailableItem",function(data){
+    console.log("Received select avialble Itme from server");
+    console.log(data);
+    renderSales(data);
+})
 
-    ubsApp.startRecordingTimer(templateConfig);
-    tempVar.html += ubsOrdertemplate(templateConfig);
-    ubsApp.raiseAudioEvent(document.getElementById('templateContent'),'spaceLanding');
-	if(ubsApp.noItemsForSale) {
-        ubsApp.noItemsForSale = false;
-        ubsApp.openPopup({
-                        "message" : ubsApp.getTranslation("salesNoItemMessage"),
-                        "header" : ubsApp.getTranslation("ERROR"),
-                        "headerStyle" : "text-align: center;  color: black; font-weight: 700;",
-                        "buttons":[
-                        	{
-                        		'id':"closePopupButton",
-                        		'name' : ubsApp.getTranslation("CLOSE"),
-                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'),'saleEnd'); ubsApp.callServerClosePopup(); ubsApp.stopTimer(); ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
-                        	}
-                        ]
-                        });
-    }
+function renderSales(data){
 
+        console.log(Date.now())
+        config=data.config;
+        arr=data.arr;
+        noOfItems= data.noOfItems;
+        val=data.val;
+        tempVar = data.tempVar;
+        console.log(data.description);
+        let orderNo=1;
+        for(var i=0;i<noOfItems;i++){
+            var x = config.order[i].itemId;
+            console.log(config.order);
+            config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
+    
+            config.order[i].item = ubsApp.translation.itemTable[x];
+    
+            if(config.order[i].exclude==false){
+                config.order[i].no = orderNo;
+                orderNo++;
+                val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
+                if(config.order[i].discountOnItem) {
+                    if(config.order[i].discountOnItem.type == 1) {
+                        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
+                    } else {
+                        val-=config.order[i].discountOnItem.value;
+                    }
+                }
+            }
+        }
+    
+        if(config.discountOnTotal) {
+            if(config.discountOnTotal.type == 1) {
+                val-=config.discountOnTotal.value * val / 100;
+            } else {
+                val-=config.discountOnTotal.value;
+            }
+        }
+        config["tempTotal"] = Math.round(val * 100) / 100;
+         
+        
+        templateConfig=config;
+        templateConfig.SUBMIT = ubsApp.getTranslation("SUBMIT");
+           templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
+           templateConfig.Customer = ubsApp.getTranslation("Customer");
+           templateConfig.gameLogo = ubsApp.getTranslation("gameLogo");
+       
+           templateConfig.salesConfig = ubsApp.getTranslation("sale");
+           templateConfig.sale = ubsApp.getTranslation("sale");
+           templateConfig.Discount = ubsApp.getTranslation("Discount");
+           templateConfig.PLAYER = ubsApp.getTranslation("PLAYER");
+           templateConfig.Total = ubsApp.getTranslation("Total");
+       
+           
+       
+           ubsApp.startRecordingTimer(templateConfig);
+           tempVar.html += ubsOrdertemplate(templateConfig);
+           ubsApp.raiseAudioEvent(document.getElementById('templateContent'),'spaceLanding');
+           console.log("reached here at " + Date.now());
+           globalTempVar = tempVar;
+           globalTempConfig = templateConfig;
 
+           if(ubsApp.noItemsForSale) {
+               ubsApp.noItemsForSale = false;
+               ubsApp.openPopup({
+                               "message" : ubsApp.getTranslation("salesNoItemMessage"),
+                               "header" : ubsApp.getTranslation("ERROR"),
+                               "headerStyle" : "text-align: center;  color: black; font-weight: 700;",
+                               "buttons":[
+                                   {
+                                       'id':"closePopupButton",
+                                       'name' : ubsApp.getTranslation("CLOSE"),
+                                         'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'),'saleEnd'); ubsApp.callServerClosePopup(); ubsApp.stopTimer(); ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
+                                   }
+                               ]
+                               });
+           }
+     socketComplete=true;
+     socket.emit('renderSalesComplete',{
+         roomCode : ubsApp.studentArray[playerChance].room,
+         globalTempVar : globalTempVar,
+         globalTempConfig : globalTempConfig
+     })
 }
 
 ubsApp.bindSaleTabEvents = function() {
@@ -310,7 +393,7 @@ ubsApp.calculateBill = function(){
 	//document.getElementById("receiptTotal").value=total;
 }
 
-ubsApp.selectAvailableItems = function(config){
+ubsApp.selectAvailableItems = function(config, tempVar){
 
 	let noOfItems =config.order.length;
 	let val=0;
@@ -334,52 +417,12 @@ ubsApp.selectAvailableItems = function(config){
         arr:arr,
         noOfItems: noOfItems,
         val:val,
+        tempVar : tempVar,
         roomCode: ubsApp.studentArray[playerChance].room
 
     });
 
 }
-
-socket.on("clientSelectAvailableItem",function(data){
-
-    config=data.config;
-    arr=data.arr;
-    noOfItems= data.noOfItems;
-    val=data.val;
-
-    console.log(data.description);
-    let orderNo=1;
-    for(var i=0;i<noOfItems;i++){
-        var x = config.order[i].itemId;
-        console.log(config.order);
-        config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
-
-        config.order[i].item = ubsApp.translation.itemTable[x];
-
-        if(config.order[i].exclude==false){
-            config.order[i].no = orderNo;
-            orderNo++;
-            val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
-            if(config.order[i].discountOnItem) {
-                if(config.order[i].discountOnItem.type == 1) {
-                    val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
-                } else {
-                    val-=config.order[i].discountOnItem.value;
-                }
-            }
-        }
-    }
-
-    if(config.discountOnTotal) {
-        if(config.discountOnTotal.type == 1) {
-            val-=config.discountOnTotal.value * val / 100;
-        } else {
-            val-=config.discountOnTotal.value;
-        }
-    }
-    config["tempTotal"] = Math.round(val * 100) / 100;
-
-})
 
 	// for(let i = 0; i<arr.length;i++){
 	// 	config.order[arr[i]].exclude = true;

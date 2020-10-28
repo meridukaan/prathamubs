@@ -1108,7 +1108,7 @@ ubsApp.payOffTemplate='<div style="width:100%; height:100%; background-color:rgb
 '                      {{/if}}'+
 '                      {{#if payOff}}'+
 '                           <span class="payOffLeftModeOfPaymentValue">'+
-'                               <select class="borderB1" id="payOffDropDown">'+
+'                               <select class="borderB1" id="payOffDropDown" onchange="ubsApp.modeOfPayment(this.value)">'+
 '                                   <option value="cash">{{cashTitle}}</option>'+
 '                                   <option value="cheque">{{chequeTitle}}</option>'+
 '                               </select>'+

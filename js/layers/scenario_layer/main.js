@@ -120,7 +120,6 @@ ubsApp.renderPage = function(page) {
 
 	}
 
-	
 
 	if(tempVar.wheelConfig.segments){
 		tempVar.wheelConfig.animation.callbackFinished = ubsWheelOfFortune.alertPrize;
@@ -181,7 +180,15 @@ ubsApp.renderPage = function(page) {
 		document.getElementById("headId").innerHTML=ubsApp.getScore();
 	}*/
 }
-    
+	
+socket.on('renderSalesCompleteClient', function(data){
+	console.log("Second Render reached")
+	tempVar = data.globalTempVar;
+	console.log(data.globalTempVar);
+	$("#templateContent").empty();
+	$("#templateContent").append(tempVar.html);
+})
+
 ubsApp.mapTemplatetoFunction = function(){
     templateMap={};
 	for(let i=0; i<templateName.length; i++){
@@ -287,7 +294,8 @@ ubsApp.stopTimer = function() {
 ubsApp.socketCloseCurrentScenario=function(){
 	console.log("close scenario - socket mode");
 	socket.emit('closeScenario',{
-		description : "This function goes to server to trigger close scenario in the room"
+		description : "This function goes to server to trigger close scenario in the room",
+		roomCode : ubsApp.studentArray[playerChance].room
 	});
 }
 

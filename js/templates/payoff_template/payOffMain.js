@@ -105,17 +105,18 @@ ubsApp.payDebt=function(questionId){
 	})
 }
 
-ubsApp.modeOfPayment = function(){
-	var dropDownValue = document.getElementById("payOffDropDown").value
+ubsApp.modeOfPayment = function(value){
+	console.log(value);
 	socket.emit('serverPayOffDropDown',{
-		dropDownValue : dropDownValue,
+		dropDownValue : value,
 		roomCode : ubsApp.studentArray[0].room
 	})
 }
 
 socket.on('clientPayOffDropDown',function(data){
 	var selectedValue = document.getElementById("payOffDropDown");
-	selectedValue.textContent = data.dropDownValue;
+	console.log(selectedValue.value);
+	selectedValue.value = data.dropDownValue;
 })
 
 ubsApp.openPayOffScenario=function(openNextMove = false){

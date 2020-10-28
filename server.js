@@ -208,12 +208,14 @@ io.on('connection', function (socket) {
         console.log("Socket Id = "+ socket.id);
         console.log(data.config.order);
         console.log(data.arr);
+
         socket.in(Number(data.roomCode)).emit('clientSelectAvailableItem', {
             description: "This event calls the selectAvailableItem on all clients in room",
             config:data.config,
             arr:data.arr,
             noOfItems: data.noOfItems,
             val:data.val,
+            tempVar : data.tempVar,
             isCaller : false
         })
         socket.emit('clientSelectAvailableItem', {
@@ -222,8 +224,10 @@ io.on('connection', function (socket) {
             arr:data.arr,
             noOfItems: data.noOfItems,
             val:data.val,
+            tempVar : data.tempVar,
             isCaller : true
         })
+        console.log("finished emitting at " + Date.now());
     })
 
     socket.on('serverReduceInventory', function(data){
@@ -249,7 +253,6 @@ io.on('connection', function (socket) {
         })
     })
 
-<<<<<<< HEAD
     socket.on('serverPayOffScenario', function(data){
         socket.in(Number(data.roomCode)).emit('clientPayOffScenario', { 
             openNextMove: data.openNextMove
@@ -269,11 +272,12 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverPayOffDropDown', function(data){
+        console.log("Reached Server Pay OFF Drop Down");
+        console.log("Value received is " + data.dropDownValue);
         socket.in(Number(data.roomCode)).emit('clientPayOffDropDown',{
             dropDownValue : data.dropDownValue
         })
     })
-=======
     socket.on('textToReplicateSale', function (data) {
         console.log("calling from server");
         socket.in(Number(data.roomCode)).emit('replicatedTextTotal', {
@@ -289,8 +293,21 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('renderSalesComplete', function(data){
+        console.log("Reached render sales server");
+        console.log(data.globalTempVar)
+        console.log("----------------------")
+        console.log(data.globalTempConfig)
+        socket.in(Number(data.roomCode)).emit('renderSalesCompleteClient', { 
+            globalTempVar: data.globalTempVar,
+            globalTempConfig : data.globalTempConfig
+        });
+        socket.emit('renderSalesCompleteClient', { 
+            globalTempVar: data.globalTempVar,
+            globalTempConfig : data.globalTempConfig
+        });
+    })
 
->>>>>>> 1a53ef9ae364933ff36387cb6d3de7c47701b1ae
 })
 
 http.listen(3000, function () {
