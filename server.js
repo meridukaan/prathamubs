@@ -150,23 +150,40 @@ io.on('connection', function (socket) {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
             userPosition: data.userPosition,
-            userRoom: data.userRoom
+            userRoom: data.userRoom,
+            isCaller: true
         });
         socket.in(Number(data.userRoom)).emit('clientMyMove', {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
             userPosition: data.userPosition,
-            userRoom: data.userRoom
+            userRoom: data.userRoom,
+            isCaller: false
         });
     })
 
     socket.on('callNextMove', function(data){
         
         socket.emit('nextMove', {
-            description: "Calling Next Move in all Cleints in my room"
+            description: "Calling Next Move in all Cleints in my room",
+            isCaller:true
         });
         socket.in(Number(data.roomCode)).emit('nextMove', {
-            description: "Calling Next Move in all Cleints in my room"
+            description: "Calling Next Move in all Cleints in my room",
+            isCaller:false
+        });
+    })
+
+    socket.on('sendSelectedOptionId', function(data){
+        socket.emit('selectedOptionId', {
+            description: "Transferring selected option ID",
+            isCaller:true,
+            optionId: data.optionId
+        });
+        socket.in(Number(data.roomCode)).emit('selectedOptionId', {
+            description: "Transferring selected option ID",
+            isCaller:false,
+            optionId: data.optionId
         });
     })
 
@@ -179,6 +196,93 @@ io.on('connection', function (socket) {
             description: "This event calls the startScenario on all clients in room", templateName : data.templateName, template : data.template, key: data.key
         })
     })
+
+    socket.on('serverLuckPaymentQuiz', function(data) {
+        socket.in(Number(data.roomCode)).emit('clientLuckPaymentQuiz', {
+            page : data.page,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientLuckPaymentQuiz', {
+            page : data.page,
+            roomCode : data.roomCode
+        })
+    })
+
+    socket.on('serverPayOrGain', function(data){
+        socket.in(Number(data.roomCode)).emit('clientPayOrGain', {
+            pageName : data.pageName,
+            questionId : data.questionId,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientPayOrGain', {
+            pageName : data.pageName,
+            questionId : data.questionId,
+            roomCode : data.roomCode
+        })
+    })
+
+    socket.on('serverQuizPage', function(data){
+        console.log(data.description);
+        socket.in(Number(data.roomCode)).emit('clientQuizPage', {
+            quizPage : data.quizPage,
+            roomCode : data.roomCode
+        })
+        socket.emit('clientQuizPage', {
+            quizPage : data.quizPage,
+            roomCode : data.roomCode
+        })
+    })
+
+    socket.on('serverOpenPopUp', function(data){
+        console.log("server open popup called for roomcode : "+data.roomCode);
+        socket.emit('clientOpenPopUp', {config : data.config});
+        socket.in(Number(data.roomCode)).emit('clientOpenPopUp', {config : data.config})
+    })
+
+
+
+    socket.on('displayNextQuizQuestion', function(data){
+        console.log("Displaying next question");
+        socket.in(Number(data.roomCode)).emit('clientDisplayNextQuestion', {
+            description: "Displaying client by name", page:data.page,
+            updateCorrectAnswerScore: data.updateCorrectAnswerScore,
+            choiceSelected: data.choiceSelected
+        })
+
+        socket.emit('clientDisplayNextQuestion', {
+            description: "Displaying client by name", page:data.page,
+            updateCorrectAnswerScore: data.updateCorrectAnswerScore,
+            choiceSelected: data.choiceSelected
+        })
+    })
+
+    socket.on('socketCheckAnswerAndRenderNextPage', function(data){
+        socket.in(Number(data.roomCode)).emit('checkAnswerAndRenderNextPage',{
+            page: data.page,
+            answer: data.answer,
+            optionName: data.optionName,
+            questionId: data.questionId,
+            reputationPoints: data.reputationPoints,
+            startTime: data.startTime,
+            helpPageName: data.helpPageName,
+            entryPoint: data.entryPoint,
+            scenarioName: data.scenarioName
+        })
+
+        socket.emit('checkAnswerAndRenderNextPage',{
+            page: data.page,
+            answer: data.answer,
+            optionName: data.optionName,
+            questionId: data.questionId,
+            reputationPoints: data.reputationPoints,
+            startTime: data.startTime,
+            helpPageName: data.helpPageName,
+            entryPoint: data.entryPoint,
+            scenarioName: data.scenarioName
+        })
+        
+    })
+
 
     socket.on('decisionOptionClicked', function (data) {
         console.log(data.questionId);

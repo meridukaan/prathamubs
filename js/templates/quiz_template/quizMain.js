@@ -32,11 +32,76 @@ ubsApp.displayNextQuizQuestion=function(page, updateCorrectAnswerScore){
   	  questionNo=parseInt(questionNo)+1;
 	  $("#quizQuestionNumber").text(questionNo);
 	  $("#correctAnswers").text(quizCorrectAnswer);
-
+	
+	  console.log("ubsApp.pages: "+ubsApp.pages);
 	  if(ubsApp.pages[page].templates[0].quizResult){
+		  console.log("Inside Dislay Result If condition");
+		  console.log("Inside if page is : "+ page);
 	  		ubsApp.displayResults(page);
 	  }
 }
+
+ubsApp.socketDisplayNextQuizQuestion = function(page, updateCorrectAnswerScore){
+	socket.emit('displayNextQuizQuestion',{
+		description: "Call Server to display next quiz question",
+		page: page,
+		updateCorrectAnswerScore: updateCorrectAnswerScore,
+		roomCode: userArray[playerChance].getRoomCode(),
+		choiceSelected: choiceSelected
+	})
+}
+
+socket.on('clientDisplayNextQuestion', function(data){
+	// choiceSelected=data.choiceSelected;
+	choiceSelected=data.choiceSelected;
+	console.log("Prining ChoiceSelected: "+data.choiceSelected);
+	ubsApp.displayNextQuizQuestion(data.page, data.updateCorrectAnswerScore);
+})
+
+
+ubsApp.socketSendOptionId=function(optionId){
+	console.log(optionId);
+	socket.emit('sendSelectedOptionId',{
+		description : "This function goes to server to transfer the selected option id",
+		roomCode: userArray[playerChance].getRoomCode(),
+		optionId: optionId
+	});
+}
+
+socket.on('selectedOptionId',function(data){
+	console.log("Am I a Caller?");
+	console.log(data.isCaller);
+	if(data.isCaller==false){	
+		document.getElementById(data.optionId).checked=true;
+	}
+	// ubsApp.closeCurrentScenario();	
+})
+
+ubsApp.socketCheckAnswerAndRenderNextPage=function(page, answer, optionName, questionId, reputationPoints, startTime, helpPageName, entryPoint, scenarioName){
+	console.log("Socket Check Answer and Render Next Page");
+	if(page==''){
+		page='generalQuizResult';
+	}
+	socket.emit('socketCheckAnswerAndRenderNextPage', {
+		description: 'Socket Check Answer and Render Next Page',
+		page: page,
+		answer: answer,
+		optionName: optionName,
+		questionId: questionId,
+		reputationPoints: reputationPoints,
+		startTime:startTime,
+		helpPageName:helpPageName,
+		entryPoint:entryPoint,
+		scenarioName:scenarioName,
+		roomCode: userArray[playerChance].getRoomCode()
+	})
+}
+
+
+socket.on("checkAnswerAndRenderNextPage", function(data){
+	console.log("Checking Answers and Rendering page");
+	ubsApp.checkAnswerAndRenderNextPage(data.page, data.answer, data.optionName, data.questionId, data.reputationPoints, data.startTime, data.helpPageName, data.entryPoint, data.scenarioName);	
+})
 
 ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionId, reputationPoints, startTime, helpPageName, entryPoint, scenarioName){
   console.log("Quiz Question ID: "+ questionId);
@@ -61,13 +126,13 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 		  	if(entryPoint == "unluckyScenario"){
 		  		let currentPlayerRepPoints = userArray[playerChance].getReputationPts();
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizWrongResultFromLuckyScenario'], [reputationPoints]));
-		  		nextAction = "ubsApp.callServerClosePopup(); ubsApp.closeCurrentScenario();ubsApp.callServerNextMove();"
+		  		nextAction = "ubsApp.callServerClosePopup(); ubsApp.socketCloseCurrentScenario();ubsApp.callServerNextMove();"
 		  	}
 		  	else{
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizCorrectAnswerMessage'], [reputationPoints]));
-		  		nextAction = "ubsApp.callServerClosePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
+		  		nextAction = "ubsApp.callServerClosePopup("+true+", "+false+");ubsApp.socketDisplayNextQuizQuestion(\'"+ page +"\', true);"
 		  	}
-		    ubsApp.openPopup({
+		    ubsApp.socketOpenPopUp({
         		"message" : quizResultMessage,
         		"header"  : ubsApp.translation["quizCorrectAnswerHeading"],
         		"headerStyle" : "text-align: center;  color: green; font-weight: 700; ",
@@ -92,7 +157,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 		  		let currentPlayerRepPoints = userArray[playerChance].getReputationPts();
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizWrongResultFromUnluckyScenario'], [reputationPoints]));
 				userArray[playerChance].setReputationPts(currentPlayerRepPoints);
-		  		ubsApp.openPopup({
+		  		ubsApp.socketOpenPopUp({
 	        		"message" : quizResultMessage,
 	        		"header"  : ubsApp.translation["quizWrongAnswerHeading"],
 	        		"headerStyle" : "text-align: center;  color: red; font-weight: 700; ",
@@ -100,7 +165,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 	                		{
 	                			'id':"unluckyScenarioOkButton",
 	                            'name' : ubsApp.getTranslation("OK"),
-	                            'action': "ubsApp.callServerClosePopup(); ubsApp.payOrGain(\'"+ scenarioName +"\');ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
+	                            'action': "ubsApp.callServerClosePopup(); ubsApp.socketPayOrGain(\'"+ scenarioName +"\');ubsApp.socketCloseCurrentScenario(); ubsApp.callServerNextMove();"
 	                        }
 	                 ]
 
@@ -108,7 +173,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 		  	}
 		  	else{	
 		  		quizResultMessage = ubsApp.formatMessage(ubsApp.formatMessage(ubsApp.translation['quizWrongAnswerMessage'], [reputationPoints]));
-			  	ubsApp.openPopup({
+			  	ubsApp.socketOpenPopUp({
 	        		"message" : quizResultMessage,
 	        		"header"  : ubsApp.translation["quizWrongAnswerHeading"],
 	        		"headerStyle" : "text-align: center;  color: red; font-weight: 700; ",
@@ -116,12 +181,12 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 	                		{
 	                			'id':"quizWrongAnswer",
 	                            'name' : ubsApp.getTranslation("yes"),
-	                            'action': "ubsApp.startHelp(\'"+helpPageName+"\');ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
+	                            'action': "ubsApp.startHelp(\'"+helpPageName+"\');ubsApp.socketDisplayNextQuizQuestion(\'"+ page +"\', true);"
 	                        },
 	                        {
 	                			'id':"quizWrongAnswer",
 	                            'name' : ubsApp.getTranslation("no"),
-	                            'action': "ubsApp.callServerClosePopup("+true+");ubsApp.displayNextQuizQuestion(\'"+ page +"\', true);"
+	                            'action': "ubsApp.callServerClosePopup("+true+", "+false+");ubsApp.socketDisplayNextQuizQuestion(\'"+ page +"\', true);"
 	                        }
 	                 ]
 
@@ -194,8 +259,12 @@ ubsApp.luckQuizResult=function(){
 }
 
 ubsApp.generalQuizResult=function(page){
-
-	let resultPage = ubsApp.pages[choiceSelected.page].templates[0];
+	console.log("Page is"+ page);
+	console.log("In General quiz result function");
+	console.log(JSON.stringify(ubsApp.pages));
+	console.log(JSON.stringify(choiceSelected.page));
+	
+	let resultPage = ubsApp.pages[page].templates[0];
 	let inventory = 0;
 	let bankBalance =0;
 	let reputationPoints = 0;
@@ -242,7 +311,7 @@ ubsApp.displayResults = function(page){
 		ubsApp.luckQuizResult();
 	}
 	else if(page == "generalQuizResult"){
-		ubsApp.generalQuizResult();
+		ubsApp.generalQuizResult(page);
 	}
 }
 

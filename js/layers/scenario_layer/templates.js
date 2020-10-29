@@ -739,17 +739,17 @@ ubsApp.quizTemplate = '<div id="quiz">'+
 /*'       <span id ="quizQuestionNo">Question <span id="quizQuestionNumber"></span></span>'+*/
 '       <div id="quizOptions">'+
 '           {{#each options}}'+
-'           <label for="{{id}}" class="quizOptionsStyle"><input type="radio" style="{{radio_style}}" name="{{optionName}}" value="{{optionValue}}" id="{{id}}" />{{optionValue}}</label>'+
+'           <label for="{{id}}" class="quizOptionsStyle"><input type="radio" style="{{radio_style}}" name="{{optionName}}" value="{{optionValue}}" id="{{id}}" onclick="ubsApp.socketSendOptionId(\'{{id}}\')"/>{{optionValue}}</label>'+
 '           {{/each}}'+
 '       </div>'+
-'       <div id="quizOk"><input type="submit" style="color:green" class=\'quizButtons quizOkButton\' name="{{optionName}}" onclick="ubsApp.checkAnswerAndRenderNextPage(\'{{onClickPage.nextPage}}\',\'{{answer}}\',\'{{optionName}}\', \'{{questionId}}\',\'{{credit.reputationPoints}}\', \'{{startTime}}\', \'{{helpPageName}}\',\'{{entryPoint}}\', \'{{luckScenarioName}}\')" value={{okTitle}}></div>'+
+'       <div id="quizOk"><input type="submit" style="color:green" class=\'quizButtons quizOkButton\' name="{{optionName}}" onclick="ubsApp.socketCheckAnswerAndRenderNextPage(\'{{onClickPage.nextPage}}\',\'{{answer}}\',\'{{optionName}}\', \'{{questionId}}\',\'{{credit.reputationPoints}}\', \'{{startTime}}\', \'{{helpPageName}}\',\'{{entryPoint}}\', \'{{luckScenarioName}}\')" value={{okTitle}}></div>'+
 '       {{/if}}'+
 '   </div>'+
 '   <div id="answerDiv" style="display:none;">'+
 '       <span id="answerHeader" class="popupHeaderFontSize"></span><br>'+
 '       <span id="answerMessage"></span>'+
 '       <div id="quizOk">'+
-'           <button id="wrongAnswerOk" style="color:green" class=\'quizButtons quizOkButton\' onclick="ubsApp.displayNextQuizQuestion(\'{{onClickPage.nextPage}}\')" >{{okTitle}}</button>'+
+'           <button id="wrongAnswerOk" style="color:green" class=\'quizButtons quizOkButton\' onclick="ubsApp.socketDisplayNextQuizQuestion(\'{{onClickPage.nextPage}}\')" >{{okTitle}}</button>'+
 '       </div>'+
 '   </div>'+
 '</div>'+
@@ -1034,7 +1034,7 @@ ubsApp.luckyUnluckyTemplate='<div style="width:100%;height:100%;position:relativ
 '                   <div style="width:33.33%; margin:auto; text-align: center;">'+
 '               {{/if}}'+
 '               {{#if isLuckCategory}}'+
-'                  <button class="luckPayButton" onclick="ubsApp.payOrGain(\'{{scenarioName}}\',\'{{questionId}}\')">'+
+'                  <button class="luckPayButton" onclick="ubsApp.socketPayOrGain(\'{{scenarioName}}\',\'{{questionId}}\')">'+
 '                    {{#if negative}}{{payTitle}}{{else}}{{gainTitle}}{{/if}}'+
 '                  </button>'+
 '                {{else}}'+
@@ -1046,7 +1046,7 @@ ubsApp.luckyUnluckyTemplate='<div style="width:100%;height:100%;position:relativ
 
 '               {{#if quizRequired}}'+
 '                  <div style="display:inline-block; width:33.33%; text-align:center;float:left">'+
-'                       <button class="takeQuizButton" onclick="ubsApp.luckPaymentQuiz(\'{{scenarioName}}\')">{{takeQuizTitle}}</button>'+
+'                       <button class="takeQuizButton" onclick="ubsApp.socketLuckPaymentQuiz(\'{{scenarioName}}\')">{{takeQuizTitle}}</button>'+
 '                  </div>'+
 '                   {{#if hasAdvantageCard}}'+
 '                       <div style="display:inline-block; width:45%; text-align:right;float:left">'+

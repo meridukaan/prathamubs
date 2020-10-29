@@ -22,6 +22,7 @@ socket.on('replicateRollDice', function(data)
 {
   var diceValue = data.diceValue;
   var elDiceOne = document.getElementById('dice1');
+
   var audioElement = document.getElementById('rollIt');
   ubsApp.raiseAudioEvent(audioElement, 'rollingDice');
 
