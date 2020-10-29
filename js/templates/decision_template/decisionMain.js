@@ -32,8 +32,26 @@ ubsApp.renderDecisonTemplate = function() {
 
 }
 
-ubsApp.decisionOptions = function(reputationPts, bankBalance, startTime, questionId, insurance=false, page="", pamphlet=false, randomProfit=false){
+ubsApp.decisionOptions = function(reputationPts, bankBalance, startTime, questionId, insurance=false, page="", pamphlet=false, randomProfit=false)
+{
+	socket.emit('decisionOptionClicked', {description: "decisionOptionClicked", 
+		reputationPts : reputationPts, bankBalance: bankBalance,
+		startTime: startTime, questionId: questionId,
+		insurance: insurance, page: page,
+		pamphlet: pamphlet, randomProfit: randomProfit,
+		roomCode : ubsApp.studentArray[0].room});
 
+}
+socket.on('decisionOptionsResult', function(data){
+	var reputationPts = data.reputationPts;
+	var bankBalance = data.bankBalance;
+	var startTime = data.startTime;
+	var questionId = data.questionId;
+	var insurance = data.insurance;
+	var page = data.page;
+	var pamphlet = data.pamphlet;
+	var randomProfit = data.randomProfit;
+	
 	console.log("Decision Question Id is : " + questionId);
     reputationPts = parseInt(reputationPts);
 	let initialPlayerRepPoints = userArray[playerChance].getReputationPts();
@@ -112,7 +130,7 @@ ubsApp.decisionOptions = function(reputationPts, bankBalance, startTime, questio
 	
 
 
-}
+})
 
 
 //Computer Player
