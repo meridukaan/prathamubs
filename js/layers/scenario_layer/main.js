@@ -106,7 +106,6 @@ ubsApp.renderPage = function(page) {
 	tempVar.scratchCardTemplateConfig = undefined;
 	tempVar.flag=false;
 
-
 	for(let i=0; i< page.length; i++) {
 		let templateConfig = $.extend({},page[i]);
 		let templateType = templateConfig.templateType;
@@ -287,7 +286,7 @@ ubsApp.stopTimer = function() {
 ubsApp.socketCloseCurrentScenario=function(){
 	console.log("close scenario - socket mode");
 	socket.emit('closeScenario',{
-		description : "This function goes to server to trigger close scenario in the room"
+		description : "This function goes to server to trigger close scenario in the room", roomCode: userArray[playerChance].getRoomCode()
 	});
 }
 
@@ -349,6 +348,15 @@ ubsApp.translateScenarios=function(){
 	
 	monopoly.pages=JSON.parse(resultString);
 }
+
+ubsApp.socketOpenPopUp = function(config){
+	socket.emit('serverOpenPopUp', {config : config, roomCode : userArray[playerChance].getRoomCode()})
+}
+
+socket.on('clientOpenPopUp', function(data){
+	console.log("client open popup called with config : "+data.config);
+	ubsApp.openPopup(data.config);
+})
 
 
 ubsApp.openPopup = function(config) {
@@ -433,13 +441,13 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
    $('#resultBackground').hide();
 
    if(ubsApp.openedTransferScenario && (ubsApp.openNextMoveAfterTransfer || ubsApp.openNextMoveAfterPayOff)) {
-	ubsApp.callServerNextMove();
+	ubsApp.nextMove();
        }
     else if (!ubsApp.openedTransferScenario ) {
-        ubsApp.callServerNextMove();
+        ubsApp.nextMove();
    }
    else {
-    ubsApp.closeCurrentScenario();
+    ubsApp.socketCloseCurrentScenario();
     ubsApp.openNextMoveAfterPayOff = false;
     ubsApp.openNextMoveAfterTransfer = false;
     ubsApp.openedTransferScenario = false;

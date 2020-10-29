@@ -739,17 +739,17 @@ ubsApp.quizTemplate = '<div id="quiz">'+
 /*'       <span id ="quizQuestionNo">Question <span id="quizQuestionNumber"></span></span>'+*/
 '       <div id="quizOptions">'+
 '           {{#each options}}'+
-'           <label for="{{id}}" class="quizOptionsStyle"><input type="radio" style="{{radio_style}}" name="{{optionName}}" value="{{optionValue}}" id="{{id}}" />{{optionValue}}</label>'+
+'           <label for="{{id}}" class="quizOptionsStyle"><input type="radio" style="{{radio_style}}" name="{{optionName}}" value="{{optionValue}}" id="{{id}}" onclick="ubsApp.socketSendOptionId(\'{{id}}\')"/>{{optionValue}}</label>'+
 '           {{/each}}'+
 '       </div>'+
-'       <div id="quizOk"><input type="submit" style="color:green" class=\'quizButtons quizOkButton\' name="{{optionName}}" onclick="ubsApp.checkAnswerAndRenderNextPage(\'{{onClickPage.nextPage}}\',\'{{answer}}\',\'{{optionName}}\', \'{{questionId}}\',\'{{credit.reputationPoints}}\', \'{{startTime}}\', \'{{helpPageName}}\',\'{{entryPoint}}\', \'{{luckScenarioName}}\')" value={{okTitle}}></div>'+
+'       <div id="quizOk"><input type="submit" style="color:green" class=\'quizButtons quizOkButton\' name="{{optionName}}" onclick="ubsApp.socketCheckAnswerAndRenderNextPage(\'{{onClickPage.nextPage}}\',\'{{answer}}\',\'{{optionName}}\', \'{{questionId}}\',\'{{credit.reputationPoints}}\', \'{{startTime}}\', \'{{helpPageName}}\',\'{{entryPoint}}\', \'{{luckScenarioName}}\')" value={{okTitle}}></div>'+
 '       {{/if}}'+
 '   </div>'+
 '   <div id="answerDiv" style="display:none;">'+
 '       <span id="answerHeader" class="popupHeaderFontSize"></span><br>'+
 '       <span id="answerMessage"></span>'+
 '       <div id="quizOk">'+
-'           <button id="wrongAnswerOk" style="color:green" class=\'quizButtons quizOkButton\' onclick="ubsApp.displayNextQuizQuestion(\'{{onClickPage.nextPage}}\')" >{{okTitle}}</button>'+
+'           <button id="wrongAnswerOk" style="color:green" class=\'quizButtons quizOkButton\' onclick="ubsApp.socketDisplayNextQuizQuestion(\'{{onClickPage.nextPage}}\')" >{{okTitle}}</button>'+
 '       </div>'+
 '   </div>'+
 '</div>'+

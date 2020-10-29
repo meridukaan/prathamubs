@@ -59,14 +59,14 @@ ubsApp.renderLuckQuizQuestion = function (page) {
     ubsApp.pages[quizPage.pageName].templates[0].luckScenarioName = page;
     socket.emit('serverQuizPage', {
         description : "serverQuizPage called",
-        quizPage : quizPage,
+        quizPage : quizPage.pageName,
         roomCode : userArray[playerChance].getRoomCode()
     })
 }
 
 socket.on('clientQuizPage', function(data){
     console.log("inside socket quiz page and quiz page is  : "+ data.quizPage);
-    ubsApp.renderFirstQuizPage(data.quizPage.pageName);
+    ubsApp.renderFirstQuizPage(data.quizPage);
 })
 
 ubsApp.findQuizPage = function (category) {

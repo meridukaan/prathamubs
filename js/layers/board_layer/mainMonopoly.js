@@ -19,6 +19,7 @@ monopoly.flag2= false;
 monopoly.computerDifficulty={};
 monopoly.scenario ={};
 monopoly.numplayers=0;
+monopoly.isCaller=false;
 let numplayers = monopoly.numplayers;
 monopoly.playerChance = 0;
 let playerChance = monopoly.playerChance;
@@ -123,8 +124,6 @@ monopoly.renderPageforBoard = function(page) {
              }
               for(var j=0;j<templateConfig.bottom_row.length;j++){
                 let key=templateConfig.bottom_row[j].title;
-                console.log(templateConfig.bottom_row);
-                console.log(key);
                 let translatedString=ubsApp.translation[key];
                 templateConfig.bottom_row[j].title=translatedString;
               }
@@ -263,14 +262,15 @@ monopoly.startScenarios = function (blockNo) {
 
 socket.on('clientMyMove', function(data){
     console.log("dice value is : "+data.userDiceValue);
-    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition);
+    monopoly.isCaller = data.isCaller;
+    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller);
 })
-monopoly.myMove = function(count, pId, currentPos) {
+monopoly.myMove = function(count, pId, currentPos, isCaller) {
   var temp="#p"+pId;
   var playerToken = $(temp);
   var blockNo = currentPos;   
   console.log("Current Pos : "+ currentPos + "of player : " + userArray[pId].getplayerName());
-   var movePlayer = setInterval(frame, 500);
+  var movePlayer = setInterval(function(){frame(isCaller);}, 500);
   if(currentPos+count >= boardConfig.blocks){
     let x = userArray[pId].getWeeks();
     if(x < ubsApp.maxNumOfWeeks) {
@@ -308,11 +308,11 @@ monopoly.myMove = function(count, pId, currentPos) {
 
 
   }
-  function frame(){
+  function frame(isCaller){
     if (blockNo == (currentPos+count)%boardConfig.blocks){
       userArray[pId].setplayerCurrentPos((currentPos+count)%boardConfig.blocks);
       clearInterval(movePlayer);
-      if(userArray[pId].getWeeks() <= 12) {
+      if(userArray[pId].getWeeks() <= 12 && isCaller==true) {
         monopoly.startScenarios(blockNo);
       }
     } 
@@ -1200,7 +1200,7 @@ ubsApp.openQuizIfValid = function() {
 
     if(userArray[playerChance].canUserTakeQuiz()) {
         userArray[playerChance].incrementQuizCount();
-        ubsApp.openPopup({
+        ubsApp.socketOpenPopUp({
             "message" : ubsApp.translation["quizStartHelp"],
             "header"  : ubsApp.translation["quiz"],
             "headerStyle" : "text-align: center;  color: green; font-weight: 700",
@@ -1215,7 +1215,7 @@ ubsApp.openQuizIfValid = function() {
           });
         
     } else {
-        ubsApp.openPopup({
+        ubsApp.socketOpenPopUp({
         "message" : ubsApp.getTranslation("quizLimitReachedForWeek"),
         "header" : ubsApp.getTranslation("ERROR"),
         "headerStyle" : "text-align: center;  color: red; font-weight: 700; ",
@@ -1286,5 +1286,8 @@ ubsApp.populateStudentArray = function(studentArray) {
 
 socket.on('nextMove', function (data) {
     console.log("Toggling player chance");
+    // if(data.isCaller == true){
     ubsApp.nextMove();
+    // }
+    
 })
