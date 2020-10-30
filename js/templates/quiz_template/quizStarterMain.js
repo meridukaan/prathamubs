@@ -45,6 +45,7 @@ ubsApp.cancelQuiz=function(scenarioName){
 ubsApp.generalQuiz=function(config){   //credits can be amount or points depending on type of quiz
 
 	ubsApp.emptyQuizQuestions();
+	console.log("This is the config: "+ config +" of player: "+ userArray[playerChance].getplayerName());
 
 	let arr = [];
 	let noOfQuestions = config.noOfQuestions;
@@ -70,9 +71,12 @@ ubsApp.generalQuiz=function(config){   //credits can be amount or points dependi
 	ubsApp.pages["quizQ"+arr[arr.length-1]].templates[0].noOfQuestions = config.noOfQuestions;    			//noOfQuestions to be put in quiz config
 	ubsApp.pages["quizQ"+arr[arr.length-1]].templates[0].currentPlayerName = config.currentPlayerName;
 	ubsApp.pages[config.resultPage].templates[0].noOfQuestions = noOfQuestions;
-	ubsApp.renderFirstQuizPage("quizQ"+arr[0]);
-
-
+	// ubsApp.renderFirstQuizPage("quizQ"+arr[0]);
+	socket.emit('serverQuizPage', {
+		description: "Render General Quiz",
+        quizPage : "quizQ"+arr[0],
+        roomCode : userArray[playerChance].getRoomCode()
+	})
 }
 
 ubsApp.renderFirstQuizPage = function(page){

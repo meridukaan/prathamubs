@@ -311,13 +311,10 @@ monopoly.myMove = function(count, pId, currentPos, isCaller) {
 
   }
   function frame(isCaller){
-    console.log("Inside frame, isCaller : " + isCaller);
-    console.log("BlockNo : " + blockNo + ", count : " + count + ", BoardConfig.blocks : " + boardConfig.blocks);
     if (blockNo == (currentPos+count)%boardConfig.blocks){
       userArray[pId].setplayerCurrentPos((currentPos+count)%boardConfig.blocks);
       clearInterval(movePlayer);
-      console.log("inside If")
-      if(userArray[pId].getWeeks() <= 12 && isCaller == true) {
+      if(userArray[pId].getWeeks() <= 12 && isCaller==true) {
         monopoly.startScenarios(blockNo);
       }
     } 
@@ -1205,7 +1202,7 @@ ubsApp.openQuizIfValid = function() {
 
     if(userArray[playerChance].canUserTakeQuiz()) {
         userArray[playerChance].incrementQuizCount();
-        ubsApp.openPopup({
+        ubsApp.socketOpenPopUp({
             "message" : ubsApp.translation["quizStartHelp"],
             "header"  : ubsApp.translation["quiz"],
             "headerStyle" : "text-align: center;  color: green; font-weight: 700",
@@ -1220,7 +1217,7 @@ ubsApp.openQuizIfValid = function() {
           });
         
     } else {
-        ubsApp.openPopup({
+        ubsApp.socketOpenPopUp({
         "message" : ubsApp.getTranslation("quizLimitReachedForWeek"),
         "header" : ubsApp.getTranslation("ERROR"),
         "headerStyle" : "text-align: center;  color: red; font-weight: 700; ",
@@ -1290,9 +1287,7 @@ ubsApp.populateStudentArray = function(studentArray) {
 }
 
 socket.on('nextMove', function (data) {
-    console.log(data.description);
-    if (data.isCaller == true) {
-        ubsApp.nextMove();
-    }
+
+    ubsApp.nextMove();
     
 })
