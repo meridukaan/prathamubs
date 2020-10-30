@@ -106,7 +106,6 @@ ubsApp.payDebt=function(questionId){
 }
 
 ubsApp.modeOfPayment = function(value){
-	console.log(value);
 	socket.emit('serverPayOffDropDown',{
 		dropDownValue : value,
 		roomCode : ubsApp.studentArray[0].room
@@ -115,7 +114,6 @@ ubsApp.modeOfPayment = function(value){
 
 socket.on('clientPayOffDropDown',function(data){
 	var selectedValue = document.getElementById("payOffDropDown");
-	console.log(selectedValue.value);
 	selectedValue.value = data.dropDownValue;
 })
 

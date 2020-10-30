@@ -136,7 +136,6 @@ monopoly.renderPageforBoard = function(page) {
               for(var j=0;j<templateConfig.right_col.length;j++){
                 templateConfig.right_col[j].title=ubsApp.translation[templateConfig.right_col[j].title];
               }
-              console.log(templateConfig);
 
                monopoly.initialiseCategory();
                rollingDiceConfig.optionPageMap = templateConfig.optionPageMap;
@@ -228,7 +227,6 @@ monopoly.callStartScenario = function (templateName, template, key) {
 }
 
 socket.on('startScenarioToClient', function (data) {
-    console.log(data.description);
     templateName = data.templateName;
     template = data.template;
     key = data.key;
@@ -243,12 +241,10 @@ socket.on('startScenarioToClient', function (data) {
 })
 
 monopoly.startScenarios = function (blockNo) {
-    console.log("beginning startScenario");
     setTimeout(function () {
         let category = blockCategory[blockNo];
         ubsApp.currentScenarioCategory = category;
         if (category) {
-            console.log("Inside startScenario If")
             scenario = userArray[playerChance].getScenario(category, playerChance);
             // blockCategory[blockNo]
             let currentTemplateName = scenario.getName();
@@ -263,7 +259,6 @@ monopoly.startScenarios = function (blockNo) {
 }
 
 socket.on('clientMyMove', function(data){
-    console.log("dice value is : "+data.userDiceValue);
     monopoly.isCaller = data.isCaller;
     monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller);
 })
@@ -320,7 +315,6 @@ monopoly.myMove = function(count, pId, currentPos, isCaller) {
     } 
     else{
       blockNo++;
-      console.log("inside else, blockNo : " + blockNo)
       blockNo %= boardConfig.blocks;
       if(blockNo==0){
           if(document.getElementById("weekContent")!=null){
@@ -470,7 +464,6 @@ monopoly.storePlayerDetails=function(){
     }
     monopoly.noPlayersPlaying = numplayers;
     done_initialising=true;
-    console.log("StoreInitPlayers, before render");
     monopoly.renderPageforBoard(monopoly.pages["monopoly"]);
     ubsApp.openPopup({
                       "header" : "",
@@ -684,12 +677,10 @@ monopoly.closeLeaderBoard=function(){
 }
 
 monopoly.createRoom=function(){
-    console.log("Creating Room");
     ubsApp.openCreateRoomTemplate();
 }
 
 monopoly.joinRoom=function(){
-    console.log("Join Room");
     ubsApp.openJoinRoomTemplate();
 }
 
@@ -1005,7 +996,6 @@ ubsApp.confirmEndGame=function(){
 
 ubsApp.nextMove = function(){
 
-    console.log("Calling next move");
     ubsApp.closeCurrentScenario();
     if(!userArray[playerChance]) {
         return;

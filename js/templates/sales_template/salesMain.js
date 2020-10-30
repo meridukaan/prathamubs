@@ -14,40 +14,23 @@ ubsApp.getSalesTemplate = function(templateConfig, tempVar){
     if(monopoly.isCaller == true){
         ubsApp.selectAvailableItems(templateConfig, tempVar);
     }
-    console.log("Awaiting at " + Date.now())
-    // while(!socketComplete){
-
-    //     if(socketComplete){
-    //         break
-    //     }
-    //     else{
-    //         continue
-    //     }
-    // }
     tempVar = globalTempVar;
     templateConfig = globalTempConfig;
-    console.log("Finished waiting at " + Date.now())
 }
 
 socket.on("clientSelectAvailableItem",function(data){
-    console.log("Received select avialble Itme from server");
-    console.log(data);
     renderSales(data);
 })
 
 function renderSales(data){
-
-        console.log(Date.now())
         config=data.config;
         arr=data.arr;
         noOfItems= data.noOfItems;
         val=data.val;
         tempVar = data.tempVar;
-        console.log(data.description);
         let orderNo=1;
         for(var i=0;i<noOfItems;i++){
             var x = config.order[i].itemId;
-            console.log(config.order);
             config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
     
             config.order[i].item = ubsApp.translation.itemTable[x];
@@ -93,7 +76,6 @@ function renderSales(data){
            ubsApp.startRecordingTimer(templateConfig);
            tempVar.html += ubsOrdertemplate(templateConfig);
            ubsApp.raiseAudioEvent(document.getElementById('templateContent'),'spaceLanding');
-           console.log("reached here at " + Date.now());
            globalTempVar = tempVar;
            globalTempConfig = templateConfig;
 
@@ -217,7 +199,6 @@ ubsApp.validateAmount = function(showPopup = true) {
             
         }
 	}
-    console.log(sum_of_individual_items);
     if(!$("#receiptTotal").val()||sum_of_individual_items!=parseFloat($("#receiptTotal").val())) {
         if(showPopup) {
              ubsApp.openPopup({
@@ -424,42 +405,6 @@ ubsApp.selectAvailableItems = function(config, tempVar){
 
 }
 
-	// for(let i = 0; i<arr.length;i++){
-	// 	config.order[arr[i]].exclude = true;
-	// }
-
- //    let orderNo=1;
-	// for(var i=0;i<noOfItems;i++){
-	// 	var x = config.order[i].itemId;
-	// 	config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
-
- //    config.order[i].item = ubsApp.translation.itemTable[x];
-
-	// 	if(config.order[i].exclude==false){
-	// 	    config.order[i].no = orderNo;
- //             orderNo++;
-	// 		val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
-	// 		if(config.order[i].discountOnItem) {
- //            	    if(config.order[i].discountOnItem.type == 1) {
- //            	        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
- //            	    } else {
- //            	        val-=config.order[i].discountOnItem.value;
- //            	    }
- //            }
-	// 	}
-	// }
-
-	// if(config.discountOnTotal) {
-	//     if(config.discountOnTotal.type == 1) {
-	//         val-=config.discountOnTotal.value * val / 100;
-	//     } else {
-	//         val-=config.discountOnTotal.value;
-	//     }
-	// }
-	// config["tempTotal"] = Math.round(val * 100) / 100;
-
-
-
 ubsApp.checkInventory=function(){
 
 	let percent = 0;
@@ -533,39 +478,29 @@ ubsApp.getCategoryToPostScore = function(category){
 document.addEventListener('onkeyup',calculatorTotal);
 
 function calculatorTotal(event){
-  calculatedTotal=document.getElementById("receiptTotal").value;
-  console.log("User typed "+calculatedTotal+" in text box");
-  socket.emit('textToReplicateSale',{
-    description : "Event sends keypress events in textbox for total amount sale", total:calculatedTotal, roomCode : ubsApp.studentArray[0].room
-  })
+    calculatedTotal=document.getElementById("receiptTotal").value;
+    socket.emit('textToReplicateSale',{
+        description : "Event sends keypress events in textbox for total amount sale", total:calculatedTotal, roomCode : ubsApp.studentArray[0].room
+    })
   
 }
 socket.on('replicatedTextTotal',function(data){
-  console.log("Value received in total "+Number(data.calculatedTotal));
-  console.log(data.calculatedTotal)
-  console.log("-------------------------------");
   document.getElementById("receiptTotal").value=Number(data.calculatedTotal);
 })
 
 document.addEventListener('onkeyup',eachOrderPrice);
 
 function eachOrderPrice(event,imp){
-  console.log("imp= "+imp.id)
-  console.log("id aya he" + imp.value);
-  // orderPrice=document.getElementById("input1").value;
     orderPrice=imp.value;
     id=imp.id;
-  console.log("User typed "+orderPrice+" in text box");
-  socket.emit('textToReplicateSaleOrder',{
-    description : "Event sends keypress events in textbox for total amount sale", orderPrice:orderPrice, roomCode : ubsApp.studentArray[0].room,id : id
-  })
+    socket.emit('textToReplicateSaleOrder',{
+        description : "Event sends keypress events in textbox for total amount sale", 
+        orderPrice:orderPrice, 
+        roomCode : ubsApp.studentArray[0].room,
+        id : id
+    })
   
 }
 socket.on('replicatedTextSaleOrder',function(data){
-  console.log("Value received in order "+Number(data.orderPrice));
-  console.log(data.orderPrice)
-  console.log("-------------------------------");
-  // document.getElementById("input1").value=Number(data.orderPrice);
-  console.log("Id ala ahe " +data.id )
   document.getElementById(data.id).value=Number(data.orderPrice);
 })

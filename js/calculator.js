@@ -25,7 +25,6 @@ function addToDisplay(clickedButtonVal){
 socket.on("clientAddToDisplay",function(data){
 
 	clickedButtonVal=data.clickedButtonVal;
-	console.log("Button clicked " +clickedButtonVal);
 	switch(clickedButtonVal){
 		case 'C':
 			document.getElementById('numberInput').value = '';

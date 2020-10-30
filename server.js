@@ -36,7 +36,6 @@ io.on('connection', function (socket) {
         roomUserMap.set(roomnum, users);
         roomPropertiesList.push([socket.id, userLimit, language, weeks]);
         roomPropertiesMap.set(roomnum, roomPropertiesList);
-        console.log(roomPropertiesMap.get(roomnum));
 
         playerChance = 0;//Initialize creator to be first player
         player.name = userName;
@@ -46,7 +45,6 @@ io.on('connection', function (socket) {
         players.push(player);
         studentArrayMap.set(roomnum, players);
 
-        console.log(studentArrayMap.get(roomnum));
         socket.emit("populateCreateRoomLobby", { userSet: userList, studentArray: studentArrayMap.get(roomnum), roomCode: roomnum, isCreator: true, playerAge: data.userAge, playerGender: data.userGender });
 
     })
@@ -69,7 +67,6 @@ io.on('connection', function (socket) {
             roomUserMap.get(roomCode).add(data.userName);
             users = Array.from(roomUserMap.get(roomCode));
             playerChance = roomUserMap.get(roomCode).size - 1;
-            console.log("Chance of player is " + playerChance);
             console.log(roomUserMap.get(roomCode).size + " players in room " + roomCode + " : " + users);
 
             player.name = data.userName;
@@ -79,7 +76,6 @@ io.on('connection', function (socket) {
             player.chance = playerChance;
             studentArrayMap.get(roomCode).push(player);
 
-            console.log(studentArrayMap.get(roomCode));
             socket.emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
             socket.in(roomCode).emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
             socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", { userSet: users, isCreator: true, roomCode: roomCode, studentArray: studentArrayMap.get(roomCode) });
@@ -100,8 +96,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('actualTransferToBank', function (data) {
-        console.log(data.description);
-        console.log(data.qid);
         socket.emit('openActualTransferToBank', { questionId: data.qid });
         socket.in(Number(data.roomCode)).emit('openActualTransferToBank', { questionId: data.qid });
 
@@ -109,7 +103,6 @@ io.on('connection', function (socket) {
 
 
     socket.on('transferToBank', function (data) {
-        console.log(data.description);
         socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: false });
         socket.emit('openTransferToBank', { flag: 1, openNextMove: false });
     })
@@ -121,7 +114,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('closeScenario', function (data) {
-        console.log("opened server side of close scenario")
         socket.emit('closingCurrentScenario', {
             description: "This function would call the close scenario function on every client"
         });
@@ -131,7 +123,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverClosePopup', function (data) {
-        console.log("Server side close pop up function");
         socket.emit('socketClosePopup', {
             description: "Calling close pop up on current client",
             config: data.config,
@@ -145,7 +136,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverMyMove', function (data) {
-        console.log("inside server's myMove socket");
         socket.emit('clientMyMove', {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
@@ -163,7 +153,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('callNextMove', function(data){
-        console.log("Next move on server")
         socket.emit('nextMove', {
             description: "Calling Next Move in all Cleints in my room",
             isCaller:true
@@ -188,7 +177,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('startScenarioToServer', function (data) {
-        console.log("Opened startScenario on Server");
         socket.in(Number(data.roomCode)).emit('startScenarioToClient', {
             description : "This event calls the startScenario on all clients in room", 
             templateName : data.templateName, 
