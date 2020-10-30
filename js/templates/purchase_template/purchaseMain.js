@@ -39,8 +39,17 @@ $("#newCostText").text((parseInt(temp.substring(2))-userArray[playerChance].getI
 $("#updatedInventoryValue").text(temp.substring(2));
 }
 
-ubsApp.pay=function(startTime,questionId){
+ubsApp.pay=function(startTime,questionId)
+{
     console.log("Purchase Question ID is:" + questionId);
+    socket.emit('pay', {description: "pay", startTime : startTime, questionId: questionId,roomCode : ubsApp.studentArray[0].room});
+
+}
+
+socket.on('purchaseInventory', function(data)
+{
+var questionId=data.questionId;
+var startTime=data.startTime;
 var paymentDone=false;
 var resultMessage="";
 var subResultMessage="";
@@ -64,7 +73,7 @@ for(var i=1;i<=numberOfPaymentModes;i++){
 
         else{
             resultMessage = ubsApp.translation["validAmount"];
-            break;		
+            break;      
         }
     }
 }
@@ -178,7 +187,7 @@ else{
 }
 else{
 resultMessage=ubsApp.translation["pleaseConfirm"];
-ubsApp.openPopup({
+ubsApp.socketOpenPopUp({
     "message" : resultMessage,
     "header" : ubsApp.getTranslation("purchaseHeader"),
     "headerStyle" : "text-align: center;  color: red; font-weight: 700;"
@@ -188,17 +197,12 @@ ubsApp.openPopup({
 resultMessage="";
 }
 if(resultMessage != "") {
-    ubsApp.openPopup({ "message" : resultMessage,
+    ubsApp.socketOpenPopUp({ "message" : resultMessage,
                  "header" : ubsApp.getTranslation("purchaseHeader"),
                  "headerStyle" : "text-align: center;  color: red;"
                       });
 }
-}
-
-// ubsApp.showScore=function(){
-// 	var element=document.getElementById("purchaseLeaderBoard");
-// 	elem
-// }
+})
     
 ubsApp.addPaymentMode=function(){
 for(var i=1;i<=numberOfPaymentModes;i++){
@@ -220,24 +224,39 @@ while(end < start + ms) {
 ubsApp.openPurchaseScenario=function(openNextMove = true){
 	offlinePurchaseClicked=true;
 	ubsApp.openNextMoveAfterPurchase = openNextMove;
-	ubsApp.startCurrentScenario();
-	ubsApp.renderPageByName("purchaseScenario");
+    socket.emit('openPurchaseScenario', {description: "openPurchaseScenario", roomCode : ubsApp.studentArray[0].room}); 
+	
 }
+
+socket.on('openPurchaseScenarioEvent', function () {
+    ubsApp.startCurrentScenario();
+    ubsApp.renderPageByName("purchaseScenario");
+})
 
 
 ubsApp.increaseInventory=function(){
+    socket.emit('increaseInventory', {description: "increaseInventory", roomCode : ubsApp.studentArray[0].room});  
+}
+
+socket.on('increaseInventoryLevel', function()
+{
     var currentSliderValue = document.getElementById("mySlider").value;
     document.getElementById("mySlider").value = parseInt(currentSliderValue)+1;
     ubsApp.updateInventoryLevel(document.getElementById("mySlider").value);
     ubsApp.fillUp();
-}
+})
 
 ubsApp.decreaseInventory=function(){
+    socket.emit('decreaseInventory', {description: "decreaseInventory", roomCode : ubsApp.studentArray[0].room});  
+
+}
+
+socket.on('decreaseInventoryLevel', function ()
+ {
     var currentSliderValue = document.getElementById("mySlider").value;
     if(parseFloat(currentSliderValue)>parseFloat(userArray[playerChance].getInventoryScore())){
         document.getElementById("mySlider").value = parseInt(currentSliderValue)-1;
         ubsApp.updateInventoryLevel(document.getElementById("mySlider").value);
         ubsApp.fillUp();
     }
-
-}
+})
