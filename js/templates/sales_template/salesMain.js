@@ -1,38 +1,105 @@
+function resolveAfter2Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 300);
+    });
+  }
+
+var globalTempVar;
+var globalTempConfig;
+var socketComplete =false;
 ubsApp.getSalesTemplate = function(templateConfig, tempVar){
-	tempVar.salesConfig = templateConfig;
-	ubsApp.selectAvailableItems(templateConfig);
-    templateConfig.SUBMIT = ubsApp.getTranslation("SUBMIT");
-    templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
-    templateConfig.Customer = ubsApp.getTranslation("Customer");
-    templateConfig.gameLogo = ubsApp.getTranslation("gameLogo");
-
-    templateConfig.salesConfig = ubsApp.getTranslation("sale");
-    templateConfig.sale = ubsApp.getTranslation("sale");
-    templateConfig.Discount = ubsApp.getTranslation("Discount");
-    templateConfig.PLAYER = ubsApp.getTranslation("PLAYER");
-    templateConfig.Total = ubsApp.getTranslation("Total");
-
-
-    ubsApp.startRecordingTimer(templateConfig);
-    tempVar.html += ubsOrdertemplate(templateConfig);
-    ubsApp.raiseAudioEvent(document.getElementById('templateContent'),'spaceLanding');
-	if(ubsApp.noItemsForSale) {
-        ubsApp.noItemsForSale = false;
-        ubsApp.openPopup({
-                        "message" : ubsApp.getTranslation("salesNoItemMessage"),
-                        "header" : ubsApp.getTranslation("ERROR"),
-                        "headerStyle" : "text-align: center;  color: black; font-weight: 700;",
-                        "buttons":[
-                        	{
-                        		'id':"closePopupButton",
-                        		'name' : ubsApp.getTranslation("CLOSE"),
-                      			'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'), 'saleEnd');ubsApp.callServerClosePopup();	ubsApp.stopTimer();ubsApp.closeCurrentScenario();ubsApp.callServerNextMove();"
-                        	}
-                        ]
-                        });
+    tempVar.salesConfig = templateConfig;
+    if(monopoly.isCaller == true){
+        ubsApp.selectAvailableItems(templateConfig, tempVar);
     }
+    tempVar = globalTempVar;
+    templateConfig = globalTempConfig;
+}
 
+socket.on("clientSelectAvailableItem",function(data){
+    renderSales(data);
+})
 
+function renderSales(data){
+        config=data.config;
+        arr=data.arr;
+        noOfItems= data.noOfItems;
+        val=data.val;
+        tempVar = data.tempVar;
+        let orderNo=1;
+        for(var i=0;i<noOfItems;i++){
+            var x = config.order[i].itemId;
+            config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
+    
+            config.order[i].item = ubsApp.translation.itemTable[x];
+    
+            if(config.order[i].exclude==false){
+                config.order[i].no = orderNo;
+                orderNo++;
+                val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
+                if(config.order[i].discountOnItem) {
+                    if(config.order[i].discountOnItem.type == 1) {
+                        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
+                    } else {
+                        val-=config.order[i].discountOnItem.value;
+                    }
+                }
+            }
+        }
+    
+        if(config.discountOnTotal) {
+            if(config.discountOnTotal.type == 1) {
+                val-=config.discountOnTotal.value * val / 100;
+            } else {
+                val-=config.discountOnTotal.value;
+            }
+        }
+        config["tempTotal"] = Math.round(val * 100) / 100;
+         
+        
+        templateConfig=config;
+        templateConfig.SUBMIT = ubsApp.getTranslation("SUBMIT");
+           templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
+           templateConfig.Customer = ubsApp.getTranslation("Customer");
+           templateConfig.gameLogo = ubsApp.getTranslation("gameLogo");
+       
+           templateConfig.salesConfig = ubsApp.getTranslation("sale");
+           templateConfig.sale = ubsApp.getTranslation("sale");
+           templateConfig.Discount = ubsApp.getTranslation("Discount");
+           templateConfig.PLAYER = ubsApp.getTranslation("PLAYER");
+           templateConfig.Total = ubsApp.getTranslation("Total");
+       
+           
+       
+           ubsApp.startRecordingTimer(templateConfig);
+           tempVar.html += ubsOrdertemplate(templateConfig);
+           ubsApp.raiseAudioEvent(document.getElementById('templateContent'),'spaceLanding');
+           globalTempVar = tempVar;
+           globalTempConfig = templateConfig;
+
+           if(ubsApp.noItemsForSale) {
+               ubsApp.noItemsForSale = false;
+               ubsApp.openPopup({
+                               "message" : ubsApp.getTranslation("salesNoItemMessage"),
+                               "header" : ubsApp.getTranslation("ERROR"),
+                               "headerStyle" : "text-align: center;  color: black; font-weight: 700;",
+                               "buttons":[
+                                   {
+                                       'id':"closePopupButton",
+                                       'name' : ubsApp.getTranslation("CLOSE"),
+                                         'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'),'saleEnd'); ubsApp.callServerClosePopup(); ubsApp.stopTimer(); ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
+                                   }
+                               ]
+                               });
+           }
+     socketComplete=true;
+     socket.emit('renderSalesComplete',{
+         roomCode : ubsApp.studentArray[playerChance].room,
+         globalTempVar : globalTempVar,
+         globalTempConfig : globalTempConfig
+     })
 }
 
 ubsApp.bindSaleTabEvents = function() {
@@ -132,7 +199,6 @@ ubsApp.validateAmount = function(showPopup = true) {
             
         }
 	}
-    console.log(sum_of_individual_items);
     if(!$("#receiptTotal").val()||sum_of_individual_items!=parseFloat($("#receiptTotal").val())) {
         if(showPopup) {
              ubsApp.openPopup({
@@ -158,8 +224,34 @@ ubsApp.validateAmount = function(showPopup = true) {
         }
     return true;
 }
+
+ubsApp.callsReduceInventory = function(page,amount,hideScenarios,total,totalTime, startTime, questionId){
+    socket.emit('serverReduceInventory',{
+        page : page,
+        amount : amount,
+        hideScenarios : hideScenarios,
+        total : total,
+        totalTime : totalTime,
+        startTime : startTime,
+        questionId : questionId,
+        roomCode: ubsApp.studentArray[playerChance].room
+    })
+}
+
+socket.on('clientReduceInventory', function(data){
+    page = data.page;
+    amount = data.amount;
+    hideScenarios = data.hideScenarios;
+    total = data.total;
+    totalTime = data.totalTime;
+    startTime = data.startTime;
+    questionId = data.questionId;
+
+    ubsApp.reduceInventory(page,amount,hideScenarios,total,totalTime, startTime, questionId);    
+})
+
 ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, startTime, questionId){
-  console.log("Sales Question ID: " + questionId);
+    console.log("Sales Question ID: " + questionId);
     total = parseFloat(total);
 	let time = totalTime - $("#seconds").html();
 	ubsApp.stopTimer();
@@ -180,8 +272,8 @@ ubsApp.reduceInventory= function(page,amount,hideScenarios,total,totalTime, star
 
 		userArray[playerChance].setReputationPts(r + reputationPointIncrease);
 		ubsApp.raiseAudioEvent(document.getElementById('salesSubmitButton'), 'rightAnswer');
-      ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,reputationPointIncrease, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesReputationPointIncrease");
-		  ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,cashIncreased, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesCashIncrease");
+        ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,reputationPointIncrease, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesReputationPointIncrease");
+		ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,cashIncreased, 0, ubsApp.getCategoryToPostScore(ubsApp.currentScenarioCategory), startTime,"salesCashIncrease");
         let message = ubsApp.getTranslation("salesCorrectAnswer");
 		if(reputationPointIncrease > 0) {
 		    message += "<br>" + ubsApp.getTranslation("salesCorrectRptpt1").replace("{{reputationPoints}}",reputationPointIncrease).replace("{{time}}",time);
@@ -282,7 +374,7 @@ ubsApp.calculateBill = function(){
 	//document.getElementById("receiptTotal").value=total;
 }
 
-ubsApp.selectAvailableItems = function(config){
+ubsApp.selectAvailableItems = function(config, tempVar){
 
 	let noOfItems =config.order.length;
 	let val=0;
@@ -290,50 +382,28 @@ ubsApp.selectAvailableItems = function(config){
 	let notAvailable = Math.round(percent*noOfItems);
 	let arr = [];
 
-   if(notAvailable == noOfItems) {
+    if(notAvailable == noOfItems) {
         ubsApp.noItemsForSale = true;
-   }
+    }
 	while(arr.length < notAvailable){
 	    var randomNumber = Math.floor(Math.random()*noOfItems);
 	    if(arr.indexOf(randomNumber) > -1) continue;
 	    arr[arr.length] = randomNumber;
 	}
+    for(let i = 0; i<arr.length;i++){
+        config.order[arr[i]].exclude = true;
+    }
+    socket.emit("serverSelectAvailableItem",{
+        config:config,
+        arr:arr,
+        noOfItems: noOfItems,
+        val:val,
+        tempVar : tempVar,
+        roomCode: ubsApp.studentArray[playerChance].room
 
-	for(let i = 0; i<arr.length;i++){
-		config.order[arr[i]].exclude = true;
-	}
+    });
 
-    let orderNo=1;
-	for(var i=0;i<noOfItems;i++){
-		var x = config.order[i].itemId;
-		config.order[i].rate = ubsApp.translation.itemRateDisplay[x];
-
-    config.order[i].item = ubsApp.translation.itemTable[x];
-
-		if(config.order[i].exclude==false){
-		    config.order[i].no = orderNo;
-             orderNo++;
-			val+=config.order[i].quantity * ubsApp.salesConfig.itemRate[x];
-			if(config.order[i].discountOnItem) {
-            	    if(config.order[i].discountOnItem.type == 1) {
-            	        val-=config.order[i].discountOnItem.value * config.order[i].quantity * ubsApp.salesConfig.itemRate[x] / 100;
-            	    } else {
-            	        val-=config.order[i].discountOnItem.value;
-            	    }
-            }
-		}
-	}
-
-	if(config.discountOnTotal) {
-	    if(config.discountOnTotal.type == 1) {
-	        val-=config.discountOnTotal.value * val / 100;
-	    } else {
-	        val-=config.discountOnTotal.value;
-	    }
-	}
-	config["tempTotal"] = Math.round(val * 100) / 100;
 }
-
 
 ubsApp.checkInventory=function(){
 
@@ -404,3 +474,33 @@ ubsApp.getCategoryToPostScore = function(category){
 
   return numericCategory;
 }
+
+document.addEventListener('onkeyup',calculatorTotal);
+
+function calculatorTotal(event){
+    calculatedTotal=document.getElementById("receiptTotal").value;
+    socket.emit('textToReplicateSale',{
+        description : "Event sends keypress events in textbox for total amount sale", total:calculatedTotal, roomCode : ubsApp.studentArray[0].room
+    })
+  
+}
+socket.on('replicatedTextTotal',function(data){
+  document.getElementById("receiptTotal").value=Number(data.calculatedTotal);
+})
+
+document.addEventListener('onkeyup',eachOrderPrice);
+
+function eachOrderPrice(event,imp){
+    orderPrice=imp.value;
+    id=imp.id;
+    socket.emit('textToReplicateSaleOrder',{
+        description : "Event sends keypress events in textbox for total amount sale", 
+        orderPrice:orderPrice, 
+        roomCode : ubsApp.studentArray[0].room,
+        id : id
+    })
+  
+}
+socket.on('replicatedTextSaleOrder',function(data){
+  document.getElementById(data.id).value=Number(data.orderPrice);
+})

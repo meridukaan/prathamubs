@@ -2,6 +2,7 @@ var rollingDiceConfig = {};
 rollingDiceConfig.currentRandomDiceOne=5; //intial value of the dice
 
 
+
 function pointRoll(diceValue) 
 {
     var rollingDiceValue = diceValue;

@@ -645,7 +645,7 @@ ubsApp.leaderBoardTemplate=
 '                       <td  class="items">{{item}}</td>'+
 '                       <td  class="items" id="itemPrice{{no}}">{{amount}}</td>'+
 '                       <td  class="items">{{rate}}</td>'+
-'                       <td ><input id = "input{{no}}{{#if exclude}}-1{{/if}}" type="number" name="amt" class="amount saleInputButtons" oninput="ubsApp.calculateBill()" {{#if exclude}}disabled{{/if}} {{#if exclude}}value="0"{{/if}}></td>  '+
+'                       <td ><input id = "input{{no}}{{#if exclude}}-1{{/if}}" onkeyup="eachOrderPrice(event,input{{no}})" type="number" name="amt" class="amount saleInputButtons" oninput="ubsApp.calculateBill()" {{#if exclude}}disabled{{/if}} {{#if exclude}}value="0"{{/if}}></td>  '+
 '                     </tr>'+
 '                       {{/each}}'+
 '                     {{#if discount}}'+
@@ -659,7 +659,7 @@ ubsApp.leaderBoardTemplate=
 '                       <td></td>'+
 '                       <td></td>'+
 '                       <td><b>{{Total}}</b></td>'+
-'                       <td><input type="number"  id="receiptTotal" class="amount" ></td>    '+
+'                       <td><input type="number"  id="receiptTotal" class="amount" onkeyup="calculatorTotal(event)"></td>    '+
 '                     </tr>'+
 '                   </tbody>'+
 '                 </table>'+
@@ -709,7 +709,7 @@ ubsApp.leaderBoardTemplate=
 '           <input id="calcButton" class="button orange" type="button" value="+/-" disabled onclick="addToDisplay(\'\')">'+
 '       </div>'+
 '<div style="display:flex; width:100%; text-align:left;     margin-top: 2%;">'+
-'                  <div id= "salesSubmitButton" class="submitButton" style="cursor:pointer" onclick="if (ubsApp.validateAmount() !== false) { ubsApp.reduceInventory(\' {{onClickPage.nextPage}} \',\'{{amount}}\', \'{{onClickPage.hideScenarios}}\',\'{{tempTotal}}\',\'{{time}}\', \'{{startTime}}\', \'{{questionId}}\');}">'+
+'                  <div id= "salesSubmitButton" class="submitButton" style="cursor:pointer" onclick="if (ubsApp.validateAmount() !== false) { ubsApp.callsReduceInventory(\' {{onClickPage.nextPage}} \',\'{{amount}}\', \'{{onClickPage.hideScenarios}}\',\'{{tempTotal}}\',\'{{time}}\', \'{{startTime}}\', \'{{questionId}}\');}">'+
 '           {{SUBMIT}}'+
 ' </div>' +
 '           <div class="helpBtn" style="padding: 6%;" onclick="ubsApp.startHelp(\'{{helpPageName}}\')"></div>'+
@@ -1108,7 +1108,7 @@ ubsApp.payOffTemplate='<div style="width:100%; height:100%; background-color:rgb
 '                      {{/if}}'+
 '                      {{#if payOff}}'+
 '                           <span class="payOffLeftModeOfPaymentValue">'+
-'                               <select class="borderB1" id="payOffDropDown">'+
+'                               <select class="borderB1" id="payOffDropDown" onchange="ubsApp.modeOfPayment(this.value)">'+
 '                                   <option value="cash">{{cashTitle}}</option>'+
 '                                   <option value="cheque">{{chequeTitle}}</option>'+
 '                               </select>'+

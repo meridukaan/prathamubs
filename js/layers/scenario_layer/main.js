@@ -119,7 +119,6 @@ ubsApp.renderPage = function(page) {
 
 	}
 
-	
 
 	if(tempVar.wheelConfig.segments){
 		tempVar.wheelConfig.animation.callbackFinished = ubsWheelOfFortune.alertPrize;
@@ -180,7 +179,13 @@ ubsApp.renderPage = function(page) {
 		document.getElementById("headId").innerHTML=ubsApp.getScore();
 	}*/
 }
-    
+	
+socket.on('renderSalesCompleteClient', function(data){
+	tempVar = data.globalTempVar;
+	$("#templateContent").empty();
+	$("#templateContent").append(tempVar.html);
+})
+
 ubsApp.mapTemplatetoFunction = function(){
     templateMap={};
 	for(let i=0; i<templateName.length; i++){
@@ -284,9 +289,9 @@ ubsApp.stopTimer = function() {
 
 
 ubsApp.socketCloseCurrentScenario=function(){
-	console.log("close scenario - socket mode");
 	socket.emit('closeScenario',{
-		description : "This function goes to server to trigger close scenario in the room", roomCode: userArray[playerChance].getRoomCode()
+		description : "This function goes to server to trigger close scenario in the room",
+		roomCode : ubsApp.studentArray[playerChance].room
 	});
 }
 
@@ -305,7 +310,6 @@ ubsApp.closeCurrentScenario=function(){
 }
 
 socket.on('closingCurrentScenario',function(data){
-	console.log("closing scenrio after receiving from socket");
 	ubsApp.closeCurrentScenario();	
 })
 
@@ -354,7 +358,6 @@ ubsApp.socketOpenPopUp = function(config){
 }
 
 socket.on('clientOpenPopUp', function(data){
-	console.log("client open popup called with config : "+data.config);
 	ubsApp.openPopup(data.config);
 })
 
@@ -379,7 +382,6 @@ ubsApp.openPopup = function(config) {
 }
 
 ubsApp.callServerClosePopup = function(config, doNextMoveFlag){
-	console.log("close pop up clicked");
 	socket.emit("serverClosePopup",{
 		roomCode : ubsApp.studentArray[0].room,
 		config : config,
@@ -388,12 +390,10 @@ ubsApp.callServerClosePopup = function(config, doNextMoveFlag){
 }
 
 ubsApp.callServerNextMove = function(){
-	console.log("Next Move clicked");
 	socket.emit("callNextMove",{ description: "Call Next Move", roomCode : ubsApp.studentArray[0].room });
 }
 
 socket.on('socketClosePopup', function(data){
-	console.log("server has triggered socket close pop up");
 	popUpConfig = data.config;
 	doNextMoveFlag = data.doNextMove;
 	ubsApp.closePopup(popUpConfig, doNextMoveFlag);
