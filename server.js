@@ -391,7 +391,32 @@ io.on('connection', function (socket) {
         socket.emit('replicateRollDice', { diceValue: data.diceValue });
         socket.in(Number(data.roomCode)).emit('replicateRollDice', { diceValue: data.diceValue });
 
-    });    
+    }); 
+
+    socket.on('increaseInventory', function (data) {
+        socket.emit('increaseInventoryLevel');
+        socket.in(Number(data.roomCode)).emit('increaseInventoryLevel');
+
+    });   
+
+    socket.on('decreaseInventory', function (data) {
+        socket.emit('decreaseInventoryLevel');
+        socket.in(Number(data.roomCode)).emit('decreaseInventoryLevel');
+
+    });   
+
+
+    socket.on('openPurchaseScenario', function (data) {
+        socket.emit('openPurchaseScenarioEvent');
+        socket.in(Number(data.roomCode)).emit('openPurchaseScenarioEvent');
+
+    });  
+
+    socket.on('pay', function (data) {
+        socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime });
+        socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime  });
+
+    }); 
 
 })
 
