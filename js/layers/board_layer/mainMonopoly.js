@@ -19,7 +19,7 @@ monopoly.flag2= false;
 monopoly.computerDifficulty={};
 monopoly.scenario ={};
 monopoly.numplayers=0;
-monopoly.isCaller=false;
+monopoly.isCaller = false;
 let numplayers = monopoly.numplayers;
 monopoly.playerChance = 0;
 let playerChance = monopoly.playerChance;
@@ -136,7 +136,6 @@ monopoly.renderPageforBoard = function(page) {
               for(var j=0;j<templateConfig.right_col.length;j++){
                 templateConfig.right_col[j].title=ubsApp.translation[templateConfig.right_col[j].title];
               }
-              console.log(templateConfig);
 
                monopoly.initialiseCategory();
                rollingDiceConfig.optionPageMap = templateConfig.optionPageMap;
@@ -219,14 +218,15 @@ monopoly.renderPageforBoard = function(page) {
 
 monopoly.callStartScenario = function (templateName, template, key) {
     socket.emit('startScenarioToServer', {
-        description: "This calls server side for startScenario", templateName
-            : templateName, template: template, key: key, roomCode:
-            ubsApp.studentArray[0].room
+        description : "This calls server side for startScenario", 
+        templateName : templateName, 
+        template : template, 
+        key : key, 
+        roomCode : ubsApp.studentArray[0].room
     });
 }
 
 socket.on('startScenarioToClient', function (data) {
-    console.log("Started scenario on client from Socket");
     templateName = data.templateName;
     template = data.template;
     key = data.key;
@@ -241,12 +241,10 @@ socket.on('startScenarioToClient', function (data) {
 })
 
 monopoly.startScenarios = function (blockNo) {
-    console.log("beginning startScenario");
     setTimeout(function () {
         let category = blockCategory[blockNo];
         ubsApp.currentScenarioCategory = category;
         if (category) {
-            console.log("Inside startScenario If")
             scenario = userArray[playerChance].getScenario(category, playerChance);
             // blockCategory[blockNo]
             let currentTemplateName = scenario.getName();
@@ -261,7 +259,6 @@ monopoly.startScenarios = function (blockNo) {
 }
 
 socket.on('clientMyMove', function(data){
-    console.log("dice value is : "+data.userDiceValue);
     monopoly.isCaller = data.isCaller;
     monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller);
 })
@@ -269,7 +266,7 @@ monopoly.myMove = function(count, pId, currentPos, isCaller) {
   var temp="#p"+pId;
   var playerToken = $(temp);
   var blockNo = currentPos;   
-  console.log("Current Pos : "+ currentPos + "of player : " + userArray[pId].getplayerName());
+  console.log("Current Pos : "+ currentPos + " of player : " + userArray[pId].getplayerName());
   var movePlayer = setInterval(function(){frame(isCaller);}, 500);
   if(currentPos+count >= boardConfig.blocks){
     let x = userArray[pId].getWeeks();
@@ -318,7 +315,6 @@ monopoly.myMove = function(count, pId, currentPos, isCaller) {
     } 
     else{
       blockNo++;
-      
       blockNo %= boardConfig.blocks;
       if(blockNo==0){
           if(document.getElementById("weekContent")!=null){
@@ -468,7 +464,6 @@ monopoly.storePlayerDetails=function(){
     }
     monopoly.noPlayersPlaying = numplayers;
     done_initialising=true;
-    console.log("StoreInitPlayers, before render");
     monopoly.renderPageforBoard(monopoly.pages["monopoly"]);
     ubsApp.openPopup({
                       "header" : "",
@@ -682,12 +677,10 @@ monopoly.closeLeaderBoard=function(){
 }
 
 monopoly.createRoom=function(){
-    console.log("Creating Room");
     ubsApp.openCreateRoomTemplate();
 }
 
 monopoly.joinRoom=function(){
-    console.log("Join Room");
     ubsApp.openJoinRoomTemplate();
 }
 
@@ -1003,7 +996,6 @@ ubsApp.confirmEndGame=function(){
 
 ubsApp.nextMove = function(){
 
-    console.log("Calling next move");
     ubsApp.closeCurrentScenario();
     if(!userArray[playerChance]) {
         return;
@@ -1285,9 +1277,7 @@ ubsApp.populateStudentArray = function(studentArray) {
 }
 
 socket.on('nextMove', function (data) {
-    console.log("Toggling player chance");
-    // if(data.isCaller == true){
+
     ubsApp.nextMove();
-    // }
     
 })
