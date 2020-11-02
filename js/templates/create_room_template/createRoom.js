@@ -64,6 +64,7 @@ ubsApp.createRoom = function () {
         });
     }
     else {
+        monopoly.storeMyDetails(userName, userAge, userGender);
         socket.emit("serverCreateRoom", {
             description: "create room button clicked",
             roomLimit: userLimit,

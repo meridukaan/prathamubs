@@ -51,6 +51,7 @@ ubsApp.joinRoom = function () {
             ]
         });
     } else {
+        monopoly.storeMyDetails(playerName, playerAge, playerGender);
         socket.emit("serverJoinRoom", {
             description: "Player trying to join room",
             roomCode: roomCode,

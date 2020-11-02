@@ -380,6 +380,13 @@ socket.on('storePlayerDetailsToClient',function(data){
     // monopoly.storePlayerDetails();
 })
 
+monopoly.storeMyDetails =function(userName, age, gender){
+    ubsApp.myDetails={};
+    ubsApp.myDetails.userName=userName;
+    ubsApp.myDetails.age=age;
+    ubsApp.myDetails.gender=gender;
+}
+
 monopoly.storePlayerDetails=function(){
     var i=0;
     let computerRequired=false;  //document.getElementById("computer").checked;
@@ -420,7 +427,9 @@ monopoly.storePlayerDetails=function(){
         // let res = document.getElementById("name"+i).value.split("_");
         // user.setplayerName(res[1]);
         // user.setplayerStudentId(res[0]);
-
+        if(ubsApp.studentArray[i].name==ubsApp.myDetails.userName){
+            ubsApp.myDetails.id="p"+i;
+        }
         user.setplayerName(ubsApp.studentArray[i].name);
         user.setRoomCode(ubsApp.studentArray[i].room);
         user.setplayerScore(initialPlayerCash);
@@ -475,6 +484,11 @@ monopoly.storePlayerDetails=function(){
                       "backgroundColor" :"white",
                    });
     setTimeout(function(){ubsApp.callServerClosePopup();}, 2000);
+    socket.emit('disableScreenForRest',{
+        description:'Disable screen for all Ids except this Id',
+        playerId:'p0',
+        roomCode: ubsApp.studentArray[0].room
+    });
 }
 
 monopoly.initPlayers=function(){
@@ -1032,7 +1046,12 @@ ubsApp.nextMove = function(){
          }
 
 			playerChance+=1;
-	        playerChance%=numplayers;
+            playerChance%=numplayers;
+            socket.emit('disableScreenForRest',{
+                description:'Disable screen for all Ids except this Id',
+                playerId:userArray[playerChance].getplayerId(),
+                roomCode: ubsApp.studentArray[0].room
+            });
 	        let count = 0;
 	        let atleastOnePlayerPlaying = false;
 
