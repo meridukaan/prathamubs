@@ -456,6 +456,15 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
    }
 }
 
+socket.on('disableScreen', function(data){
+	if(data.playerId==ubsApp.myDetails.id){
+		$('#disableScreenContent').css("height",0+'px');
+	}
+	else{
+		$('#disableScreenContent').css("height",screenHeight+'px');
+	}
+})
+
 ubsApp.updateScoreInDB = function (playerStudentId, scenarioquestionId, scoredmarks, totalmarks, questionlevel, scenarioStartTime, scoreLabel){
 	if(ubsApp.isAndroidEnabled){
 		Android.addScore(playerStudentId,questionId,scoredMarks, totalMarks, level, startTime,label);

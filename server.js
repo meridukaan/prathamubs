@@ -416,7 +416,20 @@ io.on('connection', function (socket) {
         socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime });
         socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime  });
 
-    }); 
+    });
+
+    socket.on('disableScreenForRest', function(data){
+        socket.emit('disableScreen',{
+            description:'Disable screen for all Ids except this Id',
+            playerId:data.playerId
+        })
+        
+        socket.in(Number(data.roomCode)).emit('disableScreen',{
+            description:'Disable screen for all Ids except this Id',
+            playerId:data.playerId
+        })
+        
+    });
 
 })
 
