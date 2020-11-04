@@ -1,15 +1,22 @@
 ubsApp.startHelp=function(pageName){
 
-    ubsApp.closeHelp();
+	socket.emit('ServerStartHelp',{
+		pageName : pageName,
+		roomCode : ubsApp.studentArray[playerChance].room
+	})
+}
+
+socket.on('ClientStartHelp',function(data){
+	pageName=data.pageName;
+	ubsApp.closeHelp();
 	//document.getElementById("helpContent").style.opacity="0.95";
 	$('#popupBackground').show();
 	$('#helpContent').css("height",(screenHeight)+'px')
 	$('#helpContent').css("width",(screenWidth)+'px')
 	helpScenarioOpen=true;
 	ubsApp.renderHelpPage(ubsApp.pages[pageName].templates);
+})
 
-
-}
 
 ubsApp.renderHelpPage=function(template){
 	let html = "";

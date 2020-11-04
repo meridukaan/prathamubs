@@ -431,6 +431,44 @@ io.on('connection', function (socket) {
         
     });
 
+
+    socket.on('ServerStartHelp', function(data){
+        socket.emit('ClientStartHelp',{
+            description:'ClientStartHelp',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('ClientStartHelp',{
+            description:'ClientStartHelp',
+            pageName:data.pageName
+        })
+        
+    });
+
+    socket.on('serverOpenScoreBoard', function(data){
+        socket.emit('clientOpenScoreBoard',{
+            description:'clientOpenScoreBoard'
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientOpenScoreBoard',{
+            description:'clientOpenScoreBoard'
+            
+        })
+        
+    });
+
+    socket.on('servercloseSideIcon', function(data){
+        socket.emit('clientcloseSideIcon',{
+            description:'clientcloseSideIcon'
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientcloseSideIcon',{
+            description:'clientcloseSideIcon'
+            
+        })
+        
+    });
+
 })
 
 http.listen(3000, function () {
