@@ -441,6 +441,32 @@ io.on('connection', function (socket) {
         socket.in(Number(data.roomCode)).emit('clientWithdrawFromBank', { questionId: data.questionId });
     });
 
+    socket.on('socketStartHelp', function(data){
+        socket.emit('clientStartHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientStartHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+    });
+
+    socket.on('socketCloseHelp', function(data){
+        socket.emit('clientCloseHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientCloseHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+    });
+
 })
 
 http.listen(3000, function () {

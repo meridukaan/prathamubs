@@ -11,6 +11,22 @@ ubsApp.startHelp=function(pageName){
 
 }
 
+ubsApp.socketStartHelp = function(pageName){
+	if(pageName=="introHelp"){
+		console.log("Starting intro help");
+	}
+	socket.emit('socketStartHelp', {
+		descrtiption: 'Calling Server for Starting Help',
+		pageName:pageName,
+		roomCode: ubsApp.studentArray[0].room
+	});
+}
+
+socket.on('clientStartHelp', function(data){
+	console.log('Received message from Server, now starting help');
+	ubsApp.startHelp(data.pageName);
+})
+
 ubsApp.renderHelpPage=function(template){
 	let html = "";
 	for(let i=0; i< template.length; i++) {
@@ -58,3 +74,16 @@ ubsApp.closeHelp=function(){
   document.getElementById("helpContent").style["background-color"] = "rgb(105,105,105)";
 }
 
+
+ubsApp.socketCloseHelp=function(){
+	socket.emit('socketCloseHelp', {
+		descrtiption: 'Calling Server for Closing Help',
+		roomCode: ubsApp.studentArray[0].room
+	});
+}
+
+
+socket.on('clientCloseHelp', function(data){
+	console.log('Received message from Server, now closing help');
+	ubsApp.closeHelp();
+})

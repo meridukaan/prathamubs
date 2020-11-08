@@ -1058,7 +1058,7 @@ ubsApp.luckyUnluckyTemplate='<div style="width:100%;height:100%;position:relativ
 '           </div>'+
 '       </div>'+
 '       <div class="luckHelpIcon">'+
-'           <input type="image" style="width:100%;" src="images/help-button.png" onclick="ubsApp.startHelp(\'{{helpPageName}}\')" />'+
+'           <input type="image" style="width:100%;" src="images/help-button.png" onclick="ubsApp.socketStartHelp(\'{{helpPageName}}\')" />'+
 '       </div>'+
 '       <div class="luckGameIcon">'+
 '           <img style="width:100%;"src="{{gameLogo}}">'+
@@ -1374,7 +1374,7 @@ ubsApp.insuranceTemplate = '<div id="decisonMaking">'+
 '               <span id="decisionBankBalance" style="word-spacing: 2.5vmax;display:block">{{invVal}} ₹{{inventoryValue}}</span>      <br>'+
 '               <span id="decisionBankBalance" style="word-spacing: 2.5vmax;display:block">{{repPoints}} {{reputationPts}}</span>       <br>'+
 '           </div>'+
-'       <div class="decisionHelpButtons" onclick="ubsApp.startHelp(\'decisionHelp\')" style="position: absolute;right: 10%;bottom: 20%;"></div>'+
+'       <div class="decisionHelpButtons" onclick="ubsApp.socketStartHelp(\'decisionHelp\')" style="position: absolute;right: 10%;bottom: 20%;"></div>'+
 '       </div>'+
 '</div>';
 
@@ -1419,7 +1419,7 @@ ubsApp.decisionTemplate = '<div id="decisonMaking">'+
 '               <span id="decisionBankBalance" style="word-spacing: 2.5vmax;display:block">{{invVal}} ₹{{inventoryValue}}</span>      <br>'+
 '               <span id="decisionBankBalance" style="word-spacing: 2.5vmax;display:block">{{repPoints}} {{reputationPts}}</span>       <br>'+
 '           </div>'+
-'       <div class="decisionHelpButtons" onclick="ubsApp.startHelp(\'decisionHelp\')" style="position: absolute;right: 10%;bottom: 20%;"></div>'+
+'       <div class="decisionHelpButtons" onclick="ubsApp.socketStartHelp(\'decisionHelp\')" style="position: absolute;right: 10%;bottom: 20%;"></div>'+
 '       </div>'+
 '</div>';
 
