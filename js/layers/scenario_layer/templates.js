@@ -569,9 +569,20 @@ ubsApp.leaderBoardTemplate=
 ''+
 '		<div style="display:inline-block;width:100%;">'+
 '			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: {{color}};font-weight: bold; width: 17.5%;text-align: center;" onclick="monopoly.socketStorePlayerDetails()">{{startGame}}</div>'+
-'			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.closeCurrentScenario()">{{shareCode}}</div>'+
+'			<div style="cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 17.5%;text-align: center;" onclick="ubsApp.openShareScreen()">{{shareCode}}</div>'+
 '		</div>'+
 '	'+
+'<div id="myModal" class="modal" style="display: none;">'+
+  '<div class="modal-content">'+
+    '<span class="close" onClick="ubsApp.closeModal()">×</span>'+
+    '<button id="copy_invite" onclick="ubsApp.shareCode()">Copy to Clipboard</button>'+
+    '<br>'+
+    '<br>'+
+    '<button onclick="sendMail(); return false">Send via Mail</button>'+
+    
+  '</div>'+
+
+'</div>'+
 '		</div>'+
 '	</div>'+
 '</div>';
@@ -1500,9 +1511,11 @@ ubsApp.popUpTemplate = '<div style="{{style}};{{#if showBorder}}background-image
                        '        <div style="text-align: center;margin-top: 10px;">'+
                        '            <div style="width: fit-content;width: -moz-max-content;margin: auto;margin-top: 2%;">'+
                        '                {{#each buttons}}'+
-
+                       '                {{#if buttonStyle}}                    '+                
+                       '                <div id= "{{id}}" style="{{buttonStyle}}" onclick="{{action}}" >{{name}}'+
+                       '               {{else}}                    '+ 
                        '                <div id= "{{id}}" style="cursor:pointer;    float: left;margin-right: 10px;background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content; padding: 15px; padding-bottom: 15%; color: red; font-weight:bold" onclick="{{action}}" >{{name}}'+
-
+                        '               {{/if}}                    '+                          
                        '                </div>'+
                        '                {{/each}}'+
                        '            </div>'+
