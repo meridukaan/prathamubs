@@ -1312,3 +1312,62 @@ socket.on('nextMove', function (data) {
     ubsApp.nextMove();
     
 })
+
+
+ubsApp.openShareScreen = function()
+{
+  ubsApp.openPopup({
+            "message" : "",
+            "header"  : "Share Code",
+            "headerStyle" : "text-align: center;  color: green; font-weight: 700; ",
+            "buttons":[
+                    {
+                      'id':"shareCode",
+                            'name' : "Copy to Clipboard",
+                            'action': "ubsApp.shareCode()",
+                            'buttonStyle':"cursor:pointer;    float: left;margin-right: 10px;background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content; padding: 15px; color: red; font-weight:bold"
+                    },
+                    {
+                      'id':"sendMail",
+                            'name' : "Share it via Email",
+                            'action': "ubsApp.sendMail()",
+                            'buttonStyle':"cursor:pointer;    float: left;margin-right: 10px;background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content; padding: 15px; color: red; font-weight:bold"
+                    },
+                    {
+                      'id':"cancel",
+                            'name' : "Cancel",
+                            'action': "ubsApp.callServerClosePopup();",
+                            'buttonStyle':"cursor:pointer;    float: left;margin-right: 10px;background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content; padding: 15px; color: red; font-weight:bold"
+
+                    }
+
+                 ]
+
+          });  
+
+}
+
+
+ubsApp.shareCode = function()
+{
+    var room_code = document.getElementById("roomCode").innerText;
+    var complete_message= "Join Room in Meri Dukan"+"\n"+ "http://meridukan.prathamopenschool.org/"+"\n"+"Room ID: "+room_code;
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = complete_message;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    alert("Copied to Clipboard");
+}
+
+
+ubsApp.sendMail = function() 
+{
+    var room_code_mail = document.getElementById("roomCode").innerText;
+    var link = "mailto:?"
+             + "&subject=Join%20Room%20in%20Meri%20Dukan" 
+             + "&body=Join%20Room%20in%20Meri%20Dukan%0D%0Ahttp%3A%2F%2Fmeridukan.prathamopenschool.org%2F%0D%0ARoom%20ID%3A%20" + room_code_mail;
+    
+    window.location.href = link;
+}

@@ -431,6 +431,16 @@ io.on('connection', function (socket) {
         
     });
 
+        socket.on('serverOpenWithdrawFromBank', function (data) {
+        socket.emit('clientOpenWithdrawFromBank');
+        socket.in(Number(data.roomCode)).emit('clientOpenWithdrawFromBank');
+    });
+
+    socket.on('serverWithdrawFromBank', function (data) {
+        socket.emit('clientWithdrawFromBank', { questionId: data.questionId });
+        socket.in(Number(data.roomCode)).emit('clientWithdrawFromBank', { questionId: data.questionId });
+
+
 
     socket.on('ServerStartHelp', function(data){
         socket.emit('ClientStartHelp',{
@@ -467,6 +477,7 @@ io.on('connection', function (socket) {
             
         })
         
+
     });
 
 })
