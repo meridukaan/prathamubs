@@ -1200,12 +1200,24 @@ ubsApp.initializeLeaderBoard=function(category)
 }
 
 ubsApp.openScoreBoard = function(){
-  monopoly.renderPageforBoard(monopoly.pages.SideScoreBoardPage);
+  socket.emit('serverOpenScoreBoard',{
+    roomCode: ubsApp.studentArray[playerChance].room
+  })
 }
 
+socket.on('clientOpenScoreBoard',function(data){
+  monopoly.renderPageforBoard(monopoly.pages.SideScoreBoardPage); 
+})
+
 ubsApp.closeSideIcon = function(){
-    $("#templateContent").empty();
+    socket.emit('servercloseSideIcon',{
+    roomCode: ubsApp.studentArray[playerChance].room
+  }) 
 }
+
+socket.on('clientcloseSideIcon',function(data){
+   $("#templateContent").empty(); 
+})
 
 ubsApp.openQuizIfValid = function() {
 
