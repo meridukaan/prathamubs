@@ -431,7 +431,7 @@ io.on('connection', function (socket) {
         
     });
 
-    socket.on('serverOpenWithdrawFromBank', function (data) {
+        socket.on('serverOpenWithdrawFromBank', function (data) {
         socket.emit('clientOpenWithdrawFromBank');
         socket.in(Number(data.roomCode)).emit('clientOpenWithdrawFromBank');
     });
@@ -439,6 +439,45 @@ io.on('connection', function (socket) {
     socket.on('serverWithdrawFromBank', function (data) {
         socket.emit('clientWithdrawFromBank', { questionId: data.questionId });
         socket.in(Number(data.roomCode)).emit('clientWithdrawFromBank', { questionId: data.questionId });
+
+
+
+    socket.on('ServerStartHelp', function(data){
+        socket.emit('ClientStartHelp',{
+            description:'ClientStartHelp',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('ClientStartHelp',{
+            description:'ClientStartHelp',
+            pageName:data.pageName
+        })
+        
+    });
+
+    socket.on('serverOpenScoreBoard', function(data){
+        socket.emit('clientOpenScoreBoard',{
+            description:'clientOpenScoreBoard'
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientOpenScoreBoard',{
+            description:'clientOpenScoreBoard'
+            
+        })
+        
+    });
+
+    socket.on('servercloseSideIcon', function(data){
+        socket.emit('clientcloseSideIcon',{
+            description:'clientcloseSideIcon'
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientcloseSideIcon',{
+            description:'clientcloseSideIcon'
+            
+        })
+        
+
     });
 
     socket.on('socketStartHelp', function(data){
