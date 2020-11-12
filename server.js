@@ -519,6 +519,17 @@ io.on('connection', function (socket) {
         
     });
 
+    socket.on('serverPayFromBank', function(data){
+        socket.emit('clientPayFromBank', {
+            pageName: data.pageName,
+            questionId: data.questionId
+        })
+        socket.in(Number(data.roomCode)).emit('clientPayFromBank', {
+            pageName: data.pageName,
+            questionId: data.questionId
+        })
+    });
+
 })
 
 http.listen(3000, function () {
