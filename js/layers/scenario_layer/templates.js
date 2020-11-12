@@ -562,8 +562,11 @@ ubsApp.leaderBoardTemplate=
 '				<div style="display: table-cell;">{{people_message}}</div>'+
 '			</div>'+
 '			<div style="display: table-row;">'+
-'				<div style="display: table-cell; " id ="listOfUsers"></div>'+
+'				<div style="display: table-cell;" id ="listOfUsers"></div>'+
 '			</div>'+
+'           <div style="display: table-row;">'+
+'               <div style="display: table-cell;" id="errorMessage"></div>'+
+'           </div>'+
 '			'+
 '		</div>'+
 ''+

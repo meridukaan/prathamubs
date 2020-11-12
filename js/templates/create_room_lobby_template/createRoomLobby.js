@@ -22,7 +22,12 @@ socket.on("populateCreateRoomLobby", function(data){
     ubsApp.studentArray = data.studentArray;
     ubsApp.openCreateRoomLobbyTemplate();
     ubsApp.populateCreateRoomLobbyPage(data.userSet, Number(data.roomCode));
-})
+});
+
+socket.on("storePlayerDetailsError", function(data){
+    console.log(data.description);
+    document.getElementById("errorMessage").innerHTML = data.description;
+});
 
 //add create room functions below
 
