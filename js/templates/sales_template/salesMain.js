@@ -450,13 +450,7 @@ ubsApp.salesTimeOut= function(temp){
                    "message" : message,
                    "header" : ubsApp.getTranslation("salesResultHeader"),
                    "headerStyle" : "text-align: center;  color: black; font-weight: 700; ",
-                   "buttons":[
-                                        {
-                                            'id':"closePopupButton",
-                                            'name' : ubsApp.getTranslation("CLOSE"),
-                                            'action': "ubsApp.callServerClosePopup();"
-                                        }
-                                    ]
+                   
                    });
     }
 
