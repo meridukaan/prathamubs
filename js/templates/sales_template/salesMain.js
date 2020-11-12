@@ -504,3 +504,16 @@ function eachOrderPrice(event,imp){
 socket.on('replicatedTextSaleOrder',function(data){
   document.getElementById(data.id).value=Number(data.orderPrice);
 })
+
+document.addEventListener('onkeyup',discountSale);
+
+function discountSale(event){
+    discountSaleValue=document.getElementById("discount").value;
+    socket.emit('textToReplicateSaleDiscount',{
+        description : "Event sends keypress events in textbox for discount sale", discount:discountSaleValue, roomCode : ubsApp.studentArray[0].room
+    })
+  
+}
+socket.on('replicatedTextDiscount',function(data){
+  document.getElementById("discount").value=Number(data.discountSaleValue);
+})
