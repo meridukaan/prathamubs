@@ -771,7 +771,7 @@ ubsApp.quizTemplate = '<div id="quiz">'+
 '<div id="quizOkButtons" style="display:flex;width:100%;margin-left:55%">'+
 '   <button id="quizDone" style="color:green" disabled class=\'quizButtons quizSubmitButtons\' onclick="ubsApp.doneQuiz()">{{doneTitle}}</button>'+
 '   <button id="quizCancel" style="color:red" class=\'quizButtons quizSubmitButtons\' onclick="ubsApp.cancelQuiz(\'{{luckScenarioName}}\')">{{cancelTitle}}</button>'+
-'   <button id="quizHelp" class=\'quizButtons quizHelpButtons\' onclick="ubsApp.startHelp(\'{{helpPageName}}\')"></button>'+
+'   <button id="quizHelp" class=\'quizButtons quizHelpButtons\' onclick="ubsApp.socketStartHelp(\'{{helpPageName}}\')"></button>'+
 '</div>'+
 '</div>';
 
@@ -1006,7 +1006,7 @@ ubsApp.purchaseTemplate = '<div class="container-fluid mainPurchaseDiv">'+
 '            <div class="row" style="height:20vmax;">'+
 '                    <div class="confirmButton mainButtons buyMainButtons" onclick="ubsApp.pay(\'{{startTime}}\',\'{{questionId}}\'); ">{{doneTitle}}</div>'+
 '                    <div class="confirmButton mainButtons buyMainButtons" id="target_cancel" onclick="ubsApp.socketCloseCurrentScenario(); {{#if openNextMove }} ubsApp.callServerNextMove(); {{/if}}">{{noThanksTitle}}</div>'+
-'                    <div class="helpBtn mainButtons buyMainButtons" onclick="ubsApp.startHelp(\'purchaseHelp\')"></div>'+
+'                    <div class="helpBtn mainButtons buyMainButtons" onclick="ubsApp.socketStartHelp(\'purchaseHelp\')"></div>'+
 '            </div>'+
 '        </div>'+
 '    </div>'+
