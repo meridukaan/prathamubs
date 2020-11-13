@@ -530,6 +530,12 @@ io.on('connection', function (socket) {
         })
     });
 
+    socket.on('textToReplicateSaleDiscount', function (data) {
+        socket.in(Number(data.roomCode)).emit('replicatedTextDiscount', {
+            description: "Event to send back the discount text received from the player", discountSaleValue: data.discount
+        })
+    })
+
 })
 
 http.listen(3000, function () {
