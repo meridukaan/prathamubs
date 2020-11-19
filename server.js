@@ -536,6 +536,18 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('serverHelpVideoPause', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPause', {
+            description: "Event to pause video on all clients"
+        })
+    })
+
+    socket.on('serverHelpVideoPlay', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPlay', {
+            description: "Event to play video on all clients"
+        })
+    })
+
 })
 
 http.listen(3000, function () {
