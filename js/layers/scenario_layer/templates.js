@@ -987,7 +987,7 @@ ubsApp.purchaseTemplate = '<div class="container-fluid mainPurchaseDiv">'+
 '                </div>'+
 '                <div id="parent1" class="row" style="padding: 1%;">'+
 '                    <div class="col-md-6 col-lg-6">{{payByTitle}}:</div>'+
-'                    <div class="col-md-6 col-lg-6" style="text-align: right;"><select class="borderB1" id="pay1" ><option value="cash">{{cashTitle}}</option><option value="cheque">{{chequeTitle}}</option><option value="credit">{{creditTitle}}</option></select><input style="display:none;" type="number" class="enterAmountText" id="amount1" min="0" style="width: 20%;"></div>'+
+'                    <div class="col-md-6 col-lg-6" style="text-align: right;"><select class="borderB1" id="pay1" onchange="ubsApp.buyMode(this.value)" ><option value="cash">{{cashTitle}}</option><option value="cheque">{{chequeTitle}}</option><option value="credit">{{creditTitle}}</option></select><input style="display:none;" type="number" class="enterAmountText" id="amount1" min="0" style="width: 20%;"></div>'+
 '                </div>'+
 '                <div class="row" style="">'+
 '                    <div id="parent2" style="display:none; padding: 1%;">'+
