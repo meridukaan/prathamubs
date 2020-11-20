@@ -177,7 +177,7 @@ ubsApp.validateAmount = function(showPopup = true) {
                            'buttons' : [
                                {
                                    'name' : ubsApp.getTranslation("yes"),
-                                   'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
+                                   'action': "ubsApp.callServerClosePopup();ubsApp.socketStartHelp(\'salesHelp\');",
                                },
 
                                {
@@ -209,7 +209,7 @@ ubsApp.validateAmount = function(showPopup = true) {
                                    'buttons' : [
                                        {
                                            'name' : ubsApp.getTranslation("yes"),
-                                           'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
+                                           'action': "ubsApp.callServerClosePopup();ubsApp.socketStartHelp(\'salesHelp\');",
                                        },
 
                                        {

@@ -536,6 +536,25 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('serverHelpVideoPause', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPause', {
+            description: "Event to pause video on all clients"
+        })
+    })
+
+    socket.on('serverHelpVideoPlay', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPlay', {
+            description: "Event to play video on all clients"
+        })
+    })
+
+    socket.on('serverBuyModeDropDown', function(data){
+        socket.in(Number(data.roomCode)).emit('clientBuyModeDropDown', {
+            description : "Event to replication drop down in Buy screen",
+            dropDownValue : data.dropDownValue
+        })
+    })
+
 })
 
 http.listen(3000, function () {
