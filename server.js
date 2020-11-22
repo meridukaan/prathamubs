@@ -88,6 +88,10 @@ io.on('connection', function (socket) {
             console.log("Username already exists");
             socket.emit("joinRoomPopup", { description: "Sorry, this username is already taken", header: "Username already exists" });
 
+        } else if (roomUserMap.get(roomCode).size == userLimitMap.get(roomCode)) {
+            console.log("Room full");
+            socket.emit("joinRoomPopup", { description: "This room is full, please find another room, or create a new room", header : "Room full"});
+
         } else if (roomUserMap.get(roomCode).size < userLimitMap.get(roomCode)) {
             socket.join(roomCode);
             roomUserMap.get(roomCode).add(data.userName);
@@ -123,24 +127,29 @@ io.on('connection', function (socket) {
 
 
              }
-        });
-
-
-
-        }//TODO : room full popup
-
+            });
+        }
     })
 
     socket.on('storePlayerDetailsToServer', function (data) {
-        socket.emit('storePlayerDetailsToClient', {
-            description: "Calls store player details on all clients",
-            roomLanguage: data.roomLanguage
-        })
-        socket.to(Number(data.roomCode)).emit('storePlayerDetailsToClient', {
-            description: "Calls store player details on all clients",
-            roomLanguage: data.roomLanguage
-        })
-    })
+        roomCode=Number(data.roomCode);
+        if (roomUserMap.get(roomCode).size < userLimitMap.get(roomCode)) {
+            socket.emit('storePlayerDetailsError', {
+                description: "The room is not yet full, please wait while others join"
+            })
+        }
+        else{
+            socket.emit('storePlayerDetailsToClient', {
+                description: "Calls store player details on all clients",
+                roomLanguage: data.roomLanguage
+            })
+            socket.to(roomCode).emit('storePlayerDetailsToClient', {
+                description: "Calls store player details on all clients",
+                roomLanguage: data.roomLanguage
+            })    
+        }
+        
+    });
 
     socket.on('actualTransferToBank', function (data) {
         socket.emit('openActualTransferToBank', { questionId: data.qid });
@@ -487,7 +496,10 @@ io.on('connection', function (socket) {
         socket.emit('clientWithdrawFromBank', { questionId: data.questionId });
         socket.in(Number(data.roomCode)).emit('clientWithdrawFromBank', { questionId: data.questionId });
     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c3e973f2d5a719ed5b4ab9fdab6211f1c19be97
 
 
     socket.on('ServerStartHelp', function(data){
@@ -527,6 +539,68 @@ io.on('connection', function (socket) {
         
 
     });
+
+    socket.on('socketStartHelp', function(data){
+        socket.emit('clientStartHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientStartHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+    });
+
+    socket.on('socketCloseHelp', function(data){
+        socket.emit('clientCloseHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientCloseHelp',{
+            description:'Starting Help Scenario',
+            pageName:data.pageName
+        })
+        
+    });
+
+    socket.on('serverPayFromBank', function(data){
+        socket.emit('clientPayFromBank', {
+            pageName: data.pageName,
+            questionId: data.questionId
+        })
+        socket.in(Number(data.roomCode)).emit('clientPayFromBank', {
+            pageName: data.pageName,
+            questionId: data.questionId
+        })
+    });
+
+    socket.on('textToReplicateSaleDiscount', function (data) {
+        socket.in(Number(data.roomCode)).emit('replicatedTextDiscount', {
+            description: "Event to send back the discount text received from the player", discountSaleValue: data.discount
+        })
+    })
+
+    socket.on('serverHelpVideoPause', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPause', {
+            description: "Event to pause video on all clients"
+        })
+    })
+
+    socket.on('serverHelpVideoPlay', function(data){
+        socket.in(Number(data.roomCode)).emit('clientHelpVideoPlay', {
+            description: "Event to play video on all clients"
+        })
+    })
+
+    socket.on('serverBuyModeDropDown', function(data){
+        socket.in(Number(data.roomCode)).emit('clientBuyModeDropDown', {
+            description : "Event to replication drop down in Buy screen",
+            dropDownValue : data.dropDownValue
+        })
+    })
 
 })
 

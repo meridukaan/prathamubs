@@ -260,3 +260,15 @@ socket.on('decreaseInventoryLevel', function ()
         ubsApp.fillUp();
     }
 })
+
+ubsApp.buyMode = function(value){
+    socket.emit('serverBuyModeDropDown',{
+        dropDownValue : value,
+        roomCode : ubsApp.studentArray[0].room
+    })
+}
+
+socket.on('clientBuyModeDropDown', function(data){
+    var selection = document.getElementById("pay1");
+    selection.value = data.dropDownValue
+})
