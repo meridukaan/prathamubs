@@ -496,10 +496,6 @@ io.on('connection', function (socket) {
         socket.emit('clientWithdrawFromBank', { questionId: data.questionId });
         socket.in(Number(data.roomCode)).emit('clientWithdrawFromBank', { questionId: data.questionId });
     });
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c3e973f2d5a719ed5b4ab9fdab6211f1c19be97
 
 
     socket.on('ServerStartHelp', function(data){
