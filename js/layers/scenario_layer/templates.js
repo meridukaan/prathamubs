@@ -940,7 +940,7 @@ ubsApp.purchaseTemplate = '<div class="container-fluid mainPurchaseDiv">'+
 '                        {{current}}<br>{{inventoryTitle}}<br>{{level}}:<span id="percent">{{sliderValue}}</span>%'+
 '                    </div>'+
 '                    <div class="col-md-4">'+
-'                        <input type="range" value="{{sliderValue}}" id="mySlider" oninput="ubsApp.updateInventoryLevel(this.value)">'+
+'                        <input type="range" value="{{sliderValue}}" id="mySlider" oninput="ubsApp.socketUpdateInventoryLevel(this.value)">'+
 '                    </div>'+
 '                    <div id="increaseValue" class="col-md-4" style="padding-left: 0%;margin:auto;display:grid;">'+
 '                       <div id="increaseInventory" >'+
