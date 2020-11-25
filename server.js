@@ -154,14 +154,16 @@ io.on('connection', function (socket) {
             userChance: data.userChance,
             userPosition: data.userPosition,
             userRoom: data.userRoom,
-            isCaller : true
+            isCaller : true,
+            playerChance : data.playerChance
         });
         socket.in(Number(data.userRoom)).emit('clientMyMove', {
             userDiceValue: data.userDiceValue,
             userChance: data.userChance,
             userPosition: data.userPosition,
             userRoom: data.userRoom,
-            isCaller : false
+            isCaller : false,
+            playerChance : data.playerChance
         });
     })
 
@@ -535,6 +537,21 @@ io.on('connection', function (socket) {
             description: "Event to send back the discount text received from the player", discountSaleValue: data.discount
         })
     })
+
+    socket.on('serverLeaveRoom', function(data){
+        socket.emit('clientLeaveRoom', {
+            userName: data.userName,
+            roomCode: data.roomCode,
+            
+        })
+        
+        socket.in(Number(data.roomCode)).emit('clientLeaveRoom', {
+            userName: data.userName,
+            roomCode: data.roomCode
+        })
+
+        socket.leave(data.roomCode)
+    });
 
 })
 

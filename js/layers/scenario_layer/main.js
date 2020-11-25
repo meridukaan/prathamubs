@@ -459,9 +459,11 @@ ubsApp.closeResultPopup = function(doNextMove=true) {
 socket.on('disableScreen', function(data){
 	if(data.playerId==ubsApp.myDetails.id){
 		$('#disableScreenContent').css("height",0+'px');
+		document.getElementById("quiteGameButton").style.display = "none";
 	}
 	else{
 		$('#disableScreenContent').css("height",screenHeight+'px');
+		document.getElementById("quiteGameButton").style.display = "block";
 	}
 })
 
