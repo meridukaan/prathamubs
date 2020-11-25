@@ -450,14 +450,14 @@ io.on('connection', function (socket) {
     }); 
 
     socket.on('increaseInventory', function (data) {
-        socket.emit('increaseInventoryLevel');
-        socket.in(Number(data.roomCode)).emit('increaseInventoryLevel');
+        socket.emit('increaseInventoryLevel', {sliderValue: data.sliderValue});
+        socket.in(Number(data.roomCode)).emit('increaseInventoryLevel', {sliderValue: data.sliderValue});
 
     });   
 
     socket.on('decreaseInventory', function (data) {
-        socket.emit('decreaseInventoryLevel');
-        socket.in(Number(data.roomCode)).emit('decreaseInventoryLevel');
+        socket.emit('decreaseInventoryLevel', {sliderValue: data.sliderValue});
+        socket.in(Number(data.roomCode)).emit('decreaseInventoryLevel', {sliderValue: data.sliderValue});
 
     });   
 
@@ -595,6 +595,15 @@ io.on('connection', function (socket) {
         socket.in(Number(data.roomCode)).emit('clientBuyModeDropDown', {
             description : "Event to replication drop down in Buy screen",
             dropDownValue : data.dropDownValue
+        })
+    })
+
+    socket.on('serverUpdateInventoryLevel', function(data){
+        socket.in(Number(data.roomCode)).emit('clientUpdateInventoryLevel', {
+            value: data.value
+        })
+        socket.emit('clientUpdateInventoryLevel', {
+            value: data.value
         })
     })
 
