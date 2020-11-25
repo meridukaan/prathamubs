@@ -11,7 +11,7 @@ ubsApp.helpConfig={
 
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh; width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{salesVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{salesVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{salesVideoOnline}} type=\"video/mp4\"></video> </div>"
 
 
             },
@@ -50,7 +50,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{incomeTaxVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{incomeTaxVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{incomeTaxVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -70,7 +70,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{propertyTaxVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{propertyTaxVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video  id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{propertyTaxVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -90,7 +90,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{insuranceVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{insuranceVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{insuranceVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -110,7 +110,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{bankingVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{bankingVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{bankingVideoOnline}} type=\"video/mp4\"></video> </div>"
             },
             {
                 "templateId":4,
@@ -129,7 +129,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{atmVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{atmVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{atmVideoOnline}} type=\"video/mp4\"></video> </div>"
             },
             {
                 "templateId":4,
@@ -148,7 +148,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{depositsVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{depositsVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{depositsVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -168,7 +168,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{kycPanAadharVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{kycPanAadharVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline ><source src={{kycPanAadharVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -188,7 +188,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{gstVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{gstVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline ><source src={{gstVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
@@ -208,7 +208,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{loansVideo}} type=\"video/mp4\"></video> </div>",              
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{loansVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{loansVideoOnline}} type=\"video/mp4\"></video> </div>"
             },
             {
                 "templateId":4,
@@ -227,7 +227,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{mobileBankingVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{mobileBankingVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{mobileBankingVideoOnline}} type=\"video/mp4\"></video> </div>"
             },
             {
                 "templateId":4,
@@ -330,7 +330,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{purchaseVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{purchaseVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline ><source src={{purchaseVideoOnline}} type=\"video/mp4\"></video> </div>"
 
              },
             {
@@ -350,7 +350,7 @@ ubsApp.helpConfig={
                 "id":"helpContentVideo",
                 "style":"position:absolute;top:2%;left:2%;background-repeat: no-repeat;color:white;height:100vh;width:99vw;",
                 "src":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline ><source src={{instructionVideo}} type=\"video/mp4\"></video> </div>",
-                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" controls autoplay loop muted playsinline><source src={{instructionVideoOnline}} type=\"video/mp4\"></video> </div>"
+                "srcOnline":"<div style=\"width:95%;height:95%\"><video id=\"helpVideo\" width=\"100%\" height=\"100%\" onpause=\"ubsApp.vidPauseEvent()\" onplaying=\"ubsApp.vidPlayEvent()\" controls autoplay loop muted playsinline><source src={{instructionVideoOnline}} type=\"video/mp4\"></video> </div>"
 
             },
             {
