@@ -10,6 +10,13 @@ let creatorMap = new map();
 let studentArrayMap = new map();
 let roomPropertiesMap = new map();
 let roomPropertiesList = new Array(); // [creatorSocketId, userLimit, userLanguage, numOfWeeks]
+var jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const { window } = new JSDOM();
+const { document } = (new JSDOM('')).window;
+global.document = document;
+
+var $ = jQuery = require('jquery')(window);
 
 app.use(express.static(__dirname));
 io.on('connection', function (socket) {
@@ -22,38 +29,57 @@ io.on('connection', function (socket) {
         userName = data.userName;
         language = data.roomLanguage;
         weeks = Number(data.roomWeeks);
-        roomnum = Math.floor(1000 + Math.random() * 9000); //Generate random num for room code
-        while (rooms.includes(roomnum)) {
-            roomnum = Math.floor(1000 + Math.random() * 9000);
-        }
-        rooms.push(roomnum);
-        creatorMap.set(roomnum, socket.id); //remove
-        users.add(userName);
-        userList = Array.from(users);
-        userLimitMap.set(roomnum, userLimit); //remove
-        socket.join(roomnum);
+      
+        var roomCreatorData = {};
+        roomCreatorData.playername = userName;
+        roomCreatorData.age = data.userAge;
+        roomCreatorData.gender = data.userGender;
+        roomCreatorData.noOfPlayers = data.roomLimit;
+        roomCreatorData.language = data.roomLanguage;
+        roomCreatorData.noOfWeeks = data.roomWeeks;
 
-        roomUserMap.set(roomnum, users);
-        roomPropertiesList.push([socket.id, userLimit, language, weeks]);
-        roomPropertiesMap.set(roomnum, roomPropertiesList);
 
-        playerChance = 0;//Initialize creator to be first player
-        player.name = userName;
-        player.age = Number(data.userAge);
-        player.gender = data.userGender;
-        player.room = roomnum;
-        players.push(player);
-        studentArrayMap.set(roomnum, players);
+       $.ajax({
+            url: "http://apimeridukan.prathamopenschool.org/api/room/CreateRoom",
+            type: "post",
+            dataType:"json",
+            contentType:"application/json",
+            data: JSON.stringify(roomCreatorData),
+            success : function(data){
+                roomnum = Number(data.ErrorDesc); 
+                console.log("Room created on server-"+roomnum);
+                rooms.push(roomnum);
+                creatorMap.set(roomnum, socket.id); //remove
+                users.add(userName);
+                userLimitMap.set(roomnum, userLimit); //remove
+                socket.join(roomnum);
 
-        socket.emit("populateCreateRoomLobby", { userSet: userList, studentArray: studentArrayMap.get(roomnum), roomCode: roomnum, isCreator: true, playerAge: data.userAge, playerGender: data.userGender });
+                roomUserMap.set(roomnum, users);
+                /*roomPropertiesList.push([socket.id, userLimit, language, weeks]);
+                roomPropertiesMap.set(roomnum, roomPropertiesList);*/
 
+                playerChance = 0;//Initialize creator to be first player
+                player.name = userName;
+                player.age = Number(data.userAge);
+                player.gender = data.userGender;
+                player.room = roomnum;
+                players.push(player);
+                studentArrayMap.set(roomnum, players);
+
+                socket.emit("populateCreateRoomLobby", { userSet: Array.from(users), studentArray: studentArrayMap.get(roomnum), roomCode: roomnum, isCreator: true, playerAge: data.userAge, playerGender: data.userGender });
+
+             }
+        });
+
+        
     })
 
     socket.on('serverJoinRoom', function (data) {
         users = [];
         let player = {};
         roomCode = Number(data.roomCode);
-
+        console.log("Rooms--"+rooms);
+        console.log("roomCode--"+roomCode);
         if (!rooms.includes(roomCode)) {
             console.log("Invalid room code");
             socket.emit("joinRoomPopup", { description: "Room code does not exist!", header: "Invalid room code" });
@@ -80,12 +106,29 @@ io.on('connection', function (socket) {
             player.chance = playerChance;
             studentArrayMap.get(roomCode).push(player);
 
+            $.ajax({
+                url: "http://apimeridukan.prathamopenschool.org/api/room/JoinRoom",
+                type: "post",
+                dataType:"json",
+                contentType:"application/json",
+                data: JSON.stringify(playerData),
+                success : function(data){
+                    console.log("Joined");
+                    var playerData = {
+                        "playername":player.name,
+                        "age":player.age,
+                        "gender":player.gender,
+                        "roomCode":player.room
+                    };
+
             socket.emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
             socket.in(roomCode).emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
             socket.to(creatorMap.get(roomCode)).emit("populateCreateRoomLobby", { userSet: users, isCreator: true, roomCode: roomCode, studentArray: studentArrayMap.get(roomCode) });
 
-        }
 
+             }
+            });
+        }
     })
 
     socket.on('storePlayerDetailsToServer', function (data) {
