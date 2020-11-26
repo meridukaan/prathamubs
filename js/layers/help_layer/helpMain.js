@@ -27,6 +27,34 @@ socket.on('clientStartHelp', function(data){
 	ubsApp.startHelp(data.pageName);
 })
 
+ubsApp.vidPauseEvent = function(){
+	console.log("Video is now paused");
+	socket.emit("serverHelpVideoPause",{
+		description : "This calls the video pause event",
+		roomCode : ubsApp.studentArray[playerChance].room
+	})
+}
+
+ubsApp.vidPlayEvent = function() {
+	console.log("Video is now playing");
+	socket.emit("serverHelpVideoPlay",{
+		description : "This calls the video play event",
+		roomCode : ubsApp.studentArray[playerChance].room
+	})
+}
+
+var vid = null;
+
+socket.on("clientHelpVideoPause",function(data){
+	vid = document.getElementById("helpVideo");
+	vid.pause();
+})
+
+socket.on("clientHelpVideoPlay",function(data){
+	vid = document.getElementById("helpVideo");
+	vid.play();
+})
+
 ubsApp.renderHelpPage=function(template){
 	let html = "";
 	for(let i=0; i< template.length; i++) {

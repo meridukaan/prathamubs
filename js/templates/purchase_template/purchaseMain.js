@@ -17,6 +17,17 @@ ubsApp.getPurchaseTemplate=function(templateConfig,tempVar){
 	ubsApp.openNextMoveAfterPurchase = true;
 }
 
+ubsApp.socketUpdateInventoryLevel = function(value){
+    socket.emit("serverUpdateInventoryLevel", {
+        value: value,
+        roomCode: userArray[playerChance].getRoomCode()
+    });
+}
+
+socket.on('clientUpdateInventoryLevel', function(data){
+    console.log("inventory update called for player "+ userArray[playerChance].getplayerName())
+    ubsApp.updateInventoryLevel(data.value);
+});
 
 ubsApp.updateInventoryLevel=function(value){
     if(parseFloat(value)<parseFloat(userArray[playerChance].getInventoryScore())){	//instead of 20 write userArray[playerChance].getInventoryScore()
@@ -32,6 +43,7 @@ ubsApp.updateInventoryLevel=function(value){
     }
     
 }
+
 ubsApp.fillUp=function(){
 var temp=document.getElementById("value").innerHTML;
 document.getElementById("newInventoryLevelText").innerHTML=document.getElementById("percent").innerHTML;
@@ -235,28 +247,50 @@ socket.on('openPurchaseScenarioEvent', function () {
 
 
 ubsApp.increaseInventory=function(){
-    socket.emit('increaseInventory', {description: "increaseInventory", roomCode : ubsApp.studentArray[0].room});  
+    var sliderValue = document.getElementById("mySlider").value;
+    socket.emit('increaseInventory', {
+        description: "increaseInventory", 
+        roomCode : ubsApp.studentArray[0].room, 
+        sliderValue: sliderValue});  
 }
 
-socket.on('increaseInventoryLevel', function()
+socket.on('increaseInventoryLevel', function(data)
 {
-    var currentSliderValue = document.getElementById("mySlider").value;
+    // var currentSliderValue = document.getElementById("mySlider").value;
+    var currentSliderValue = data.sliderValue;
     document.getElementById("mySlider").value = parseInt(currentSliderValue)+1;
     ubsApp.updateInventoryLevel(document.getElementById("mySlider").value);
     ubsApp.fillUp();
 })
 
 ubsApp.decreaseInventory=function(){
-    socket.emit('decreaseInventory', {description: "decreaseInventory", roomCode : ubsApp.studentArray[0].room});  
+    var sliderValue = document.getElementById("mySlider").value;
+    socket.emit('decreaseInventory', {
+        description: "decreaseInventory", 
+        roomCode : ubsApp.studentArray[0].room,
+        sliderValue: sliderValue
+    });  
 
 }
 
-socket.on('decreaseInventoryLevel', function ()
+socket.on('decreaseInventoryLevel', function (data)
  {
-    var currentSliderValue = document.getElementById("mySlider").value;
+    var currentSliderValue = data.sliderValue;
     if(parseFloat(currentSliderValue)>parseFloat(userArray[playerChance].getInventoryScore())){
         document.getElementById("mySlider").value = parseInt(currentSliderValue)-1;
         ubsApp.updateInventoryLevel(document.getElementById("mySlider").value);
         ubsApp.fillUp();
     }
+})
+
+ubsApp.buyMode = function(value){
+    socket.emit('serverBuyModeDropDown',{
+        dropDownValue : value,
+        roomCode : ubsApp.studentArray[0].room
+    })
+}
+
+socket.on('clientBuyModeDropDown', function(data){
+    var selection = document.getElementById("pay1");
+    selection.value = data.dropDownValue
 })

@@ -177,7 +177,7 @@ ubsApp.validateAmount = function(showPopup = true) {
                            'buttons' : [
                                {
                                    'name' : ubsApp.getTranslation("yes"),
-                                   'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
+                                   'action': "ubsApp.callServerClosePopup();ubsApp.socketStartHelp(\'salesHelp\');",
                                },
 
                                {
@@ -209,7 +209,7 @@ ubsApp.validateAmount = function(showPopup = true) {
                                    'buttons' : [
                                        {
                                            'name' : ubsApp.getTranslation("yes"),
-                                           'action': "ubsApp.callServerClosePopup();ubsApp.startHelp(\'salesHelp\');",
+                                           'action': "ubsApp.callServerClosePopup();ubsApp.socketStartHelp(\'salesHelp\');",
                                        },
 
                                        {
@@ -449,7 +449,8 @@ ubsApp.salesTimeOut= function(temp){
             ubsApp.openResultPopup({
                    "message" : message,
                    "header" : ubsApp.getTranslation("salesResultHeader"),
-                   "headerStyle" : "text-align: center;  color: black; font-weight: 700; "
+                   "headerStyle" : "text-align: center;  color: black; font-weight: 700; ",
+                   
                    });
     }
 
@@ -503,4 +504,17 @@ function eachOrderPrice(event,imp){
 }
 socket.on('replicatedTextSaleOrder',function(data){
   document.getElementById(data.id).value=Number(data.orderPrice);
+})
+
+document.addEventListener('onkeyup',discountSale);
+
+function discountSale(event){
+    discountSaleValue=document.getElementById("discount").value;
+    socket.emit('textToReplicateSaleDiscount',{
+        description : "Event sends keypress events in textbox for discount sale", discount:discountSaleValue, roomCode : ubsApp.studentArray[0].room
+    })
+  
+}
+socket.on('replicatedTextDiscount',function(data){
+  document.getElementById("discount").value=Number(data.discountSaleValue);
 })
