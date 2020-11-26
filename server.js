@@ -105,6 +105,12 @@ io.on('connection', function (socket) {
             player.room = roomCode;
             player.chance = playerChance;
             studentArrayMap.get(roomCode).push(player);
+            var playerData = {
+                "playername":player.name,
+                "age":player.age,
+                "gender":player.gender,
+                "roomCode":player.room
+            };
 
             $.ajax({
                 url: "http://apimeridukan.prathamopenschool.org/api/room/JoinRoom",
@@ -114,12 +120,7 @@ io.on('connection', function (socket) {
                 data: JSON.stringify(playerData),
                 success : function(data){
                     console.log("Joined");
-                    var playerData = {
-                        "playername":player.name,
-                        "age":player.age,
-                        "gender":player.gender,
-                        "roomCode":player.room
-                    };
+
 
             socket.emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
             socket.in(roomCode).emit("populateJoinRoomLobby", { userList: users, studentArray: studentArrayMap.get(roomCode), roomCode: roomCode, isCreator: false });
