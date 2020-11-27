@@ -58,8 +58,7 @@ ubsApp.pay=function(startTime,questionId)
 
 }
 
-socket.on('purchaseInventory', function(data)
-{
+socket.on('purchaseInventory', function(data) {
 var questionId=data.questionId;
 var startTime=data.startTime;
 var paymentDone=false;
@@ -177,9 +176,13 @@ else{
         document.getElementById("creditValue").innerHTML="₹ "+userArray[playerChance].getCredit();
         document.getElementById("creditLimitValue").innerHTML="₹ "+userArray[playerChance].getCreditLimit();
 
-        if(!offlinePurchaseClicked)
-        ubsApp.callServerNextMove();
+        if(!offlinePurchaseClicked) {
+        // ubsApp.callServerNextMove();
+        console.log("Inside offline purchase if");
+        nextAction = "ubsApp.callServerClosePopup(); ubsApp.callServerNextMove();"
+        }
         else{
+            nextAction = "ubsApp.callServerClosePopup();"
             ubsApp.closeCurrentScenario();
             ubsApp.currentPlayerContents();
             offlinePurchaseClicked=false;
@@ -211,7 +214,14 @@ resultMessage="";
 if(resultMessage != "") {
     ubsApp.socketOpenPopUp({ "message" : resultMessage,
                  "header" : ubsApp.getTranslation("purchaseHeader"),
-                 "headerStyle" : "text-align: center;  color: red;"
+                 "headerStyle" : "text-align: center;  color: red;",
+                 "buttons":[
+                    {
+                        'id':"purchase",
+                        'name' : ubsApp.getTranslation("OK"),
+                        'action': nextAction
+                    }
+             ]
                       });
 }
 })
@@ -233,14 +243,14 @@ while(end < start + ms) {
 }
 }
 
-ubsApp.openPurchaseScenario=function(openNextMove = true){
-	offlinePurchaseClicked=true;
-	ubsApp.openNextMoveAfterPurchase = openNextMove;
-    socket.emit('openPurchaseScenario', {description: "openPurchaseScenario", roomCode : ubsApp.studentArray[0].room}); 
+ubsApp.openPurchaseScenario=function(openNextMove, offlinePurchaseClicked){
+    socket.emit('openPurchaseScenario', {description: "openPurchaseScenario", roomCode : ubsApp.studentArray[0].room, openNextMove: openNextMove, offlinePurchaseClicked: offlinePurchaseClicked}); 
 	
 }
 
-socket.on('openPurchaseScenarioEvent', function () {
+socket.on('openPurchaseScenarioEvent', function (data) {
+    ubsApp.openNextMoveAfterPurchase = data.openNextMove;
+    offlinePurchaseClicked = data.offlinePurchaseClicked;
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("purchaseScenario");
 })
