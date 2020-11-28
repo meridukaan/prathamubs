@@ -464,14 +464,14 @@ io.on('connection', function (socket) {
 
 
     socket.on('openPurchaseScenario', function (data) {
-        socket.emit('openPurchaseScenarioEvent');
-        socket.in(Number(data.roomCode)).emit('openPurchaseScenarioEvent');
+        socket.emit('openPurchaseScenarioEvent', {openNextMove: data.openNextMove, offlinePurchaseClicked: data.offlinePurchaseClicked});
+        socket.in(Number(data.roomCode)).emit('openPurchaseScenarioEvent', {openNextMove: data.openNextMove, offlinePurchaseClicked: data.offlinePurchaseClicked});
 
     });  
 
     socket.on('pay', function (data) {
-        socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime });
-        socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime  });
+        socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime});
+        socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime});
 
     });
 
