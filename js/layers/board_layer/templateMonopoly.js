@@ -158,7 +158,7 @@ monopoly.sideScoreBoardTemplate= '<div class="mainBoardoverlay">'+
 '    </div>'+
 '    <div class="sideScoreBoardRow">'+
 '       <div class="sideScoreBoardCol"></div>'+
-'       <button class="sideScoreBoardCol sideScoreBoardButton" onclick="ubsApp.openPurchaseScenario(false)" style="padding-left: 7%;padding-right: 7%;">{{buy}}</button>'+
+'       <button class="sideScoreBoardCol sideScoreBoardButton" onclick="ubsApp.openPurchaseScenario(false, true)" style="padding-left: 7%;padding-right: 7%;">{{buy}}</button>'+
 '       <div class="sideScoreBoardCol"></div>'+
 '    </div>'+
 '    <div class="sideScoreBoardRow">'+
