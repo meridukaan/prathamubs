@@ -177,8 +177,6 @@ else{
         document.getElementById("creditLimitValue").innerHTML="₹ "+userArray[playerChance].getCreditLimit();
 
         if(!offlinePurchaseClicked) {
-        // ubsApp.callServerNextMove();
-        console.log("Inside offline purchase if");
         nextAction = "ubsApp.callServerClosePopup(); ubsApp.callServerNextMove();"
         }
         else{
@@ -266,7 +264,6 @@ ubsApp.increaseInventory=function(){
 
 socket.on('increaseInventoryLevel', function(data)
 {
-    // var currentSliderValue = document.getElementById("mySlider").value;
     var currentSliderValue = data.sliderValue;
     document.getElementById("mySlider").value = parseInt(currentSliderValue)+1;
     ubsApp.updateInventoryLevel(document.getElementById("mySlider").value);
