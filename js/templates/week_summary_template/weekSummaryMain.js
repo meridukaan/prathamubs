@@ -1,5 +1,4 @@
 ubsApp.getWeekSummaryTemplate = function(templateConfig, tempVar){
-    //console.log("Weekly Summary Id is: " + questionId);
     var questionId = 1;
     console.log("Weekly Summary Id is: " + questionId);
     templateConfig.lastWeekCash = userArray[playerChance].getLastWeekPlayerScore();
@@ -46,10 +45,18 @@ ubsApp.getWeekSummaryTemplate = function(templateConfig, tempVar){
 
 }
 
-
 ubsApp.openCurrentPlayerSummary = function(config) {
+    socket.emit("weekSummaryTemplate",{
+        description: "This event calls currentPlayerSummary on all clients",
+        roomCode : ubsApp.studentArray[playerChance].room,
+        config: config
+    })
+}
+
+socket.on("renderWeeklySummary",function(data){
+    config=data.config;
     ubsApp.openCurrentPlayerConfig = config;
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("weekSummaryPage");
     ubsApp.openCurrentPlayerConfig = {};
-}
+})

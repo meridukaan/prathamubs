@@ -160,8 +160,8 @@ io.on('connection', function (socket) {
 
 
     socket.on('transferToBank', function (data) {
-        socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: false });
-        socket.emit('openTransferToBank', { flag: 1, openNextMove: false });
+        socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: data.openNextMove });
+        socket.emit('openTransferToBank', { flag: 1, openNextMove: data.openNextMove });
     })
 
     socket.on('textToReplicate', function (data) {
@@ -606,6 +606,17 @@ io.on('connection', function (socket) {
         socket.emit('clientUpdateInventoryLevel', {
             value: data.value
         })
+    })
+
+    socket.on('weekSummaryTemplate',function(data){
+        socket.in(Number(data.roomCode)).emit('renderWeeklySummary', { 
+            tempVar: data.tempVar,
+            templateConfig : data.templateConfig
+        });
+        socket.emit('renderWeeklySummary', { 
+            tempVar: data.tempVar,
+            templateConfig : data.templateConfig
+        });
     })
 
 })

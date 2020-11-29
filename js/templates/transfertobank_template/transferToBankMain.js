@@ -43,7 +43,7 @@ socket.on('replicatedText',function(data){
 
 
 ubsApp.transferToBank = function (questionId) {
-	socket.emit('actualTransferToBank', {description: "Atual transfer to bank", qid : questionId, roomCode : ubsApp.studentArray[0].room});
+	socket.emit('actualTransferToBank', {description: "Actual transfer to bank", qid : questionId, roomCode : ubsApp.studentArray[0].room});
 	
 }
 
@@ -55,6 +55,12 @@ socket.on('openActualTransferToBank', function(data){
 	var startTime = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 	ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, amount, 0, 0, startTime, "transferToBank");
 
+	if(ubsApp.openNextMoveAfterTransfer){
+		transferAction = "ubsApp.callServerClosePopup();ubsApp.callServerNextMove();"
+	} else {
+		transferAction = "ubsApp.callServerClosePopup();"
+	}
+
 	if (amount) {
 		if (amount <= userArray[playerChance].getplayerScore()) {
 			userArray[playerChance].setplayerScore(userArray[playerChance].getplayerScore() - amount);
@@ -63,7 +69,7 @@ socket.on('openActualTransferToBank', function(data){
 			if (!cashTransfered && userArray[playerChance].getTransferReminderOpened()) {
 				userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts() + 5);
 			}
-			cashTransfered = true;
+			userArray[playerChance].setCashTransferred(true);
 			var temptimer;
 			var temptime = 20;
 			temptimer = setInterval(function () {
@@ -88,7 +94,7 @@ socket.on('openActualTransferToBank', function(data){
 							{
 								'id': "closePopupButton",
 								'name': ubsApp.getTranslation("CLOSE"),
-								'action': "ubsApp.callServerClosePopup();"
+								'action': transferAction
 							}
 						]
 					});
@@ -108,8 +114,7 @@ socket.on('openActualTransferToBank', function(data){
 
 
 ubsApp.openTransferToBank = function (openNextMove = false) {
-	socket.emit('transferToBank', { description: "This is transfer to bank method", roomCode : ubsApp.studentArray[0].room });
-
+	socket.emit('transferToBank', { description: "This is transfer to bank method", roomCode : ubsApp.studentArray[0].room, openNextMove : openNextMove });
 }
 
 socket.on('openTransferToBank', function (data) {

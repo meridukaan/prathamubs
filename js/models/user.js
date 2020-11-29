@@ -21,6 +21,14 @@ class User{
      return false;
     }
 
+    isCashTransferred() {
+        return this.cashTransferred;
+    }
+
+    setCashTransferred(flag) {
+        this.cashTransferred = flag;
+    }
+
     incrementQuizCount() {
         this.quizTakenInCurrentWeek++;
     }
