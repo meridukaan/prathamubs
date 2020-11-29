@@ -160,8 +160,8 @@ io.on('connection', function (socket) {
 
 
     socket.on('transferToBank', function (data) {
-        socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: false });
-        socket.emit('openTransferToBank', { flag: 1, openNextMove: false });
+        socket.in(Number(data.roomCode)).emit('openTransferToBank', { flag: 1, openNextMove: data.openNextMove });
+        socket.emit('openTransferToBank', { flag: 1, openNextMove: data.openNextMove });
     })
 
     socket.on('textToReplicate', function (data) {
@@ -464,14 +464,14 @@ io.on('connection', function (socket) {
 
 
     socket.on('openPurchaseScenario', function (data) {
-        socket.emit('openPurchaseScenarioEvent');
-        socket.in(Number(data.roomCode)).emit('openPurchaseScenarioEvent');
+        socket.emit('openPurchaseScenarioEvent', {openNextMove: data.openNextMove, offlinePurchaseClicked: data.offlinePurchaseClicked});
+        socket.in(Number(data.roomCode)).emit('openPurchaseScenarioEvent', {openNextMove: data.openNextMove, offlinePurchaseClicked: data.offlinePurchaseClicked});
 
     });  
 
     socket.on('pay', function (data) {
-        socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime });
-        socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime  });
+        socket.emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime});
+        socket.in(Number(data.roomCode)).emit('purchaseInventory', { questionId: data.questionId, startTime: data.startTime});
 
     });
 
@@ -606,6 +606,17 @@ io.on('connection', function (socket) {
         socket.emit('clientUpdateInventoryLevel', {
             value: data.value
         })
+    })
+
+    socket.on('weekSummaryTemplate',function(data){
+        socket.in(Number(data.roomCode)).emit('renderWeeklySummary', { 
+            tempVar: data.tempVar,
+            templateConfig : data.templateConfig
+        });
+        socket.emit('renderWeeklySummary', { 
+            tempVar: data.tempVar,
+            templateConfig : data.templateConfig
+        });
     })
 
 })

@@ -272,8 +272,8 @@ monopoly.myMove = function(count, pId, currentPos, isCaller) {
     let x = userArray[pId].getWeeks();
     if(x < ubsApp.maxNumOfWeeks) {
           userArray[pId].setWeeks(++x);
-            if(cashTransfered){
-              cashTransfered=false;
+            if(userArray[playerChance].isCashTransferred()){
+              userArray[playerChance].setCashTransferred(false);
               userArray[pId].setTransferReminderOpened(true);
             }
             else{
@@ -449,6 +449,7 @@ monopoly.storePlayerDetails=function(){
         user.setTransferReminderOpened(true);
         user.setScenarioArray(scenariosArray);
         user.setWeeks(1);
+        user.setCashTransferred(false);
         userArray[i]=user;
     }
     if(computerRequired)
