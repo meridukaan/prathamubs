@@ -184,6 +184,9 @@ else{
             ubsApp.closeCurrentScenario();
             ubsApp.currentPlayerContents();
             offlinePurchaseClicked=false;
+            if(ubsApp.isMultiplayerEnabled){
+                ubsApp.storePlayerDetailsOnServer(userArray[playerChance], "purchaseInventory");
+            }
         }
 
         // document.getElementById("bankBalanceValue").innerHTML=userArray[playerChance].getBankBalance();

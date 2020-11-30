@@ -419,26 +419,11 @@ monopoly.storePlayerDetails=function(){
      return;
     }
 
-    // for( i=0;i<numplayers;i++) {
-
-    //     if(playerMap[document.getElementById("name"+i).value]) {
-    //          ubsApp.openPopup({
-    //                 "message" : ubsApp.getTranslation("eachPlayerNameUniqueMessage"),
-    //                 "header" : ubsApp.getTranslation("ERROR"),
-    //                 "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
-    //                 });
-    //          return;
-    //     }
-    //     playerMap[document.getElementById("name"+i).value] = true;
-    //  }
 
     for( i=0;i<numplayers;i++)
     {
         console.log("Num of players : "+numplayers);
         let user=new User();
-        // let res = document.getElementById("name"+i).value.split("_");
-        // user.setplayerName(res[1]);
-        // user.setplayerStudentId(res[0]);
         if(ubsApp.studentArray[i].name==ubsApp.myDetails.userName){
             ubsApp.myDetails.id="p"+i;
         }
@@ -462,6 +447,10 @@ monopoly.storePlayerDetails=function(){
         user.setScenarioArray(scenariosArray);
         user.setWeeks(1);
         user.setCashTransferred(false);
+        if(ubsApp.isMultiplayerEnabled)
+        {
+           ubsApp.storePlayerDetailsOnServer(user);
+        }
         userArray[i]=user;
     }
     if(computerRequired)
@@ -1022,7 +1011,7 @@ ubsApp.confirmEndGame=function(){
   }
 
 ubsApp.nextMove = function(){
-
+    ubsApp.storePlayerDetailsOnServer(userArray[playerChance]);
     ubsApp.closeCurrentScenario();
     if(!userArray[playerChance]) {
         return;
@@ -1321,7 +1310,6 @@ ubsApp.populateStudentArray = function(studentArray) {
 }
 
 socket.on('nextMove', function (data) {
-
     ubsApp.nextMove();
     
 })
@@ -1383,4 +1371,34 @@ ubsApp.sendMail = function()
              + "&body=Join%20Room%20in%20Meri%20Dukan%0D%0Ahttp%3A%2F%2Fmeridukan.prathamopenschool.org%2F%0D%0ARoom%20ID%3A%20" + room_code_mail;
     
     window.location.href = link;
+}
+
+ubsApp.storePlayerDetailsOnServer = function(user, scenarioName, scenarioId, quizScore)
+{
+      var playerDetails = {
+                  "roomCode":user.getRoomCode(),
+                  "PlayerName":user.getplayerName(),
+                  "bankBalance":user.getBankBalance(),
+                  "cash":user.getplayerScore(),
+                  "debt":user.getCredit(),
+                  "reputationPoints":user.getReputationPts(),
+                  "inventoryLevel":user.getInventoryScore(),
+                  "advantageCards":user.getAdvantageCardNumber(),
+                  "scenarioName":scenarioName,
+                  "scenarioID":scenarioId,
+                  "quizScore":quizScore
+
+               }
+
+            $.ajax({
+                url: "http://apimeridukan.prathamopenschool.org/api/roomplayer/storeroomv2",
+                type: "post",
+                dataType:"json",
+                contentType:"application/json",
+                data: JSON.stringify(playerDetails),
+                success : function(data){
+                    console.log("Stored details successfully for user-->"+user.getplayerName());
+                }
+
+            });
 }

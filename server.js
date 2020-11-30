@@ -78,8 +78,6 @@ io.on('connection', function (socket) {
         users = [];
         let player = {};
         roomCode = Number(data.roomCode);
-        console.log("Rooms--"+rooms);
-        console.log("roomCode--"+roomCode);
         if (!rooms.includes(roomCode)) {
             console.log("Invalid room code");
             socket.emit("joinRoomPopup", { description: "Room code does not exist!", header: "Invalid room code" });
@@ -171,6 +169,8 @@ io.on('connection', function (socket) {
     })
 
     socket.on('closeScenario', function (data) {
+        
+
         socket.emit('closingCurrentScenario', {
             description: "This function would call the close scenario function on every client"
         });
@@ -180,6 +180,8 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverClosePopup', function (data) {
+
+        
         socket.emit('socketClosePopup', {
             description: "Calling close pop up on current client",
             config: data.config,
