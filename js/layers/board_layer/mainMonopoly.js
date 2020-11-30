@@ -272,11 +272,12 @@ monopoly.startScenarios = function (blockNo) {
 
 socket.on('clientMyMove', function(data){
     monopoly.isCaller = data.isCaller;
-    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller);
+    monopoly.myMove(data.userDiceValue, data.userChance, data.userPosition, monopoly.isCaller,data.playerChance);
 })
-monopoly.myMove = function(count, pId, currentPos, isCaller) {
-  var temp="#p"+pId;
+monopoly.myMove = function(count, pId, currentPos, isCaller,playerChance) {
+  var temp="#"+pId;
   var playerToken = $(temp);
+    pId=playerChance;
   var blockNo = currentPos;   
   console.log("Current Pos : "+ currentPos + " of player : " + userArray[pId].getplayerName());
   var movePlayer = setInterval(function(){frame(isCaller);}, 500);
@@ -370,9 +371,10 @@ monopoly.rollDice  = function(){
     $("#diceval").html(diceVal);
     socket.emit("serverMyMove", {
         userDiceValue : diceVal,
-        userChance : playerChance,
+        userChance : ubsApp.myDetails.id,
         userPosition : userArray[playerChance].getplayerCurrentPos(),
-        userRoom : userArray[playerChance].getRoomCode()
+        userRoom : userArray[playerChance].getRoomCode(),
+        playerChance: playerChance
     });	
     //   monopoly.myMove(diceVal, playerChance, userArray[playerChance].getplayerCurrentPos());   //update Real time dice Value
     },1000);
@@ -914,7 +916,7 @@ ubsApp.confirmEndGame=function(){
       'buttons' : [
           {
               'name' : ubsApp.getTranslation("yes"),
-              'action': "ubsApp.callServerClosePopup();ubsApp.endGame();"
+            'action': "ubsApp.callServerClosePopup();ubsApp.endGame();ubsApp.leaveRoom();"
           },
 
           {
@@ -931,7 +933,7 @@ ubsApp.confirmEndGame=function(){
   userArray[playerChance].setPaymentReminderOpen(false);
   userArray[playerChance].setTransferReminderOpened(true);
   userArray[playerChance].setOpenWeekSummary(false);
-
+  
   	var arr=[];
 
     let playersConfig =[];
@@ -1019,7 +1021,32 @@ ubsApp.confirmEndGame=function(){
                   "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
                   "imageUrl" : ubsApp.getTranslation("congratulationImage"),
                });
+
+               window.setTimeout(function(){
+                window.location.href = "thank_you.html";
+        
+            }, 8000);          
   }
+
+ubsApp.leaveRoom = function(){
+    socket.emit('serverLeaveRoom', {
+		descrtiption: 'Calling Server for Leave Room',
+		userName:ubsApp.myDetails.userName,
+		roomCode: ubsApp.studentArray[0].room
+    });
+}
+
+socket.on('clientLeaveRoom', function(data){
+	ubsApp.callServerNextMove();
+	for(var i=0;i<numplayers;i++){    
+        if(userArray[i].getplayerName().toLowerCase()==data.userName.toLowerCase()){
+            numplayers--;
+            userArray.splice(i,1);
+            ubsApp.studentArray.splice(i,1);
+            document.getElementById('p'+i).style.display="none";
+        }
+    }
+})
 
 ubsApp.nextMove = function(){
 
