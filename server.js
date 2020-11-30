@@ -69,7 +69,7 @@ io.on('connection', function (socket) {
                 socket.emit("populateCreateRoomLobby", { userSet: Array.from(users), studentArray: studentArrayMap.get(roomnum), roomCode: roomnum, isCreator: true, playerAge: data.userAge, playerGender: data.userGender });
 
              }
-        });
+        }) ;
 
         
     })
@@ -583,18 +583,40 @@ io.on('connection', function (socket) {
     })
 
     socket.on('serverLeaveRoom', function(data){
-        socket.emit('clientLeaveRoom', {
-            userName: data.userName,
-            roomCode: data.roomCode,
-            
-        })
-        
-        socket.in(Number(data.roomCode)).emit('clientLeaveRoom', {
-            userName: data.userName,
-            roomCode: data.roomCode
-        })
+        var baseLeaveUrl = "http://apimeridukan.prathamopenschool.org/api/roomplayer/removeplayerbyname";
+        var leaveRoomData ={
+            roomcode : data.roomCode,
+            playername : data.userName
+          };
+        var paramaterizedLeaveUrl = baseLeaveUrl.replace(/\?.*$/, "") + "?" + jQuery.param(leaveRoomData);
 
-        socket.leave(data.roomCode)
+       $.ajax({
+            url: paramaterizedLeaveUrl,
+            type: "post",
+            dataType:"json",
+            contentType:"application/json",
+            success : function(response){
+                console.log("Player Removed from Room-"+response.ErrorDesc);
+                if (response.ErrorDesc=='Success'){
+                    console.log("Player Removed from Room-"+response.ErrorDesc);
+                    socket.emit('clientLeaveRoom', {
+                        userName: data.userName,
+                        roomCode: data.roomCode,
+                        
+                    })
+                    
+                    socket.in(Number(data.roomCode)).emit('clientLeaveRoom', {
+                        userName: data.userName,
+                        roomCode: data.roomCode
+                    })
+            
+                    socket.leave(data.roomCode)
+                    console.log("code is executed successfully");
+                }else{
+                    alert("Sorry, player was not removed. Please try again!!");
+                }
+             }
+        }) ;
     });
     socket.on('serverHelpVideoPause', function(data){
         socket.in(Number(data.roomCode)).emit('clientHelpVideoPause', {

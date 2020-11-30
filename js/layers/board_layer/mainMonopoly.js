@@ -903,7 +903,7 @@ ubsApp.confirmEndGame=function(){
       'buttons' : [
           {
               'name' : ubsApp.getTranslation("yes"),
-              'action': "ubsApp.callServerClosePopup();ubsApp.endGame();ubsApp.callServerNextMove();ubsApp.leaveRoom();"
+            'action': "ubsApp.callServerClosePopup();ubsApp.endGame();ubsApp.leaveRoom();"
           },
 
           {
@@ -1024,9 +1024,8 @@ ubsApp.leaveRoom = function(){
 }
 
 socket.on('clientLeaveRoom', function(data){
-	
-	for(var i=0;i<numplayers;i++){
-    
+	ubsApp.callServerNextMove();
+	for(var i=0;i<numplayers;i++){    
         if(userArray[i].getplayerName().toLowerCase()==data.userName.toLowerCase()){
             numplayers--;
             userArray.splice(i,1);
