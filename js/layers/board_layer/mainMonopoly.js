@@ -227,6 +227,7 @@ monopoly.callStartScenario = function (templateName, template, key) {
 }
 
 socket.on('startScenarioToClient', function (data) {
+    monopoly.refreshUserArray(data.userArray);
     templateName = data.templateName;
     template = data.template;
     key = data.key;
@@ -239,6 +240,17 @@ socket.on('startScenarioToClient', function (data) {
     ubsApp.renderPageByName(templateName);
     template[0].question = key;
 })
+
+monopoly.refreshUserArray=function(userArrayData){
+    for(var i=0;i<numplayers;i++){
+        userArray[i].setReputationPts(Number(userArrayData[i].reputationPoints));
+        userArray[i].setAdvantageCardNumber(Number(userArrayData[i].advantageCards));
+        userArray[i].setplayerScore(Number(userArrayData[i].cash));
+        userArray[i].setCredit(Number(userArrayData[i].debt));
+        userArray[i].setBankBalance(Number(userArrayData[i].bankBalance));
+        userArray[i].setInventoryScore(Number(userArrayData[i].inventoryLevel));
+    }
+}
 
 monopoly.startScenarios = function (blockNo) {
     setTimeout(function () {

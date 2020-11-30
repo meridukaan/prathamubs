@@ -234,18 +234,37 @@ io.on('connection', function (socket) {
     })
 
     socket.on('startScenarioToServer', function (data) {
-        socket.in(Number(data.roomCode)).emit('startScenarioToClient', {
-            description : "This event calls the startScenario on all clients in room", 
-            templateName : data.templateName, 
-            template : data.template, 
-            key : data.key
-        })
-        socket.emit('startScenarioToClient', {
-            description: "This event calls the startScenario on calling client in room", 
-            templateName : data.templateName, 
-            template : data.template, 
-            key : data.key
-        })
+        var getPlayerData={};
+        var sendDataToServer=data;
+        getPlayerData.data=data.roomCode;
+        console.log("Prining get player details");
+		console.log(JSON.stringify(getPlayerData));
+        $.ajax({
+            url: "http://apimeridukan.prathamopenschool.org/api/room/getplayerdetailsv2?roomcode="+data.roomCode,
+            type: "get",
+            dataType:"json",
+            contentType:"application/json",
+            data: JSON.stringify(getPlayerData),
+            success : function(data){
+                console.log("Printing userArray");
+                // var userArray=JSON.parse(data);
+                socket.in(Number(sendDataToServer.roomCode)).emit('startScenarioToClient', {
+                    description : "This event calls the startScenario on all clients in room", 
+                    templateName : sendDataToServer.templateName, 
+                    template : sendDataToServer.template, 
+                    key : sendDataToServer.key,
+                    userArray:data
+                })
+                socket.emit('startScenarioToClient', {
+                    description: "This event calls the startScenario on calling client in room", 
+                    templateName : sendDataToServer.templateName, 
+                    template : sendDataToServer.template, 
+                    key : sendDataToServer.key,
+                    userArray:data
+                })
+             }
+        });
+   
     })
 
     socket.on('serverAddToDisplay', function (data) {
