@@ -249,6 +249,10 @@ monopoly.refreshUserArray=function(userArrayData){
         userArray[i].setCredit(Number(userArrayData[i].debt));
         userArray[i].setBankBalance(Number(userArrayData[i].bankBalance));
         userArray[i].setInventoryScore(Number(userArrayData[i].inventoryLevel));
+        userArray[i].setplayerName(userArrayData[i].PlayerName);
+        userArray[i].setplayerAge(Number(userArrayData[i].Age));
+        userArray[i].setplayerGender(userArrayData[i].Gender);
+        userArray[i].setplayerUniqueIdentifier(userArrayData[i].PlayerId);
     }
 }
 

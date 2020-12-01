@@ -241,8 +241,6 @@ io.on('connection', function (socket) {
         var getPlayerData={};
         var sendDataToServer=data;
         getPlayerData.data=data.roomCode;
-        console.log("Prining get player details");
-		console.log(JSON.stringify(getPlayerData));
         $.ajax({
             url: "http://apimeridukan.prathamopenschool.org/api/room/getplayerdetailsv2?roomcode="+data.roomCode,
             type: "get",
