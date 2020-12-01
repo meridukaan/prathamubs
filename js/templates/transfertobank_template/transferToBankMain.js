@@ -28,7 +28,6 @@ document.addEventListener('onkeyup',replicatecashText);
 
 function replicatecashText(event){
 	amountToTransfer=document.getElementById("debtPaymentText").value;
-	console.log("User typed "+amountToTransfer+" in text box");
 	socket.emit('textToReplicate',{
 		description : "Event sends keypress events in textbox for transfer to bank", cash:amountToTransfer, roomCode : ubsApp.studentArray[0].room
 	})
@@ -53,8 +52,12 @@ socket.on('openActualTransferToBank', function(data){
 	var amount = document.getElementById("debtPaymentText").value;
 	var date = new Date();
 	var startTime = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	
 	ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, amount, 0, 0, startTime, "transferToBank");
-
+	if(ubsApp.isMultiplayerEnabled){
+		ubsApp.storePlayerDetailsOnServer(userArray[playerChance], "transferToBank");
+	}
+	
 	if(ubsApp.openNextMoveAfterTransfer){
 		transferAction = "ubsApp.callServerClosePopup();ubsApp.callServerNextMove();"
 	} else {

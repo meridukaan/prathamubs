@@ -33,6 +33,10 @@ socket.on('clientPayDebt',function(data){
 						userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+3);
 						userArray[playerChance].setCredit(userArray[playerChance].getCredit()-amountEntered);
 						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amountEntered, 0,0, startTime,"payDebt,Cash");
+						if(ubsApp.isMultiplayerEnabled)
+						{
+							ubsApp.storePlayerDetailsOnServer(userArray[playerChance],"payOffDebt");
+						}
 						ubsApp.currentPlayerContents();
 						ubsApp.closeCurrentScenario();
 						if(userArray[playerChance].getCredit()==0){
@@ -62,6 +66,10 @@ socket.on('clientPayDebt',function(data){
 						userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()+3);
 						userArray[playerChance].setCredit(userArray[playerChance].getCredit()-amountEntered);
 						ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(),questionId,amountEntered, 0,0, startTime,"payDebt,cheque");
+						if(ubsApp.isMultiplayerEnabled)
+						{
+							ubsApp.storePlayerDetailsOnServer(userArray[playerChance],"payOffDebt");
+						}
 						ubsApp.currentPlayerContents();
 						if(userArray[playerChance].getCredit()==0){
 							userArray[playerChance].setPayOffDeadline(-1);
@@ -85,8 +93,11 @@ socket.on('clientPayDebt',function(data){
 					}
 				}
 
+
+
 			
 		}
+
 		else{
 			document.getElementById("result").innerHTML=ubsApp.translation["enterValidAmount"];
 		}

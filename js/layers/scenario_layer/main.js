@@ -47,6 +47,7 @@ let templateMap = {};
 let offlinePurchaseClicked=false;
 ubsApp.isAndroidEnabled=false;
 ubsApp.isWebEnabled = false;
+ubsApp.isMultiplayerEnabled = true;
 ubsApp.deviceFingerPrint = "";
 ubsApp.popupConfig = {};
 
@@ -292,6 +293,8 @@ ubsApp.socketCloseCurrentScenario=function(){
 	socket.emit('closeScenario',{
 		description : "This function goes to server to trigger close scenario in the room",
 		roomCode : ubsApp.studentArray[playerChance].room
+		
+
 	});
 }
 
@@ -390,6 +393,7 @@ ubsApp.callServerClosePopup = function(config, doNextMoveFlag){
 }
 
 ubsApp.callServerNextMove = function(){
+
 	socket.emit("callNextMove",{ description: "Call Next Move", roomCode : ubsApp.studentArray[0].room });
 }
 
@@ -400,6 +404,7 @@ socket.on('socketClosePopup', function(data){
 })
 
 ubsApp.closePopup = function(config, doNextMove=true) {
+	
 
    if(ubsApp.isResultPopUpOpen && config) {
         $('#popupBackground').hide();
@@ -492,6 +497,10 @@ ubsApp.updateScoreInDB = function (playerStudentId, scenarioquestionId, scoredma
     			console.log(data);
    			}
   		})
+	}
+
+	if(ubsApp.isMultiplayerEnabled){
+		ubsApp.storePlayerDetailsOnServer(userArray[playerChance])
 	}
 	
 }

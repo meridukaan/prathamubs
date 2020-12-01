@@ -36,6 +36,9 @@ ubsApp.socketWithdrawFromBank = function (questionId) {
     var date = new Date();
     var startTime = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, number, 0, 0, startTime, "withdrawFromBank");
+    if(ubsApp.isMultiplayerEnabled){
+        ubsApp.storePlayerDetailsOnServer(userArray[playerChance], "withdrawFromBank");
+    }
     console.log("current player is: " + userArray[playerChance].getplayerName());
     if (number > 0) {
         if (number <= userArray[playerChance].getBankBalance()) {
