@@ -149,7 +149,9 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
   			ubsApp.raiseAudioEvent(audioElement, 'rightAnswer');
 			ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, scoredMarks,totalMarks, 1, startTime, "quizScore");
 	  		ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, reputationPoints,reputationPoints, 1, startTime, "quizReputationPoints");
-
+	  		if(ubsApp.isMultiplayerEnabled){
+				ubsApp.storePlayerDetailsOnServer(userArray[playerChance], "quiz", questionId, scoredMarks);
+			}
 	  }
 	  else{
 		  	scoredMarks = 0;
@@ -197,7 +199,9 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
   			ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, scoredMarks,totalMarks, 1, startTime, "quizScore");
 	  		ubsApp.updateScoreInDB(userArray[playerChance].getplayerStudentId(), questionId, 0,reputationPoints, 1, startTime, "quizReputationPoints");
 
-	  	
+	  		if(ubsApp.isMultiplayerEnabled){
+				ubsApp.storePlayerDetailsOnServer(userArray[playerChance], "quiz", questionId, scoredMarks);
+			}
 	  }
 	  ubsApp.currentPlayerContents();
 	  // if(ubsApp.pages[page].templates[0].quizResult){
