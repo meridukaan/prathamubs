@@ -248,7 +248,6 @@ io.on('connection', function (socket) {
             contentType:"application/json",
             data: JSON.stringify(getPlayerData),
             success : function(data){
-                console.log("Printing userArray");
                 // var userArray=JSON.parse(data);
                 socket.in(Number(sendDataToServer.roomCode)).emit('startScenarioToClient', {
                     description : "This event calls the startScenario on all clients in room", 
