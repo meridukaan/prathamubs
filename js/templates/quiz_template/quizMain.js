@@ -183,7 +183,7 @@ ubsApp.checkAnswerAndRenderNextPage=function(page, answer, optionName, questionI
 	                		{
 	                			'id':"quizWrongAnswer",
 	                            'name' : ubsApp.getTranslation("yes"),
-	                            'action': "ubsApp.startHelp(\'"+helpPageName+"\');ubsApp.socketDisplayNextQuizQuestion(\'"+ page +"\', true);"
+	                            'action': "ubsApp.socketStartHelp(\'"+helpPageName+"\');ubsApp.socketDisplayNextQuizQuestion(\'"+ page +"\', true);"
 	                        },
 	                        {
 	                			'id':"quizWrongAnswer",
