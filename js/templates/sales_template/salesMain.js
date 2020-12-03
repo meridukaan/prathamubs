@@ -81,7 +81,7 @@ function renderSales(data){
 
            if(ubsApp.noItemsForSale) {
                ubsApp.noItemsForSale = false;
-               ubsApp.openPopup({
+               ubsApp.socketOpenPopUp({
                                "message" : ubsApp.getTranslation("salesNoItemMessage"),
                                "header" : ubsApp.getTranslation("ERROR"),
                                "headerStyle" : "text-align: center;  color: black; font-weight: 700;",
@@ -89,7 +89,7 @@ function renderSales(data){
                                    {
                                        'id':"closePopupButton",
                                        'name' : ubsApp.getTranslation("CLOSE"),
-                                         'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'),'saleEnd'); ubsApp.callServerClosePopup(); ubsApp.stopTimer(); ubsApp.closeCurrentScenario(); ubsApp.callServerNextMove();"
+                                       'action': "ubsApp.raiseAudioEvent(document.getElementById('closePopupButton'),'saleEnd'); ubsApp.callServerClosePopup(); ubsApp.callServerStopTimer(); ubsApp.socketCloseCurrentScenario(); ubsApp.callServerNextMove();"
                                    }
                                ]
                                });
