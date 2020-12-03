@@ -241,8 +241,6 @@ io.on('connection', function (socket) {
         var getPlayerData={};
         var sendDataToServer=data;
         getPlayerData.data=data.roomCode;
-        console.log("Prining get player details");
-		console.log(JSON.stringify(getPlayerData));
         $.ajax({
             url: "http://apimeridukan.prathamopenschool.org/api/room/getplayerdetailsv2?roomcode="+data.roomCode,
             type: "get",
@@ -250,7 +248,6 @@ io.on('connection', function (socket) {
             contentType:"application/json",
             data: JSON.stringify(getPlayerData),
             success : function(data){
-                console.log("Printing userArray");
                 // var userArray=JSON.parse(data);
                 socket.in(Number(sendDataToServer.roomCode)).emit('startScenarioToClient', {
                     description : "This event calls the startScenario on all clients in room", 
