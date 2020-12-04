@@ -45,9 +45,7 @@ socket.on('openAdvantageCardToClient', function (data) {
 //}
 
 ubsApp.replicateAdvantageText=function(){
-    console.log("Function called from key up advantage cards");
     convertTotal=document.getElementById("convertText").value;
-    console.log("Text Entered in Advantage card is "+convertTotal);
     socket.emit('textToReplicateAdvantage',{
         description : "Event sends keypress events in textbox for total amount sale", total:convertTotal, roomCode : ubsApp.studentArray[0].room
     })
