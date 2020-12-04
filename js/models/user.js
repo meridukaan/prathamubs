@@ -226,9 +226,14 @@ class User{
             this.advantageCardNumber=advantageCardNumber;
         }
         else{
-            this.advantageCardNumber+=advantageCardNumber;
+            this.advantageCardNumber=advantageCardNumber;
         }
     }
+
+    addAdvantageCardNumber(advantageCardNumber){
+        this.advantageCardNumber+=advantageCardNumber;
+    }
+
     getAdvantageCardNumber(){
         return this.advantageCardNumber;
     }

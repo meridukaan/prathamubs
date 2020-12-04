@@ -376,9 +376,13 @@ ubsApp.payOrGain = function (pageName, questionId) {
 }
 
 ubsApp.useOneAdvantageCard = function () {
+    socket.emit('useOneAdvantageCardToServer', { description: "This method is to use advantage card to avoid payment", roomCode : ubsApp.studentArray[0].room});
+}
+
+socket.on('useOneAdvantageCardToClient',function(data){
     let header = ubsApp.getTranslation("redeemAdvantageCardHeader");
     if (userArray[playerChance].getAdvantageCardNumber() > 0) {
-        userArray[playerChance].setAdvantageCardNumber(-1);
+        userArray[playerChance].setAdvantageCardNumber(userArray[playerChance].getAdvantageCardNumber()-1);
         let cardNumber = userArray[playerChance].getAdvantageCardNumber();
         let message = ubsApp.formatMessage(ubsApp.translation["redeemAdvantageCardMessage"], [cardNumber]);
         ubsApp.openResultPopup({
@@ -387,4 +391,4 @@ ubsApp.useOneAdvantageCard = function () {
             "headerStyle": "text-align: center;  color: black;",
         })
     }
-}
+  })

@@ -1477,7 +1477,7 @@ ubsApp.advantageCardTemplate='<div style="{{style}}">'+
                            '                </div>'+
                           '                <div style="display: inline-block;width: 100%;">'+
                           '                        <div style="float: left; width: 60%;">{{convertReputationMessage}}</div>'+
-                          '                        <div style="float: right;"><input type="number" style="width: 50px;" id="convertText"></input></div>'+
+                          '                        <div style="float: right;"><input type="number" style="width: 50px;" id="convertText" onkeyup="ubsApp.replicateAdvantageText()"></input></div>'+
                           '                </div>'+
                            ''+
                            '            </div>'+
@@ -1486,7 +1486,7 @@ ubsApp.advantageCardTemplate='<div style="{{style}}">'+
                            ''+
                            '        <div style="display:inline-block;width:100%;">'+
                            '                 <div style="float: left;margin-left: 35%;margin-right: 11px;cursor:pointer; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;    padding: 1%; padding-bottom: 2%; color: green;font-weight:bold; width: 16%;text-align: center;" onclick="ubsApp.covertReputationToWildCard()" >{{OK}}</div>'+
-                           '                 <div style="cursor:pointer; float: left; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center; padding-right: 16%; padding-left: 2%;" onclick="ubsApp.closeCurrentScenario()" >{{CANCEL}}</div>'+
+                           '                 <div style="cursor:pointer; float: left; background-image: url(images/buttonMedium.png);background-size: 100% 100%;width: fit-content;margin: auto;  padding: 1%; padding-bottom: 2%; color: red;font-weight: bold; width: 15.5%;text-align: center; padding-right: 16%; padding-left: 2%;" onclick="ubsApp.socketCloseCurrentScenario()" >{{CANCEL}}</div>'+
                            '                 <div style="cursor: pointer;     float: right;padding: 3%;width: 13%;    background-size: 100% 100%;background-image: url(images/help-button.png);"  onclick="ubsApp.socketStartHelp(\'salesHelp\')" ></div>'+
 
                            '        </div>'+
