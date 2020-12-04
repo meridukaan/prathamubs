@@ -675,6 +675,27 @@ io.on('connection', function (socket) {
         });
     })
 
+    socket.on('openAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('openAdvantageCardToClient', { description: "This is conversion of reputation points to advantage cards"});
+        socket.emit('openAdvantageCardToClient', {description: "This is conversion of reputation points to advantage cards"});
+    })
+
+    socket.on('textToReplicateAdvantage', function (data) {
+        socket.in(Number(data.roomCode)).emit('replicatedTextAdvantage', {
+            description: "Event to send back the text received from the player", total: data.total
+        })
+    })
+
+    socket.on('convertReputationToAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('convertReputationToAdvantageCardToClient', { description: "This is conversion of reputation points to advantage cards", numberEntered:data.numberEntered});
+        socket.emit('convertReputationToAdvantageCardToClient', {description: "This is conversion of reputation points to advantage cards", numberEntered:data.numberEntered});
+    })
+
+    socket.on('useOneAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('useOneAdvantageCardToClient', { description: "This method is to use advantage card to avoid payment"});
+        socket.emit('useOneAdvantageCardToClient', {description: "This method is to use advantage card to avoid payment"});
+    })
+
 })
 
 http.listen(3000, function () {

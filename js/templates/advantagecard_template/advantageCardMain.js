@@ -15,9 +15,13 @@ ubsApp.getAdvantageCardTemplate=function(templateConfig,tempVar){
 }
 
 ubsApp.openAdvantageCard=function(){
+    socket.emit('openAdvantageCardToServer', { description: "This is conversion of reputation points to advantage cards", roomCode : ubsApp.studentArray[0].room});
+}
+
+socket.on('openAdvantageCardToClient', function (data) {
     ubsApp.startCurrentScenario();
     ubsApp.renderPageByName("advantageCardScenario");
-}
+})
 
 //ubsApp.checkDetails=function(){
 //    var numberEntered=document.getElementById("convertText").value;
@@ -40,29 +44,52 @@ ubsApp.openAdvantageCard=function(){
 //    }
 //}
 
+ubsApp.replicateAdvantageText=function(){
+    console.log("Function called from key up advantage cards");
+    convertTotal=document.getElementById("convertText").value;
+    console.log("Text Entered in Advantage card is "+convertTotal);
+    socket.emit('textToReplicateAdvantage',{
+        description : "Event sends keypress events in textbox for total amount sale", total:convertTotal, roomCode : ubsApp.studentArray[0].room
+    })
+}
+
+socket.on('replicatedTextAdvantage',function(data){
+    document.getElementById("convertText").value=Number(data.total);
+  })
+
 ubsApp.covertReputationToWildCard=function(){
      var numberEntered=document.getElementById("convertText").value;
-        console.log(numberEntered);
-        if(numberEntered>14 && numberEntered <= userArray[playerChance].getReputationPts())
-        {
-            let reputationPointsUsed = numberEntered  - (numberEntered%15);
-            userArray[playerChance].setAdvantageCardNumber(reputationPointsUsed / 15);
-            userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()-reputationPointsUsed);
-            ubsApp.closeCurrentScenario();
-            ubsApp.currentPlayerContents();
-            ubsApp.openPopup({
-                'message' : ubsApp.getTranslation("advantageCardConvertSuccess").replace("{{advantageCard}}",(reputationPointsUsed / 15)).replace("{{reputationPoints}}",reputationPointsUsed),
-                "header" : ubsApp.getTranslation("SUCCESS"),
-                "headerStyle" : "text-align: center;  color: green; font-weight: 700;",
-            });
-
-        }
-    else{
-        ubsApp.openPopup({
-            'message' : ubsApp.translation["validReputationPts"],
-            "header" : ubsApp.getTranslation("ERROR"),
-            "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
-        });
-        }
+        socket.emit('convertReputationToAdvantageCardToServer', { description: "This is conversion of reputation points to advantage cards", roomCode : ubsApp.studentArray[0].room, numberEntered:numberEntered});
+       
 
 }
+
+socket.on('convertReputationToAdvantageCardToClient',function(data){
+    
+    var numberEntered=data.numberEntered;
+    if(numberEntered>14 && numberEntered <= userArray[playerChance].getReputationPts())
+    {
+        let reputationPointsUsed = numberEntered  - (numberEntered%15);
+        userArray[playerChance].addAdvantageCardNumber(reputationPointsUsed / 15);
+        userArray[playerChance].setReputationPts(userArray[playerChance].getReputationPts()-reputationPointsUsed);
+        if(ubsApp.isMultiplayerEnabled)
+        {
+            ubsApp.storePlayerDetailsOnServer(userArray[playerChance],"advantageCardScenario");
+        }
+        ubsApp.closeCurrentScenario();
+        ubsApp.currentPlayerContents();
+        ubsApp.openPopup({
+            'message' : ubsApp.getTranslation("advantageCardConvertSuccess").replace("{{advantageCard}}",(reputationPointsUsed / 15)).replace("{{reputationPoints}}",reputationPointsUsed),
+            "header" : ubsApp.getTranslation("SUCCESS"),
+            "headerStyle" : "text-align: center;  color: green; font-weight: 700;",
+        });
+
+    }
+else{
+    ubsApp.openPopup({
+        'message' : ubsApp.translation["validReputationPts"],
+        "header" : ubsApp.getTranslation("ERROR"),
+        "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
+    });
+    }
+  })
