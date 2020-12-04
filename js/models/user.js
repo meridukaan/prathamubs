@@ -36,6 +36,18 @@ class User{
         this.name=name;
     }
 
+    setplayerAge(age){
+        this.age=age;
+    }
+
+    setplayerGender(gender){
+        this.gender=gender;
+    }
+
+    setplayerUniqueIdentifier(uid){
+        this.uid=uid;
+    }
+
     setplayerStudentId(id) {
         this.playerStudentId = id;
     }
@@ -214,9 +226,14 @@ class User{
             this.advantageCardNumber=advantageCardNumber;
         }
         else{
-            this.advantageCardNumber+=advantageCardNumber;
+            this.advantageCardNumber=advantageCardNumber;
         }
     }
+
+    addAdvantageCardNumber(advantageCardNumber){
+        this.advantageCardNumber+=advantageCardNumber;
+    }
+
     getAdvantageCardNumber(){
         return this.advantageCardNumber;
     }
@@ -258,6 +275,20 @@ class User{
     getplayerId(){
         return this.playerId;
     }
+    
+    getplayerAge(){
+        return this.age;
+    }
+
+    getplayerGender(){
+        return this.gender;
+    }
+
+    getplayerUniqueIdentifier(){
+        return this.uid;
+    }
+
+
     // updatequestions(questionId){
     //     this.questionsDone.push(questionId);
     //}

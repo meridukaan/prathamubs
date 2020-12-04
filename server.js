@@ -241,8 +241,6 @@ io.on('connection', function (socket) {
         var getPlayerData={};
         var sendDataToServer=data;
         getPlayerData.data=data.roomCode;
-        console.log("Prining get player details");
-		console.log(JSON.stringify(getPlayerData));
         $.ajax({
             url: "http://apimeridukan.prathamopenschool.org/api/room/getplayerdetailsv2?roomcode="+data.roomCode,
             type: "get",
@@ -250,7 +248,6 @@ io.on('connection', function (socket) {
             contentType:"application/json",
             data: JSON.stringify(getPlayerData),
             success : function(data){
-                console.log("Printing userArray");
                 // var userArray=JSON.parse(data);
                 socket.in(Number(sendDataToServer.roomCode)).emit('startScenarioToClient', {
                     description : "This event calls the startScenario on all clients in room", 
@@ -668,7 +665,6 @@ io.on('connection', function (socket) {
     })
 
     socket.on('weekSummaryTemplate',function(data){
-        console.log("config is "+data.config);
         socket.in(Number(data.roomCode)).emit('renderWeeklySummary', { 
             config: data.config
         });
@@ -684,6 +680,27 @@ io.on('connection', function (socket) {
         socket.in(Number(data.roomCode)).emit('clientStopTimer',{
             description : "This event triggers stop timer method on all clients in the room"
         })
+    })
+
+    socket.on('openAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('openAdvantageCardToClient', { description: "This is conversion of reputation points to advantage cards"});
+        socket.emit('openAdvantageCardToClient', {description: "This is conversion of reputation points to advantage cards"});
+    })
+
+    socket.on('textToReplicateAdvantage', function (data) {
+        socket.in(Number(data.roomCode)).emit('replicatedTextAdvantage', {
+            description: "Event to send back the text received from the player", total: data.total
+        })
+    })
+
+    socket.on('convertReputationToAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('convertReputationToAdvantageCardToClient', { description: "This is conversion of reputation points to advantage cards", numberEntered:data.numberEntered});
+        socket.emit('convertReputationToAdvantageCardToClient', {description: "This is conversion of reputation points to advantage cards", numberEntered:data.numberEntered});
+    })
+
+    socket.on('useOneAdvantageCardToServer', function (data) {
+        socket.in(Number(data.roomCode)).emit('useOneAdvantageCardToClient', { description: "This method is to use advantage card to avoid payment"});
+        socket.emit('useOneAdvantageCardToClient', {description: "This method is to use advantage card to avoid payment"});
     })
 
 })
