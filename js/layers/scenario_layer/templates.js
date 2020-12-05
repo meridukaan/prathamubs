@@ -533,6 +533,9 @@ ubsApp.leaderBoardTemplate=
     '				<div style="display: table-cell; "><input type="radio" name="noOfWeeks" value="6">6 <input type="radio" name="noOfWeeks" value=12 checked="">12</div>'+
     '				<div style="display: table-cell; "><select style="" id="num_online_players"><option id="one" value="1">1</option><option id="two" value="2">2</option><option id="three" value="3">3</option><option id="four" value="4">4</option></select></div>'+
     '			</div>'+
+    '           <div style="display: table-row;">'+
+    '               <div style="display: table-cell;" id="roomCreatingMessage"></div>'+
+    '           </div>'+
     '		</div>'+
     '	'+
     '		</div>'+
