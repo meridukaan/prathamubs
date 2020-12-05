@@ -284,6 +284,17 @@ ubsApp.startTimer=function(temp){
 
 }
 
+ubsApp.callServerStopTimer= function(){
+    socket.emit('serverStopTimer',{
+        description : "This event triggers stop timer method",
+        roomCode : ubsApp.studentArray[playerChance].room
+    })
+}
+
+socket.on('clientStopTimer', function(data){
+    ubsApp.stopTimer();
+})
+
 ubsApp.stopTimer = function() {
     clearInterval(timeVar);
 }

@@ -666,13 +666,20 @@ io.on('connection', function (socket) {
 
     socket.on('weekSummaryTemplate',function(data){
         socket.in(Number(data.roomCode)).emit('renderWeeklySummary', { 
-            tempVar: data.tempVar,
-            templateConfig : data.templateConfig
+            config: data.config
         });
         socket.emit('renderWeeklySummary', { 
-            tempVar: data.tempVar,
-            templateConfig : data.templateConfig
+            config: data.config
         });
+    })
+
+    socket.on('serverStopTimer',function(data){
+        socket.emit('clientStopTimer',{
+            description : "This event triggers stop timer method on client"
+        })
+        socket.in(Number(data.roomCode)).emit('clientStopTimer',{
+            description : "This event triggers stop timer method on all clients in the room"
+        })
     })
 
     socket.on('openAdvantageCardToServer', function (data) {
