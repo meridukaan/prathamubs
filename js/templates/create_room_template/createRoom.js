@@ -13,6 +13,8 @@ ubsApp.openCreateRoomTemplate = function () {
 
 ubsApp.createRoom = function () {
     // ubsApp.maxNumOfWeeks = document.getElementById("");
+    //Message to stop multiple clicks when API is slow
+    document.getElementById('roomCreatingMessage').innerHTML="Creating Room"; 
     numOfWeeks = ubsApp.maxNumOfWeeks = $("input[name='noOfWeeks']:checked"). val();
     userLimit = document.getElementById("num_online_players").value;
     userName = document.getElementById("playerNameInput").value;
@@ -48,22 +50,7 @@ ubsApp.createRoom = function () {
                 }
             ]
         });
-    } else if(userLimit == 1){
-        console.log("Please visit pratham web URL");
-        ubsApp.openResultPopup({
-            "message": "Please play on http://meridukan.prathamopenschool.org/",
-            "header": "Single player",
-            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-            "buttons": [
-                {
-                    'id': "closePopupButton",
-                    'name': "CLOSE",
-                    'action': "ubsApp.closeCurrentScenario();"
-                }
-            ]
-        });
-    }
-    else {
+    }  else {
         monopoly.storeMyDetails(userName, userAge, userGender);
         socket.emit("serverCreateRoom", {
             description: "create room button clicked",

@@ -46,11 +46,13 @@ ubsApp.getWeekSummaryTemplate = function(templateConfig, tempVar){
 }
 
 ubsApp.openCurrentPlayerSummary = function(config) {
-    socket.emit("weekSummaryTemplate",{
-        description: "This event calls currentPlayerSummary on all clients",
-        roomCode : ubsApp.studentArray[playerChance].room,
-        config: config
-    })
+    if(monopoly.isCaller){
+        socket.emit("weekSummaryTemplate",{
+            description: "This event calls currentPlayerSummary on all clients",
+            roomCode : ubsApp.studentArray[playerChance].room,
+            config: config
+        })        
+    }
 }
 
 socket.on("renderWeeklySummary",function(data){
