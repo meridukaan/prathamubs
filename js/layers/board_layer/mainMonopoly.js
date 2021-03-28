@@ -24,6 +24,8 @@ let numplayers = monopoly.numplayers;
 monopoly.playerChance = 0;
 let playerChance = monopoly.playerChance;
 let userArray=[];
+let playerChanceDisabled=[];
+let tempStudentArray=[];
 let cashTransfered=false;
 var initialPlayerCash=1000;
 var initialPlayerBankBalance=100000;
@@ -458,6 +460,8 @@ monopoly.storePlayerDetails=function(){
            ubsApp.storePlayerDetailsOnServer(user);
         }
         userArray[i]=user;
+        tempStudentArray[i]=user;
+        playerChanceDisabled[i]=false;
     }
     if(computerRequired)
     {
@@ -923,9 +927,12 @@ ubsApp.confirmEndGame=function(){
  ubsApp.endGame=function(){
 
  // turning off all the reminders
-  userArray[playerChance].setPaymentReminderOpen(false);
-  userArray[playerChance].setTransferReminderOpened(true);
-  userArray[playerChance].setOpenWeekSummary(false);
+ if(numplayers>0){
+    userArray[playerChance].setPaymentReminderOpen(false);
+    userArray[playerChance].setTransferReminderOpened(true);
+    userArray[playerChance].setOpenWeekSummary(false);
+ }
+  
   
   	var arr=[];
 
@@ -992,15 +999,17 @@ ubsApp.confirmEndGame=function(){
   		var winnerName="";
 
 
-
-  		if(arr[highestScoringPlayer]) {
-  		  winnerName=userArray[highestScoringPlayer].getplayerName() +  " " + ubsApp.getTranslation("hasWon") + ".<br> " + ubsApp.getTranslation("guptaJiProfit") + " = " + harnamProjectedScore + " " +  ubsApp.getTranslation("yourProfit") + " = " + highestScore;
-
-  		} else {
-  		     winnerName= ubsApp.getTranslation("hasHighestScoreMessage").replace("{{playerName}}" , userArray[highestScoringPlayer].getplayerName()) +  ".<br> " + ubsApp.getTranslation("guptaJiProfit") + " = " + harnamProjectedScore + " " +  ubsApp.getTranslation("yourProfit") + " = " + highestScore;
-
-  		}
-
+        if(highestScoringPlayer!=-1){
+            if(arr[highestScoringPlayer]) {
+                winnerName=userArray[highestScoringPlayer].getplayerName() +  " " + ubsApp.getTranslation("hasWon") + ".<br> " + ubsApp.getTranslation("guptaJiProfit") + " = " + harnamProjectedScore + " " +  ubsApp.getTranslation("yourProfit") + " = " + highestScore;
+    
+              } else {
+                   winnerName= ubsApp.getTranslation("hasHighestScoreMessage").replace("{{playerName}}" , userArray[highestScoringPlayer].getplayerName()) +  ".<br> " + ubsApp.getTranslation("guptaJiProfit") + " = " + harnamProjectedScore + " " +  ubsApp.getTranslation("yourProfit") + " = " + highestScore;
+    
+              }
+    
+        }
+  		
   		if(!atleastOne){
 
   	   }
@@ -1030,15 +1039,90 @@ ubsApp.leaveRoom = function(){
 }
 
 socket.on('clientLeaveRoom', function(data){
-	ubsApp.callServerNextMove();
+    var nextPlayerName="";
+    
 	for(var i=0;i<numplayers;i++){    
         if(userArray[i].getplayerName().toLowerCase()==data.userName.toLowerCase()){
+            nextPlayerName=userArray[i].getplayerName((i+1)%numplayers);
             numplayers--;
             userArray.splice(i,1);
             ubsApp.studentArray.splice(i,1);
-            document.getElementById('p'+i).style.display="none";
         }
     }
+
+    for(var i=0;i<tempStudentArray.length;i++){
+        if(tempStudentArray[i].getplayerName().toLowerCase()==data.userName.toLowerCase()){
+            playerChanceDisabled[i]=true;
+            $("#p"+i).css("display","none")
+            break;
+        }
+    }
+
+    
+    if(userArray.length==1)
+        playerChance=0;
+    else{
+        //find the index of the next player's name
+        for(var i=0;i<numplayers;i++){
+            if(userArray[i].getplayerName().toLowerCase()==nextPlayerName.toLowerCase()){
+                playerChance=i;
+                break;
+            }
+        }
+        ubsApp.raiseAudioEvent(document.getElementById('playerId'),'nextPlayer');
+             ubsApp.openPopup({
+                                           "header" : "",
+                                          "message" : "",
+                                          "headerStyle" : "text-align: center;  color: red; font-weight: 700;",
+                                           "imageUrl" : ubsApp.getTranslation("nextPlayerImage"),
+                                          "imageStyle" : "width:100%;",
+                                          "showCloseButton" : false,
+                                          "showBorder" : false,
+                                          "backgroundColor" :"transparent",
+                                       });
+                       setTimeout(function(){ubsApp.callServerClosePopup(true);}, 2000);
+    }
+
+    ubsApp.closeCurrentScenario();
+
+    $('#resultBackground').hide();
+	$('#templateContent').css("height",0+'px');
+    $("#templateContent").empty();
+    $(".mainBoardoverlay").empty();
+    $(".mainBoardoverlay").css("height",0+'px');
+    console.log("NumPlayers Now is: "+numplayers);
+   
+    let count = 0;
+    let atleastOnePlayerPlaying = false;
+    if(numplayers>0){
+        socket.emit('disableScreenForRest',{
+            description:'Disable screen for all Ids except this Id',
+            playerId:userArray[playerChance].getplayerId(),
+            roomCode: ubsApp.studentArray[0].room
+        });
+        while(!userArray[playerChance].isPlayerEligibleToPlay() && count <= numplayers) {
+            count++;
+            playerChance+=1;
+            playerChance%=numplayers;
+        }
+    
+        if(count <= numplayers) {
+            atleastOnePlayerPlaying = true;
+        }
+        ubsApp.currentPlayerContents();
+
+        $("#diceval").html(" ");
+        
+    }else{
+        if(!atleastOnePlayerPlaying) {
+
+            ubsApp.endGame();
+        }
+    }    
+    
+    setTimeout(function(){ if(data.userName.toLowerCase()==ubsApp.myDetails.userName.toLowerCase()){
+        $('#disableScreenContent').height(0);
+    } }, 500);
 })
 
 ubsApp.nextMove = function(){
@@ -1406,30 +1490,31 @@ ubsApp.sendMail = function()
 
 ubsApp.storePlayerDetailsOnServer = function(user, scenarioName, scenarioId, quizScore)
 {
-      var playerDetails = {
-                  "roomCode":user.getRoomCode(),
-                  "PlayerName":user.getplayerName(),
-                  "bankBalance":user.getBankBalance(),
-                  "cash":user.getplayerScore(),
-                  "debt":user.getCredit(),
-                  "reputationPoints":user.getReputationPts(),
-                  "inventoryLevel":user.getInventoryScore(),
-                  "advantageCards":user.getAdvantageCardNumber(),
-                  "scenarioName":scenarioName,
-                  "scenarioID":scenarioId,
-                  "quizScore":quizScore
+   
+    var playerDetails = {
+        "roomCode":user.getRoomCode(),
+        "PlayerName":user.getplayerName(),
+        "bankBalance":user.getBankBalance(),
+        "cash":user.getplayerScore(),
+        "debt":user.getCredit(),
+        "reputationPoints":user.getReputationPts(),
+        "inventoryLevel":user.getInventoryScore(),
+        "advantageCards":user.getAdvantageCardNumber(),
+        "scenarioName":scenarioName,
+        "scenarioID":scenarioId,
+        "quizScore":quizScore
 
-               }
+        }
 
-            $.ajax({
-                url: "http://apimeridukan.prathamopenschool.org/api/roomplayer/storeroomv2",
-                type: "post",
-                dataType:"json",
-                contentType:"application/json",
-                data: JSON.stringify(playerDetails),
-                success : function(data){
-                    console.log("Stored details successfully for user-->"+user.getplayerName());
-                }
+    $.ajax({
+        url: "http://apimeridukan.prathamopenschool.org/api/roomplayer/storeroomv2",
+        type: "post",
+        dataType:"json",
+        contentType:"application/json",
+        data: JSON.stringify(playerDetails),
+        success : function(data){
+            console.log("Stored details successfully for user-->"+user.getplayerName());
+        }
 
-            });
+    });
 }
