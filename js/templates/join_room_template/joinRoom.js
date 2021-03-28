@@ -23,33 +23,16 @@ ubsApp.joinRoom = function () {
     playerAge = document.getElementById("playerAge").value;
     playerName = document.getElementById("playerNameInput").value;
     playerGender = document.getElementById("playerGender").value;
+    var alphaNumeric = /^[0-9a-zA-Z]+$/;
+    isAlphaNumeric = alphaNumeric.test(playerName); 
     if (!playerName) {
-        ubsApp.openResultPopup({
-            "message": "Please enter valid username",
-            "header": "Invalid username",
-            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-            "buttons": [
-                {
-                    'id': "closePopupButton",
-                    'name': "CLOSE",
-                    'action': "ubsApp.closeCurrentScenario();"
-                }
-            ]
-        });
+        document.getElementById("inputErrorMessage").innerHTML="Please enter valid username";
     }
-    else if (!playerAge) {
-        ubsApp.openResultPopup({
-            "message": "Please enter valid age",
-            "header": "Invalid age",
-            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-            "buttons": [
-                {
-                    'id': "closePopupButton",
-                    'name': "CLOSE",
-                    'action': "ubsApp.closeCurrentScenario();"
-                }
-            ]
-        });
+    else if (!isAlphaNumeric){
+        document.getElementById("inputErrorMessage").innerHTML="Only Alphabets and Numbers allowed in username";
+    }
+    else if (!playerAge || playerAge > 100) {
+        document.getElementById("inputErrorMessage").innerHTML="Please enter valid age";
     } else {
         monopoly.storeMyDetails(playerName, playerAge, playerGender);
         socket.emit("serverJoinRoom", {
@@ -70,16 +53,17 @@ socket.on("callingMonopolyBoard", function () {
 })
 
 socket.on("joinRoomPopup", function (data) {
-    ubsApp.openResultPopup({
-        "message": data.description,
-        "header": data.header,
-        "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-        "buttons": [
-            {
-                'id': "closePopupButton",
-                'name': "CLOSE",
-                'action': "ubsApp.closeCurrentScenario();"
-            }
-        ]
-    });
+    // ubsApp.openResultPopup({
+    //     "message": data.description,
+    //     "header": data.header,
+    //     "headerStyle": "text-align: center;  color: black; font-weight: 700;",
+    //     "buttons": [
+    //         {
+    //             'id': "closePopupButton",
+    //             'name': "CLOSE",
+    //             'action': "ubsApp.closeCurrentScenario();"
+    //         }
+    //     ]
+    // });
+    document.getElementById("inputErrorMessage").innerHTML=data.description;
 })

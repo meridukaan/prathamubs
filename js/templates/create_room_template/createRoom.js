@@ -1,5 +1,4 @@
 ubsApp.getCreateRoomTemplate = function (templateConfig, tempVar) {
-    // templateConfig.currentPlayerName = userArray[playerChance].getplayerName();
     tempVar.html += ubsCreateRoomTemplate(templateConfig);
 }
 
@@ -9,12 +8,8 @@ ubsApp.openCreateRoomTemplate = function () {
     ubsApp.renderPageByName("createRoomPage");
 }
 
-//add create room functions below
-
 ubsApp.createRoom = function () {
-    // ubsApp.maxNumOfWeeks = document.getElementById("");
-    //Message to stop multiple clicks when API is slow
-    document.getElementById('roomCreatingMessage').innerHTML="Creating Room"; 
+    //Message to stop multiple clicks when API is slow 
     numOfWeeks = ubsApp.maxNumOfWeeks = $("input[name='noOfWeeks']:checked"). val();
     userLimit = document.getElementById("num_online_players").value;
     userName = document.getElementById("playerNameInput").value;
@@ -22,35 +17,19 @@ ubsApp.createRoom = function () {
     userGender = document.getElementById("playerGender").value;
     languageSelected = document.getElementById("languageSelect").value;
     console.log("language :" + languageSelected)
+    var alphaNumeric = /^[0-9a-zA-Z]+$/;
+    isAlphaNumeric = alphaNumeric.test(playerName); 
     if (!userName) {
         console.log("Invalid username");
-        ubsApp.openResultPopup({
-            "message": "Please enter valid username",
-            "header": "Invalid Username",
-            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-            "buttons": [
-                {
-                    'id': "closePopupButton",
-                    'name': "CLOSE",
-                    'action': "ubsApp.closeCurrentScenario();"
-                }
-            ]
-        });
-    } else if (userAge <= 0 || !userAge) {
+        document.getElementById("inputErrorMessage").innerHTML="Please enter valid username"
+    } else if (!isAlphaNumeric){
+        document.getElementById("inputErrorMessage").innerHTML="Only alphabets and numbers allowed in the username"
+    } else if (!userAge || userAge >100) {
         console.log("Invalid age");
-        ubsApp.openResultPopup({
-            "message": "Please enter valid age",
-            "header": "Invalid age",
-            "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-            "buttons": [
-                {
-                    'id': "closePopupButton",
-                    'name': "CLOSE",
-                    'action': "ubsApp.closeCurrentScenario();"
-                }
-            ]
-        });
+        document.getElementById("inputErrorMessage").innerHTML="Please enter valid age"
     }  else {
+        document.getElementById("inputErrorMessage").innerHTML=""
+        document.getElementById('roomCreatingMessage').innerHTML="Creating Room";
         monopoly.storeMyDetails(userName, userAge, userGender);
         socket.emit("serverCreateRoom", {
             description: "create room button clicked",
