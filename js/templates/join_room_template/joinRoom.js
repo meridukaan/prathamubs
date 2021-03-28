@@ -53,17 +53,5 @@ socket.on("callingMonopolyBoard", function () {
 })
 
 socket.on("joinRoomPopup", function (data) {
-    // ubsApp.openResultPopup({
-    //     "message": data.description,
-    //     "header": data.header,
-    //     "headerStyle": "text-align: center;  color: black; font-weight: 700;",
-    //     "buttons": [
-    //         {
-    //             'id': "closePopupButton",
-    //             'name': "CLOSE",
-    //             'action': "ubsApp.closeCurrentScenario();"
-    //         }
-    //     ]
-    // });
     document.getElementById("inputErrorMessage").innerHTML=data.description;
 })
