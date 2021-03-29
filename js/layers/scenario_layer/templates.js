@@ -449,7 +449,7 @@ ubsApp.leaderBoardTemplate=
     '			</div>'+
     '			<div style="display: table-row;">'+
     '				<div style="display: table-cell;"><input  style="" id="playerNameInput"></input></div>'+
-    '				<div style="display: table-cell;"><input type="number" style="" id="playerAge"></input></div>'+
+    '				<div style="display: table-cell;"><input type="number" min="1" style="" id="playerAge"></input></div>'+
     '			</div>'+
     '			<div style="display: table-row;">'+
     '				<div style="display: table-cell; ">{{gender}}</div>'+
@@ -460,6 +460,9 @@ ubsApp.leaderBoardTemplate=
     '				<div style="display: table-cell;"><input type="text" style="" id="roomCode"></input></div>'+
     '			</div>'+
     '		</div>'+
+    '           <div style="display: table-row;">'+
+    '               <div style="display: table-cell;" id="inputErrorMessage"></div>'+
+    '           </div>'+
     '	'+
     '		</div>'+
     '		<div style="display:inline-block;width:100%;">'+
@@ -515,7 +518,7 @@ ubsApp.leaderBoardTemplate=
     '			</div>'+
     '			<div style="display: table-row;">'+
     '				<div style="display: table-cell;"><input  style="" id="playerNameInput"></input></div>'+
-    '				<div style="display: table-cell;"><input type="number" style="" id="playerAge"></input></div>'+
+    '				<div style="display: table-cell;"><input type="number" min="1" style="" id="playerAge"></input></div>'+
     '			</div>'+
     '			<div style="display: table-row;">'+
     '				<div style="display: table-cell; ">{{gender}}</div>'+
@@ -535,6 +538,9 @@ ubsApp.leaderBoardTemplate=
     '			</div>'+
     '           <div style="display: table-row;">'+
     '               <div style="display: table-cell;" id="roomCreatingMessage"></div>'+
+    '           </div>'+
+    '           <div style="display: table-row;">'+
+    '               <div style="display: table-cell;" id="inputErrorMessage"></div>'+
     '           </div>'+
     '		</div>'+
     '	'+
