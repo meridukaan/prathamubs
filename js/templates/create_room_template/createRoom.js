@@ -18,7 +18,7 @@ ubsApp.createRoom = function () {
     languageSelected = document.getElementById("languageSelect").value;
     console.log("language :" + languageSelected)
     var alphaNumeric = /^[0-9a-zA-Z]+$/;
-    isAlphaNumeric = alphaNumeric.test(playerName); 
+    isAlphaNumeric = alphaNumeric.test(userName); 
     if (!userName) {
         console.log("Invalid username");
         document.getElementById("inputErrorMessage").innerHTML="Please enter valid username"
