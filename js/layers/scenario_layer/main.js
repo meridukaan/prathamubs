@@ -38,8 +38,8 @@ let audioConfig = {};
 var count=0;
 var languageSelected="hindi";
 var calculatorReq=false;
-let screenHeight = $(window).height();
-let screenWidth = $(window).width();
+let screenHeight = screen.availHeight;
+let screenWidth = screen.availWidth;
 
 
 let templateName = ["static", "decision","purchase","withdrawFromBank","advantageCard","luck","pay","payOff", "insurance","transfer","wheelOfFortune", "timerTemp", "popup", "rollingDice","scratchCard","choice","audio", "score","sales", "quiz","quizStarter", "popup", "weekSummary", "addPlayer", "joinRoom", "createRoom", "joinRoomLobby", "createRoomLobby"];
@@ -334,8 +334,8 @@ ubsApp.startCurrentScenario=function(){
 	
 	document.getElementById("templateContent").style.opacity="0.95";
 	
-	$('#templateContent').css("height",(screenHeight)+'px')
-	$('#templateContent').css("width",(screenWidth)+'px')
+	$('#templateContent').css("height",(screen.availHeight)+'px')
+	$('#templateContent').css("width",(screen.availWidth)+'px')
 }
 
 

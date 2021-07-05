@@ -236,8 +236,8 @@ socket.on('startScenarioToClient', function (data) {
     $('#monopolyBase').css("z-index", -10);
     $('#templateBase').css("z-index", 10);
     document.getElementById("templateContent").style.opacity = "0.95";
-    $('#templateContent').css("height", (screenHeight) + 'px')
-    $('#templateContent').css("width", (screenWidth) + 'px')
+    $('#templateContent').css("height", (screen.availHeight) + 'px')
+    $('#templateContent').css("width", (screen.availWidth) + 'px')
     $('#resultBackground').show();
     ubsApp.renderPageByName(templateName);
     template[0].question = key;

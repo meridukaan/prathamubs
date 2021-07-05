@@ -3,8 +3,8 @@ ubsApp.startHelp=function(pageName){
     ubsApp.closeHelp();
 	//document.getElementById("helpContent").style.opacity="0.95";
 	$('#popupBackground').show();
-	$('#helpContent').css("height",(screenHeight)+'px')
-	$('#helpContent').css("width",(screenWidth)+'px')
+	$('#helpContent').css("height",(screen.availHeight)+'px')
+	$('#helpContent').css("width",(screen.availWidth)+'px')
 	helpScenarioOpen=true;
 	ubsApp.renderHelpPage(ubsApp.pages[pageName].templates);
 
@@ -59,8 +59,8 @@ ubsApp.renderHelpPage=function(template){
 	let html = "";
 	for(let i=0; i< template.length; i++) {
 		let templateConfig = $.extend({},template[i]);
-		 templateConfig["screenHeight"] = screenHeight;
-         templateConfig["screenWidth"] = screenWidth;
+		 templateConfig["screenHeight"] = screen.availHeight;
+         templateConfig["screenWidth"] = screen.availWidth;
 		if(templateConfig.templateType=="static"){
 			if(templateConfig.id == "helpContentVideo"){
 				templateConfig.isOnlineMode = !ubsApp.isOfflineMode; //default
